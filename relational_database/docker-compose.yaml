@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: relational_database
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mount a persistent volume to store the PostgreSQL data
+      - postgres-data:/var/lib/postgresql/data
+      # Mount the `create_tables.sql` script to the container
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # Mount the create_users.sh script to the container
+      - ./create_users.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+
+volumes:
+  postgres-data:
