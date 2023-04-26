@@ -13,6 +13,12 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class RegistrationRequest {
 
+    @Length(min = 3, max = 100)
+    private String firstName;
+
+    @Length(min = 3, max = 100)
+    private String lastName;
+
     @Email
     @Length(min = 5, max = 100)
     private String email;

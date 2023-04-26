@@ -7,12 +7,15 @@ import eu.elision.pricing.dto.AuthenticationResponse;
 import eu.elision.pricing.dto.RegistrationRequest;
 import eu.elision.pricing.exception.EmailAlreadyRegistered;
 import eu.elision.pricing.repository.UserRepository;
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,10 +25,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
+
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
-        User user = new User(registrationRequest.getEmail(),
+        User user = new User(registrationRequest.getFirstName(), registrationRequest.getLastName(), registrationRequest.getEmail(),
             passwordEncoder.encode(registrationRequest.getPassword()));
+
+        logger.debug("Registering user: {}", user);
 
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
