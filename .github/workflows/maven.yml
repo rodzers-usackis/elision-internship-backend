@@ -32,7 +32,7 @@ jobs:
     - name: Test with Maven
       run: mvn test
     - name: Generate Checkstyle report
-      run: mvn site
+      run: mvn site --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
