@@ -72,7 +72,7 @@
         <module name="EmptyBlock">
             <property name="option" value="TEXT"/>
             <property name="tokens"
-                      value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE"/>
+                      value="LITERAL_TRY, LITERAL_IF, LITERAL_ELSE"/>
         </module>
         <module name="NeedBraces">
             <property name="tokens"
@@ -82,14 +82,14 @@
             <property name="tokens"
                       value="ANNOTATION_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF, ENUM_DEF,
                     INTERFACE_DEF, LAMBDA, LITERAL_CASE, LITERAL_CATCH, LITERAL_DEFAULT,
-                    LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF,
+                    LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_IF,
                     LITERAL_TRY, LITERAL_WHILE, METHOD_DEF,
                     OBJBLOCK, STATIC_INIT, RECORD_DEF, COMPACT_CTOR_DEF"/>
         </module>
         <module name="RightCurly">
             <property name="id" value="RightCurlySame"/>
             <property name="tokens"
-                      value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE,
+                      value="LITERAL_TRY, LITERAL_CATCH, LITERAL_IF, LITERAL_ELSE,
                     LITERAL_DO"/>
         </module>
         <module name="RightCurly">
@@ -109,7 +109,7 @@
         <module name="WhitespaceAfter">
             <property name="tokens"
                       value="COMMA, SEMI, TYPECAST, LITERAL_IF, LITERAL_ELSE, LITERAL_RETURN,
-                    LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_FINALLY, DO_WHILE, ELLIPSIS,
+                    LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, DO_WHILE, ELLIPSIS,
                     LITERAL_TRY, LITERAL_CATCH, LAMBDA,
                     LITERAL_CASE"/>
         </module>
@@ -123,7 +123,7 @@
             <property name="tokens"
                       value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR,
                     BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, DO_WHILE, EQUAL, GE, GT, LAMBDA, LAND,
-                    LCURLY, LE, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY,
+                    LCURLY, LE, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE,
                     LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, 
                     LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN,
                     NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR,
