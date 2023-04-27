@@ -29,7 +29,7 @@ public class SecurityConfig {
                                                    AuthenticationProvider authenticationProvider)
         throws Exception {
         http.authorizeHttpRequests()
-            .requestMatchers("/api/auth/**", "/", "/api/auth/login")
+            .requestMatchers("/api/auth/**", "/")
             .permitAll()
             .anyRequest().authenticated()
             .and()
