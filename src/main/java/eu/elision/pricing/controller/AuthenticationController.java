@@ -50,7 +50,8 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
         @RequestBody RegistrationRequest registrationRequest
     ) {
-        return ResponseEntity.ok(authenticationService.register(registrationRequest));
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(authenticationService.register(registrationRequest));
     }
 
 }

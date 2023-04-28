@@ -102,7 +102,7 @@ class AuthenticationControllerIntegrationTests {
                                         "password": "%s"
                     }
                                     """.formatted(email, password)))
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated());
 
         assertTrue(userRepository.findByEmail(email).isPresent());
 
