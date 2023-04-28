@@ -17,6 +17,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * A user account.
+ * The user can have a {@link Role} of either {@link Role#ADMIN} or {@link Role#CLIENT}.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,7 +44,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
+    /**
+     * Creates a new user with the given email and password.
+     *
+     * @param email    User's e-mail address
+     * @param password User's password to the account
+     */
     public User(String email, String password) {
         this.email = email;
         this.password = password;

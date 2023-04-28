@@ -14,6 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link AuthenticationService}.
+ */
 @RequiredArgsConstructor
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -22,6 +25,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Saves the user in the {@link UserRepository} and returns a {@link AuthenticationResponse}
+     * containing the JWT.
+     *
+     * @param registrationRequest the {@link RegistrationRequest}
+     *                            containing the user's email and password
+     * @return the {@link AuthenticationResponse} containing the JWT
+     * @throws EmailAlreadyRegistered if the email is already registered
+     */
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
         User user = new User(registrationRequest.getEmail(),
@@ -37,6 +49,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return new AuthenticationResponse(jwt);
     }
 
+    /**
+     * Authenticates the user and returns a {@link AuthenticationResponse} containing the JWT.
+     * The user is authenticated using the {@link AuthenticationManager}.
+     * If the authentication is successful, the user is loaded into the Spring Security context.
+     *
+     * @param authenticationRequest the {@link AuthenticationRequest}
+     *                              containing the user's email and password
+     * @return the {@link AuthenticationResponse} containing the JWT
+     */
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(

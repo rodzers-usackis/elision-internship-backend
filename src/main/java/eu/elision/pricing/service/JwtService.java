@@ -5,7 +5,11 @@ import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
+/**
+ * Interface for the JWT service.
+ * Provides methods for extracting claims from a JWT,
+ * generating a JWT from claims and validating a JWT.
+ */
 public interface JwtService {
 
     String extractUsername(String jwt);
