@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 /**
  * Configures the security for the application, such as authentication and authorization rules.
  * This class specifies the beans for PasswordEncoder,
@@ -52,11 +54,15 @@ public class SecurityConfig {
                                                    AuthenticationProvider authenticationProvider)
         throws Exception {
         http.authorizeHttpRequests()
-            .requestMatchers("/api/auth/**", "/")
+            .requestMatchers("/api/auth/**")
+            .permitAll()
+            .requestMatchers(toH2Console())
             .permitAll()
             .anyRequest().authenticated()
             .and()
             .csrf().disable()
+            .headers().frameOptions().sameOrigin()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().authenticationProvider(authenticationProvider)

@@ -7,6 +7,7 @@ import eu.elision.pricing.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class AuthenticationController {
      *     and containing the {@link AuthenticationRequest}
      *     with the JWT token
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
         @RequestBody AuthenticationRequest authenticationRequest) {
@@ -46,6 +48,7 @@ public class AuthenticationController {
      * @return the {@link ResponseEntity} with HTTP status code 201,
      *     and containing the {@link AuthenticationResponse}  with the JWT token
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
         @RequestBody RegistrationRequest registrationRequest
