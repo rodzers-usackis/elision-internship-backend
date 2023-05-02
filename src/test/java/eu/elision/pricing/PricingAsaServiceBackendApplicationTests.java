@@ -1,17 +1,18 @@
 package eu.elision.pricing;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class PricingAsAServiceBackendApplicationTests {
+class PricingAsaServiceBackendApplicationTests {
 
     @Test
     void contextLoads() {
-        assertDoesNotThrow(()-> SpringApplication.run(PricingAsAServiceBackendApplication.class));
+        assertDoesNotThrow(() -> SpringApplication.run(PricingAsaServiceBackendApplication.class));
     }
 
 }
