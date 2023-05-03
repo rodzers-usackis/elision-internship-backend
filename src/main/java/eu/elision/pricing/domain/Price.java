@@ -1,12 +1,12 @@
 package eu.elision.pricing.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,36 +14,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Represents a product whose price will be tracked by the {@link ClientCompany}.
+ * Represents the price of a {@link Product} of a {@link RetailerCompany}
+ * at a certain point in time.
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class TrackedProduct {
+public class Price {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private LocalDateTime timestamp;
 
     /**
-     * Current price of the {@link Product} at the {@link ClientCompany}.
+     * The price of the product.
      */
-    private double clientCurrentPrice;
+    private double amount;
 
-    /**
-     * The {@link Product} whose price is tracked by the {@link ClientCompany}.
-     */
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    /**
-     * The {@link ClientCompany} that tracks the price of the {@link Product}.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_company_id")
-    private ClientCompany clientCompany;
+    @ManyToOne
+    @JoinColumn(name = "retailer_company_id")
+    private RetailerCompany retailerCompany;
 
 }
