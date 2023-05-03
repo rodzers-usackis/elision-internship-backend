@@ -54,4 +54,25 @@ public class PriceScrapingConfig {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    private boolean commaSeparatedDecimal;
+
+    /**
+     * Removes unnecessary characters from the price string and parses it to a double.
+     * Replaces the decimal separator with a dot if the price is comma-separated.
+     *
+     * @param priceString String containing the price value to be parsed.
+     * @return The price value as a double.
+     */
+    public double parsePriceValue(String priceString) {
+        priceString = priceString.replace(" ", "");
+        if (commaSeparatedDecimal) {
+            priceString = priceString.replace(".", "");
+            priceString = priceString.replace(',', '.');
+        } else {
+            priceString = priceString.replace(",", "");
+        }
+        priceString = priceString.replaceAll("([^\\d.])*(\\d+(\\.\\d{1,2})?)([^\\d.])*", "$2");
+        return Double.parseDouble(priceString);
+    }
+
 }
