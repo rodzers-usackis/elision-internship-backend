@@ -7,21 +7,19 @@ import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
  * Implementation of {@link ScraperService} using jsoup.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ScraperServiceImpl implements ScraperService {
 
-    private final Logger logger = LoggerFactory.getLogger(ScraperServiceImpl.class);
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
     private final PriceRepository priceRepository;
     private final HttpRequestService httpRequestService;
@@ -33,7 +31,7 @@ public class ScraperServiceImpl implements ScraperService {
         Document document = Jsoup.parse(html);
         String priceString = document.select(psc.getCssSelector()).text();
 
-        logger.debug("""
+        log.debug("""
                         
             Scraped price: {},
             Scraped from: {}.
@@ -41,7 +39,7 @@ public class ScraperServiceImpl implements ScraperService {
 
         double price = psc.parsePriceValue(priceString);
 
-        logger.debug("""
+        log.debug("""
             Parsed value: {}
             """, price);
 

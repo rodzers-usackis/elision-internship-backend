@@ -3,18 +3,17 @@ package eu.elision.pricing.service;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * Implementation of {@link PriceService}.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PriceServiceImpl implements PriceService {
 
-    private final Logger logger = LoggerFactory.getLogger(PriceServiceImpl.class);
     private final ScraperService scraperService;
     private final PriceRepository priceRepository;
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
@@ -26,7 +25,7 @@ public class PriceServiceImpl implements PriceService {
                 try {
                     priceRepository.save(scraperService.scrapePrice(psc));
                 } catch (Exception e) {
-                    logger.error("Error while scraping price for product: {} (id:{})",
+                    log.error("Error while scraping price for product: {} (id:{})",
                         psc.getProduct().getName(), psc.getId(), e);
                 }
             }
