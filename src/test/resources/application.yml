@@ -1,5 +1,4 @@
 spring:
-  profile:
   h2:
     console:
       enabled: true
@@ -20,7 +19,8 @@ spring:
         show_sql: true
         format_sql: true
   profiles:
-    active: test
+    active: test, test-webscraping
 server:
   port: 0
-
+logging:
+  level: debug
