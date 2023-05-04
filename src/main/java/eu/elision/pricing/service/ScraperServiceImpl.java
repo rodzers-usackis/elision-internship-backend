@@ -24,26 +24,26 @@ public class ScraperServiceImpl implements ScraperService {
     private final Logger logger = LoggerFactory.getLogger(ScraperServiceImpl.class);
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
     private final PriceRepository priceRepository;
-
-    /**
-     * Maximum time to wait for a response from the server.
-     * Can be set in application.yml.
-     */
-    @Value("${scraper.timeout}")
-    private final int timeout = 10000;
+    private final HttpRequestService httpRequestService;
 
 
     @Override
     public Price scrapePrice(PriceScrapingConfig psc) throws IOException, NumberFormatException {
-        Document document = Jsoup.connect(psc.getUrl()).timeout(timeout).get();
+        String html = httpRequestService.getHtml(psc.getUrl());
+        Document document = Jsoup.parse(html);
         String priceString = document.select(psc.getCssSelector()).text();
+
+        logger.debug("""
+                        
+            Scraped price: {},
+            Scraped from: {}.
+            """, priceString, psc.getUrl());
+
         double price = psc.parsePriceValue(priceString);
 
         logger.debug("""
-            Scraped price: {},
-            Scraped from: {}.
             Parsed value: {}
-            """, psc.getUrl(), priceString, price);
+            """, price);
 
         return Price.builder().product(psc.getProduct())
             .retailerCompany(psc.getRetailerCompany())

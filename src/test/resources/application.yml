@@ -23,4 +23,5 @@ spring:
 server:
   port: 0
 logging:
-  level: debug
+  level:
+    root: debug
