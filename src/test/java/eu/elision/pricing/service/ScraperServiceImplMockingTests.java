@@ -34,7 +34,8 @@ class ScraperServiceImplMockingTests {
     private ScraperService scraperService;
 
 
-    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter", "checkstyle:LineLength"})
+    @SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter",
+        "checkstyle:LineLength"})
     @Test
     void webScrapingWorksCorrectly() throws IOException {
 
