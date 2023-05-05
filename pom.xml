@@ -93,6 +93,13 @@
             <version>4.0.0-M8</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>10.10.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -123,9 +130,11 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.2.2</version>
                 <dependencies>
+                    <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
+                        <version>10.10.0</version>
                     </dependency>
                 </dependencies>
                 <configuration>
