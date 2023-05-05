@@ -11,15 +11,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Getter
-@Setter
+/**
+ * A user account.
+ * The user can have a {@link Role} of either {@link Role#ADMIN} or {@link Role#CLIENT}.
+ */
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "user_account")
@@ -42,7 +46,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
+    /**
+     * Creates a new user with the given email and password.
+     *
+     * @param firstName User's first name
+     * @param lastName  User's last name
+     * @param email     User's e-mail address
+     * @param password  User's password to the account
+     */
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;

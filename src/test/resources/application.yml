@@ -1,4 +1,5 @@
 spring:
+  profile:
   h2:
     console:
       enabled: true
@@ -18,6 +19,8 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         show_sql: true
         format_sql: true
+  profiles:
+    active: test
 server:
-  port: 8080
+  port: 0
 
