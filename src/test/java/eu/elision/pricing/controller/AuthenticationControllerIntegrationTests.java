@@ -37,7 +37,7 @@ class AuthenticationControllerIntegrationTests {
     @BeforeAll
     void setup() {
 
-        userRepository.save(new User("test@test.be", passwordEncoder.encode("secure_password")));
+        userRepository.save(new User("FirstName", "LastName", "test@test.be", passwordEncoder.encode("secure_password")));
 
     }
 
@@ -91,6 +91,8 @@ class AuthenticationControllerIntegrationTests {
     @Test
     void successfulRegistration() throws Exception {
 
+        String firstName = "FirstName";
+        String lastName = "LastName";
         String email = "test_email@register.be";
         String password = "qwerty123";
 
@@ -98,11 +100,13 @@ class AuthenticationControllerIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {
+                                        "firstName": "%s",
+                                        "lastName": "%s",
                                         "email": "%s",
                                         "password": "%s"
                     }
-                                    """.formatted(email, password)))
-            .andExpect(status().isCreated());
+                                    """.formatted(firstName, lastName, email, password)))
+            .andExpect(status().isOk());
 
         assertTrue(userRepository.findByEmail(email).isPresent());
 
@@ -114,6 +118,8 @@ class AuthenticationControllerIntegrationTests {
     @Test
     void cantRegisterWithAlreadyRegisteredEmail() throws Exception {
 
+        String firstName = "FirstName";
+        String lastName = "LastName";
         String email = "test@test.be";
         String password = "qwerty123";
 
@@ -123,10 +129,12 @@ class AuthenticationControllerIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {
+                                        "firstName": "%s",
+                                        "lastName": "%s",
                                         "email": "%s",
                                         "password": "%s"
                     }
-                                    """.formatted(email, password)))
+                                    """.formatted(firstName, lastName, email, password)))
             .andExpect(status().isConflict());
 
 
