@@ -1,22 +1,28 @@
 version: '3.9'
 
 services:
-  db:
-    image: postgres:latest
+  db-postgres:
+    image: timescale/timescaledb:latest-pg15
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespassword
-      POSTGRES_DB: relational_database
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=pricingdb
     ports:
       - "5432:5432"
     volumes:
       # Mount a persistent volume to store the PostgreSQL data
-      - postgres-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
       # Mount the `create_tables.sql` script to the container
-      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./db-init/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
       # Mount the create_users.sh script to the container
-      - ./create_users.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - ./db-init/create_users.sh:/docker-entrypoint-initdb.d/create_users.sh
+    network_mode: bridge
+
 
 volumes:
-  postgres-data:
+  db-data:
+
+networks:
+  db-network:
+    driver: bridge
