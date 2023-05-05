@@ -86,6 +86,12 @@
             <artifactId>doxia-site-renderer</artifactId>
             <version>2.0.0-M10</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>4.0.0-M8</version>
+        </dependency>
 
     </dependencies>
 
@@ -101,6 +107,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>4.0.0-M8</version>
+                <configuration>
+                    <outputDirectory>target/site</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
