@@ -6,7 +6,7 @@ POSTGRES_DB=pricingdb
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE USER rodzers WITH PASSWORD 'rodzerspassword';
     CREATE USER dominik WITH PASSWORD 'dominikpassword';
-    CREATE USER test WITH PASSWORD 'testpassword';
+    REVOKE ALL ON DATABASE postgres FROM public;
     REVOKE ALL ON DATABASE pricingdb FROM public;
     REVOKE ALL ON DATABASE postgres FROM public;
     REVOKE ALL ON DATABASE template0 FROM public;
