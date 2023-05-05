@@ -141,12 +141,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <configLocation>/config/checkstyle.xml</configLocation>
                     <failOnViolation>false</failOnViolation>
