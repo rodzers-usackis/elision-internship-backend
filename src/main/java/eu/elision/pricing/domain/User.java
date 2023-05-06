@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+//    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -49,10 +49,14 @@ public class User implements UserDetails {
     /**
      * Creates a new user with the given email and password.
      *
-     * @param email    User's e-mail address
-     * @param password User's password to the account
+     * @param firstName User's first name
+     * @param lastName  User's last name
+     * @param email     User's e-mail address
+     * @param password  User's password to the account
      */
-    public User(String email, String password) {
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = Role.CLIENT;
