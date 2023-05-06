@@ -1,5 +1,6 @@
 package eu.elision.pricing.security;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 /**
  * Configures the security for the application, such as authentication and authorization rules.

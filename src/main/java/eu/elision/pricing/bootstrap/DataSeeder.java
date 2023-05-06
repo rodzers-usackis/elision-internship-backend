@@ -8,6 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is used to seed the database with some initial data.
+ */
 @RequiredArgsConstructor
 @Component
 public class DataSeeder implements CommandLineRunner {
