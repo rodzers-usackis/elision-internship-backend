@@ -1,12 +1,7 @@
 package eu.elision.pricing.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,11 +21,17 @@ public class TrackedProduct {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    /**
+     * Purchase costs of the {@link Product} at the {@link ClientCompany}.
+     */
+    @Column(nullable = false)
+    private double productPurchaseCost;
 
     /**
-     * Current price of the {@link Product} at the {@link ClientCompany}.
+     * Selling price of the {@link Product} at the {@link ClientCompany}.
      */
-    private double clientCurrentPrice;
+    @Column(nullable = false)
+    private double productSellPrice;
 
     /**
      * The {@link Product} whose price is tracked by the {@link ClientCompany}.
@@ -45,5 +46,4 @@ public class TrackedProduct {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_company_id")
     private ClientCompany clientCompany;
-
 }
