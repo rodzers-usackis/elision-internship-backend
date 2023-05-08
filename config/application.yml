@@ -1,23 +1,24 @@
+# Postgres - Database
 spring:
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:db
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/pricingdb
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgrespassword
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
         format_sql: true
+  profiles:
+      active:
+        - create-hypertables
 server:
-  port: 8081
+  port: 8080
 
-
+logging:
+  level:
+    root: debug
