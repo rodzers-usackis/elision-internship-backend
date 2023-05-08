@@ -12,6 +12,7 @@ import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.UserDto;
 import eu.elision.pricing.repository.UserRepository;
+import eu.elision.pricing.service.JwtService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,6 +38,9 @@ class UserRestControllerTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private JwtService jwtService;
 
 
 
@@ -83,6 +87,32 @@ class UserRestControllerTest {
         mockMvc.perform(get("/api/users/me")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isForbidden());
+
+
+    }
+
+    @Test
+    void userGetsTheirInfoWhenTheyMakeRequestWithJwt() throws Exception {
+        User user = userRepository.findAll().get(0);
+
+        String jwt = jwtService.generateToken(user);
+
+
+        mockMvc.perform(get("/api/users/me")
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + jwt))
+            .andExpect(status().isOk())
+            .andExpect(result -> {
+                String json = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode jsonNode = mapper.readTree(json);
+
+                assertEquals(user.getEmail(), jsonNode.get("email").asText());
+                assertEquals(user.getFirstName(), jsonNode.get("firstName").asText());
+                assertEquals(user.getLastName(), jsonNode.get("lastName").asText());
+                assertEquals(user.getRole().toString(), jsonNode.get("role").asText());
+
+            });
 
 
     }

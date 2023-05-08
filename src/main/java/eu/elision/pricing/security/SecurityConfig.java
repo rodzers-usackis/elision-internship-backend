@@ -1,6 +1,5 @@
 package eu.elision.pricing.security;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 
 /**
@@ -56,12 +58,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
             .requestMatchers("/api/auth/**")
             .permitAll()
-            .requestMatchers(toH2Console())
-            .permitAll()
             .anyRequest().authenticated()
             .and()
             .csrf().disable()
-            .headers().frameOptions().sameOrigin()
+            .cors()
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
