@@ -1,7 +1,4 @@
 package eu.elision.pricing.security;
-
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,8 +52,6 @@ public class SecurityConfig {
         throws Exception {
         http.authorizeHttpRequests()
             .requestMatchers("/api/auth/**")
-            .permitAll()
-            .requestMatchers(toH2Console())
             .permitAll()
             .anyRequest().permitAll()
             .and()

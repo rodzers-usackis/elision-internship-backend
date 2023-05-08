@@ -36,4 +36,12 @@ public class Product {
 
     @Column(nullable = false)
     private ProductCategory category;
+
+    public Product(String name, String description, String ean, String manufacturerCode, ProductCategory productCategory) {
+        this.name = name;
+        this.description = description;
+        this.ean = ean;
+        this.manufacturerCode = manufacturerCode;
+        this.category = productCategory;
+    }
 }
