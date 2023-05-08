@@ -1,16 +1,14 @@
 package eu.elision.pricing.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.UserDto;
 import eu.elision.pricing.repository.UserRepository;
 import eu.elision.pricing.service.JwtService;
 import org.junit.jupiter.api.BeforeAll;
