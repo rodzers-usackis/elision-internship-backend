@@ -1,10 +1,10 @@
 # Postgres - Database
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/pricingdb
+    url: jdbc:postgresql://localhost:5432/pricingdb
     driver-class-name: org.postgresql.Driver
-    username: rodzers
-    password: rodzerspassword
+    username: postgres
+    password: postgrespassword
   jpa:
     hibernate:
       ddl-auto: update
