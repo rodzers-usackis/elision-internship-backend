@@ -15,7 +15,7 @@ spring:
         format_sql: true
   profiles:
       active:
-        - create-hypertables
+        - seed-data
 server:
   port: 8080
 
