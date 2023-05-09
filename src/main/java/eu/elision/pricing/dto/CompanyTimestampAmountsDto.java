@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  * DTO for price history data.
  * Contains price values with timestamps for a single Company.
+ *
  * @see PriceHistoryDto
  */
 @Data

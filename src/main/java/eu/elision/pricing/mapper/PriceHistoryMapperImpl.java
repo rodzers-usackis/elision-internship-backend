@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link PriceHistoryMapper}.
+ */
 @RequiredArgsConstructor
 @Component
 public class PriceHistoryMapperImpl implements PriceHistoryMapper {
@@ -35,7 +37,7 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper {
                 .distinct()
                 .collect(Collectors.toList());
 
-        companies.forEach(company ->{
+        companies.forEach(company -> {
 
             List<TimestampAmountDto> timestampAmounts = prices.stream()
                 .filter(price -> price.getRetailerCompany().equals(company))
@@ -47,10 +49,11 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper {
 
             CompanyDto companyDto = companyMapper.domainToDto(company);
 
-            CompanyTimestampAmountsDto companyTimestampAmountsDto = CompanyTimestampAmountsDto.builder()
-                .company(companyDto)
-                .timestampAmounts(timestampAmounts)
-                .build();
+            CompanyTimestampAmountsDto companyTimestampAmountsDto =
+                CompanyTimestampAmountsDto.builder()
+                    .company(companyDto)
+                    .timestampAmounts(timestampAmounts)
+                    .build();
 
             companyTimestampAmounts.add(companyTimestampAmountsDto);
         });

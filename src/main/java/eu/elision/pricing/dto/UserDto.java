@@ -1,10 +1,14 @@
 package eu.elision.pricing.dto;
 
 import eu.elision.pricing.domain.Role;
+import eu.elision.pricing.domain.User;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * DTO for {@link User}.
+ */
 @Data
 @Builder
 public class UserDto {

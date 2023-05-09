@@ -4,6 +4,9 @@ import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.UserDto;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link UserMapper}.
+ */
 @Component
 public class UserMapperImpl implements UserMapper {
     @Override

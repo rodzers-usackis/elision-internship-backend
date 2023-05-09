@@ -43,9 +43,8 @@ class UserRestControllerTest {
     private JwtService jwtService;
 
 
-
     @BeforeAll
-    void setup(){
+    void setup() {
 
         User user = User.builder()
             .firstName("Test")

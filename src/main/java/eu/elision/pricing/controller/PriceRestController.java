@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for price and price history data.
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/prices")

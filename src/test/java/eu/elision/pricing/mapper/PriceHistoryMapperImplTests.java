@@ -24,7 +24,7 @@ class PriceHistoryMapperImplTests {
     private PriceHistoryMapper priceHistoryMapperImpl;
 
     @Test
-    void pricesFromMultipleCompaniesMappedCorrectly(){
+    void pricesFromMultipleCompaniesMappedCorrectly() {
 
         RetailerCompany company1 = RetailerCompany.builder()
             .id(java.util.UUID.randomUUID())
@@ -92,7 +92,6 @@ class PriceHistoryMapperImplTests {
         //1 price for company2
         assertEquals(1, priceHistoryDto.getData().get(1).getTimestampAmounts().size());
         assertEquals(company2.getId(), priceHistoryDto.getData().get(1).getCompany().getId());
-
 
 
     }

@@ -11,8 +11,11 @@ class PricingAsaServiceBackendApplicationTests {
 
     @Test
     void contextLoads() {
-        //Test disabled because it uses the real database, which will not be available in the pipeline
-//        assertDoesNotThrow(() -> SpringApplication.run(PricingAsaServiceBackendApplication.class));
+        /*Test disabled because it uses the real database,
+        which will not be available in the pipeline
+
+        assertDoesNotThrow(() ->
+        SpringApplication.run(PricingAsaServiceBackendApplication.class));*/
     }
 
 }

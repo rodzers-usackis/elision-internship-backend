@@ -5,8 +5,11 @@ import eu.elision.pricing.dto.ProductDto;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link ProductMapper}.
+ */
 @Component
-public class ProductMapperImpl implements ProductMapper{
+public class ProductMapperImpl implements ProductMapper {
     @Override
     public ProductDto domainToDto(Product product) {
         return ProductDto.builder()

@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * The repository for {@link User} entities.
+ * JPA repository for {@link User} entities.
  */
 public interface UserRepository extends JpaRepository<User, UUID> {
 

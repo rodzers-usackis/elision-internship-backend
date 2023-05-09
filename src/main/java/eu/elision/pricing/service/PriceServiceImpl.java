@@ -43,8 +43,9 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before,
                                            LocalDateTime after) {
-        List<Price> prices = priceRepository.findAllByProduct_IdAndTimestampBeforeAndTimestampAfter(productId,
-            before, after);
+        List<Price> prices =
+            priceRepository.findAllByProduct_IdAndTimestampBeforeAndTimestampAfter(productId,
+                before, after);
 
         return priceHistoryMapper.domainToDto(prices);
     }

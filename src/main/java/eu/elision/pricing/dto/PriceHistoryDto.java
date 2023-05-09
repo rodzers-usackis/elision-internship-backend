@@ -1,9 +1,9 @@
 package eu.elision.pricing.dto;
 
+import eu.elision.pricing.domain.Product;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import eu.elision.pricing.domain.Product;
 
 /**
  * DTO for price history data for

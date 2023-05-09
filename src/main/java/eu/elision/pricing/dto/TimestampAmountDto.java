@@ -11,6 +11,6 @@ import lombok.Data;
 @Builder
 public class TimestampAmountDto {
 
-            private LocalDateTime timestamp;
-            private double amount;
+    private LocalDateTime timestamp;
+    private double amount;
 }

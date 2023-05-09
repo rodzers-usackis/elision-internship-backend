@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * The repository for {@link Price} entities.
+ * JPA repository for {@link Price} entities.
  */
 public interface PriceRepository extends JpaRepository<Price, UUID> {
 
@@ -20,11 +20,11 @@ public interface PriceRepository extends JpaRepository<Price, UUID> {
                                                                        LocalDateTime before,
                                                                        LocalDateTime after);
 
-    List<Price> findAllByProduct_IdAndTimestampBeforeAndTimestampAfterAndRetailerCompany_Id(UUID productId,
-                                                                                            LocalDateTime before,
-                                                                                            LocalDateTime after,
-                                                                                            UUID retailerCompanyId);
-
+    List<Price> findAllByProduct_IdAndTimestampBeforeAndTimestampAfterAndRetailerCompany_Id(
+        UUID productId,
+        LocalDateTime before,
+        LocalDateTime after,
+        UUID retailerCompanyId);
 
 
 }
