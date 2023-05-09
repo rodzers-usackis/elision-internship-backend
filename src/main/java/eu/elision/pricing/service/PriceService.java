@@ -1,7 +1,13 @@
 package eu.elision.pricing.service;
 
 import eu.elision.pricing.domain.Price;
+import eu.elision.pricing.dto.CompanyDto;
+import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.repository.PriceRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Interface for the price service.
@@ -11,5 +17,9 @@ import eu.elision.pricing.repository.PriceRepository;
 public interface PriceService {
 
     void scrapeAndSavePrices();
+
+    PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before, LocalDateTime after);
+    PriceHistoryDto getPriceHistory(UUID productId, LocalDate before, LocalDate after);
+
 
 }
