@@ -3,18 +3,18 @@ package eu.elision.pricing.dto;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import eu.elision.pricing.domain.Product;
 
 /**
  * DTO for price history data for
- * a single product and company.
- * Contains a list of {@link TimestampAmountDto}.
+ * a single {@link Product}
+ * Contains a list of {@link CompanyTimestampAmountsDto}.
  */
 @Data
 @Builder
 public class PriceHistoryDto {
 
     private ProductDto product;
-    private CompanyDto company;
-    private List<TimestampAmountDto> data;
+    private List<CompanyTimestampAmountsDto> data;
 
 }

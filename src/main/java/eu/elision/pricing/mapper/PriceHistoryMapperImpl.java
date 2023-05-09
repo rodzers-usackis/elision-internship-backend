@@ -1,17 +1,22 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Price;
+import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.dto.CompanyDto;
+import eu.elision.pricing.dto.CompanyTimestampAmountsDto;
 import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.dto.TimestampAmountDto;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Component
-public class PriceHistoryMapperImpl implements PriceHistoryMapper{
+public class PriceHistoryMapperImpl implements PriceHistoryMapper {
 
     private final CompanyMapper companyMapper;
     private final ProductMapper productMapper;
@@ -19,20 +24,41 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper{
     @Override
     public PriceHistoryDto domainToDto(List<Price> prices) {
 
-        List<TimestampAmountDto> data = prices.stream()
-            .map(price -> TimestampAmountDto.builder()
-                .timestamp(price.getTimestamp())
-                .amount(price.getAmount())
-                .build())
-            .collect(java.util.stream.Collectors.toList());
 
-        CompanyDto companyDto = companyMapper.domainToDto(prices.get(0).getRetailerCompany());
         ProductDto productDto = productMapper.domainToDto(prices.get(0).getProduct());
 
+        List<CompanyTimestampAmountsDto> companyTimestampAmounts = new ArrayList<>();
+
+        List<RetailerCompany> companies =
+            prices.stream()
+                .map(Price::getRetailerCompany)
+                .distinct()
+                .collect(Collectors.toList());
+
+        companies.forEach(company ->{
+
+            List<TimestampAmountDto> timestampAmounts = prices.stream()
+                .filter(price -> price.getRetailerCompany().equals(company))
+                .map(price -> TimestampAmountDto.builder()
+                    .timestamp(price.getTimestamp())
+                    .amount(price.getAmount())
+                    .build())
+                .collect(Collectors.toList());
+
+            CompanyDto companyDto = companyMapper.domainToDto(company);
+
+            CompanyTimestampAmountsDto companyTimestampAmountsDto = CompanyTimestampAmountsDto.builder()
+                .company(companyDto)
+                .timestampAmounts(timestampAmounts)
+                .build();
+
+            companyTimestampAmounts.add(companyTimestampAmountsDto);
+        });
+
+
         return PriceHistoryDto.builder()
-            .company(companyDto)
             .product(productDto)
-            .data(data)
+            .data(companyTimestampAmounts)
             .build();
     }
 }

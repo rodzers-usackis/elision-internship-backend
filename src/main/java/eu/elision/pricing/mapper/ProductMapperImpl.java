@@ -3,6 +3,7 @@ package eu.elision.pricing.mapper;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.dto.ProductDto;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
 public class ProductMapperImpl implements ProductMapper{
