@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -X -B package --file pom.xml
+      run: mvn -X -DskipTests -B package --file pom.xml
     - name: Test with Maven
       run: mvn test -X
     - name: Generate Checkstyle report
