@@ -4,6 +4,7 @@ import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.dto.ProductDTO;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.mapper.ProductMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-
-    public ProductController(ProductRepository productRepository, ProductMapper productMapper) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-    }
 
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/products")
