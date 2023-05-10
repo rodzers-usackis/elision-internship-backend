@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +19,6 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
-
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -51,9 +51,11 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @GetMapping("/products/{ean}")
-    public ResponseEntity<ProductDTO> getProduct(@PathVariable String ean) {
-        Product product = productRepository.findByEan(ean);
+    @GetMapping("/products/{uuid}")
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable String uuid) {
+        Product product = productRepository.findById(UUID.fromString(uuid)).orElse(null);
+
+        logger.debug("product: {}", product);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,9 +72,11 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/products")
-    public ResponseEntity<Void> deleteProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productRepository.findByEan(productDTO.getEan());
+    @DeleteMapping("/products/{uuid}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String uuid) {
+        Product product = productRepository.findById(UUID.fromString(uuid)).orElse(null);
+
+        logger.debug("product: {}", product);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,7 +90,7 @@ public class ProductController {
     @CrossOrigin
     @PutMapping("/products")
     public ResponseEntity<Void> updateProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productRepository.findByEan(productDTO.getEan());
+        Product product = productRepository.findById(productDTO.getUuid()).orElse(null);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

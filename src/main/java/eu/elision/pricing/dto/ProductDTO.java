@@ -1,6 +1,10 @@
 package eu.elision.pricing.dto;
 
+import java.util.UUID;
+
 public class ProductDTO {
+
+    private UUID uuid;
 
     private String name;
     private String description;
@@ -10,6 +14,8 @@ public class ProductDTO {
 
 
     // Getters
+    public UUID getUuid() { return uuid; }
+
     public String getName() {
         return name;
     }
