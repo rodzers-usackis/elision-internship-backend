@@ -28,5 +28,4 @@ public class UserRestController {
         @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(userMapper.domainToDto(user));
     }
-
 }

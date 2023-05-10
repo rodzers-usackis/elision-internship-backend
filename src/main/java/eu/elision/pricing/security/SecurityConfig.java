@@ -1,6 +1,5 @@
 package eu.elision.pricing.security;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +55,9 @@ public class SecurityConfig {
             .requestMatchers("/api/auth/**")
             .permitAll()
 
+
             .anyRequest().authenticated()
+
             .and()
             .csrf().disable()
             .cors()

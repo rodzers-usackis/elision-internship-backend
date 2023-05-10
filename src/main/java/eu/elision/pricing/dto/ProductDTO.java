@@ -1,16 +1,13 @@
 package eu.elision.pricing.dto;
 
-import eu.elision.pricing.domain.Product;
-import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
-/**
- * DTO for {@link Product}.
- */
+import java.util.UUID;
+
 @Data
 @Builder
-public class ProductDto {
+public class ProductDTO {
     private UUID id;
     private String name;
     private String description;

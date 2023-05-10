@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.UserRepository;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,7 +38,8 @@ class AuthenticationControllerIntegrationTests {
     @BeforeAll
     void setup() {
 
-        userRepository.save(new User("FirstName", "LastName", "test@test.be", passwordEncoder.encode("secure_password")));
+        userRepository.save(new User("FirstName", "LastName", "test@test.be",
+            passwordEncoder.encode("secure_password")));
 
     }
 
@@ -138,5 +140,10 @@ class AuthenticationControllerIntegrationTests {
             .andExpect(status().isConflict());
 
 
+    }
+
+    @AfterAll
+    void cleanUp() {
+        userRepository.deleteAll();
     }
 }
