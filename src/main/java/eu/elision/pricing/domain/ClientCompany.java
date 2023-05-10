@@ -25,4 +25,7 @@ public class ClientCompany extends RetailerCompany {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientCompany")
     private List<TrackedProduct> trackedProducts;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientCompany")
+    private List<User> users;
 }

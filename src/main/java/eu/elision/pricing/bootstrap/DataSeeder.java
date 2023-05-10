@@ -38,8 +38,6 @@ public class DataSeeder implements CommandLineRunner {
                 .role(Role.ADMIN)
                 .build();
 
-        userRepository.save(user);
-
 
         // Addresses
         Address address = Address.builder()
@@ -468,6 +466,9 @@ public class DataSeeder implements CommandLineRunner {
                 trackedProduct19,
                 trackedProduct20
         )));
+
+        user.setClientCompany(clientCompany);
+        userRepository.save(user);
 
 
         // Retailer Company
