@@ -1,13 +1,16 @@
 package eu.elision.pricing.controller;
 
 import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.Role;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.ProductRepository;
+import eu.elision.pricing.repository.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,18 +37,21 @@ public class ProductControllerIntegrationTests {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private Product product1;
 
     private Product product2;
 
-    private UUID realUUID = UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15");
+    private Product product3;
 
-    private final UUID randomUUID = UUID.randomUUID();
+    private User user;
 
     @BeforeAll
-    void setup() throws JsonProcessingException {
+    void setup() {
 
         product1 = Product.builder()
                 .name("Apple iPhone 12 Pro")
@@ -57,10 +63,7 @@ public class ProductControllerIntegrationTests {
 
         productRepository.save(product1);
 
-        realUUID = product1.getId();
-
         product2 = Product.builder()
-                .id(realUUID)
                 .name("Apple iPhone 14 Pro")
                 .description("128GB, Spacezwart")
                 .ean("194253401179")
@@ -69,16 +72,47 @@ public class ProductControllerIntegrationTests {
                 .build();
 
         productRepository.save(product2);
+
+        product3 = Product.builder()
+                .name("Apple iPhone 22 Pro")
+                .description("128GB, Spacezwart")
+                .ean("194253401174")
+                .manufacturerCode("MPXV3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
+
+        productRepository.save(product3);
+
+        User user = User.builder()
+                .email("test@test.com")
+                .password("somepassword")
+                .role(Role.CLIENT)
+                .firstName("Test")
+                .lastName("Test")
+                .build();
+
+        userRepository.save(user);
+        this.user = user;
+    }
+
+    @Test
+    void givenProductWhenPostProductsThenStatus201() throws Exception {
+        mockMvc.perform(post("/api/products")
+                        .with(user(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(product2)))
+                .andExpect(status().isCreated());
     }
 
     @Test
     void givenProductWhenGetProductsThenStatus200() throws Exception {
 
         mockMvc.perform(get("/api/products")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .with(user(user))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(21)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].name", is("Apple iPhone 12 Pro")))
                 .andExpect(jsonPath("$[0].description", is("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")))
                 .andExpect(jsonPath("$[0].ean", is("0190199731320")))
@@ -91,25 +125,25 @@ public class ProductControllerIntegrationTests {
                 .andExpect(jsonPath("$[1].category", is("ELECTRONICS")));
     }
 
-    /**
     @Test
     void givenProductWhenGetProductByIdThenStatus200() throws Exception {
 
-        mockMvc.perform(get("/api/products/" + realUUID)
+        mockMvc.perform(get("/api/products/{uuid}", product2.getId().toString())
+                        .with(user(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(product1.getName())))
-                .andExpect(jsonPath("$.description", is(product1.getDescription())))
-                .andExpect(jsonPath("$.ean", is(product1.getEan())))
-                .andExpect(jsonPath("$.manufacturerCode", is(product1.getManufacturerCode())))
-                .andExpect(jsonPath("$.category", is(product1.getCategory().name())));
+                .andExpect(jsonPath("$.name", is(product2.getName())))
+                .andExpect(jsonPath("$.description", is(product2.getDescription())))
+                .andExpect(jsonPath("$.ean", is(product2.getEan())))
+                .andExpect(jsonPath("$.manufacturerCode", is(product2.getManufacturerCode())))
+                .andExpect(jsonPath("$.category", is(product2.getCategory().name())));
     }
-    */
 
     @Test
     void givenInvalidProductWhenGetProductByIdThenStatus404() throws Exception {
 
-        mockMvc.perform(get("/api/products/{uuid}", randomUUID.toString())
+        mockMvc.perform(get("/api/products/{uuid}", UUID.randomUUID().toString())
+                        .with(user(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -117,7 +151,8 @@ public class ProductControllerIntegrationTests {
     @Test
     void givenProductsWhenDeleteProductThenStatus204() throws Exception {
 
-        mockMvc.perform(delete("/api/products/" + realUUID)
+        mockMvc.perform(delete("/api/products/{uuid}", product1.getId())
+                        .with(user(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -125,8 +160,38 @@ public class ProductControllerIntegrationTests {
     @Test
     void givenProductsWhenDeleteProductThenStatus404() throws Exception {
 
-        mockMvc.perform(delete("/api/products/{uuid}", product1.getId().toString())
+        mockMvc.perform(delete("/api/products/{uuid}", UUID.randomUUID().toString())
+                        .with(user(user))
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void givenProductsWhenPutProductThenStatus204() throws Exception {
+            product3.setName("New Name");
+
+            mockMvc.perform(put("/api/products")
+                            .with(user(user))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(product3)))
+                    .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void givenProductsWhenPutInvalidProductThenStatus404() throws Exception {
+        Product tempProduct = Product.builder()
+                .id(UUID.randomUUID())
+                .name("Apple iPhone 14 Pro")
+                .description("128GB, Spacezwart")
+                .ean("194253401179")
+                .manufacturerCode("MPXV3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
+
+        mockMvc.perform(put("/api/products")
+                        .with(user(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(tempProduct)))
                 .andExpect(status().isNotFound());
     }
 }

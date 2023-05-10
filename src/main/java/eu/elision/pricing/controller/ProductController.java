@@ -1,7 +1,7 @@
 package eu.elision.pricing.controller;
 
 import eu.elision.pricing.domain.Product;
-import eu.elision.pricing.dto.ProductDTO;
+import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,8 @@ public class ProductController {
 
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/products")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productMapper.dtoToDomain(productDTO);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+        Product product = productMapper.dtoToDomain(productDto);
 
         productRepository.save(product);
 
@@ -40,7 +40,7 @@ public class ProductController {
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/products/{uuid}")
-    public ResponseEntity<ProductDTO> getProduct(@PathVariable String uuid) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable String uuid) {
         Product product = productRepository.findById(UUID.fromString(uuid)).orElse(null);
 
         if (product == null) {
@@ -66,14 +66,14 @@ public class ProductController {
 
     @CrossOrigin("http://localhost:3000")
     @PutMapping("/products")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productRepository.findById(productDTO.getId()).orElse(null);
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
+        Product product = productRepository.findById(productDto.getId()).orElse(null);
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        productRepository.save(productMapper.dtoToDomain(productDTO));
+        productRepository.save(productMapper.dtoToDomain(productDto));
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

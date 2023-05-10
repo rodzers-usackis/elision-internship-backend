@@ -1,15 +1,14 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Product;
-
-import eu.elision.pricing.dto.ProductDTO;
+import eu.elision.pricing.dto.ProductDto;
 
 /**
- * Mapper for mapping {@link Product} to {@link ProductDTO}.
+ * Mapper for mapping {@link Product} to {@link ProductDto}.
  */
 public interface ProductMapper {
 
-    ProductDTO domainToDto(Product product);
-    Product dtoToDomain(ProductDTO productDTO);
+    ProductDto domainToDto(Product product);
+    Product dtoToDomain(ProductDto productDTO);
 }
 

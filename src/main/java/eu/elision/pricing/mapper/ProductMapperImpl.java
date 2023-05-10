@@ -1,9 +1,8 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Product;
-
 import eu.elision.pricing.domain.ProductCategory;
-import eu.elision.pricing.dto.ProductDTO;
+import eu.elision.pricing.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
 
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class ProductMapperImpl implements ProductMapper {
     @Override
 
-    public ProductDTO domainToDto(Product product) {
-        return ProductDTO.builder()
+    public ProductDto domainToDto(Product product) {
+        return ProductDto.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
@@ -26,14 +25,14 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public Product dtoToDomain(ProductDTO productDTO) {
+    public Product dtoToDomain(ProductDto productDto) {
         return Product.builder()
-                .id(productDTO.getId())
-                .name(productDTO.getName())
-                .description(productDTO.getDescription())
-                .ean(productDTO.getEan())
-                .manufacturerCode(productDTO.getManufacturerCode())
-                .category(ProductCategory.valueOf(productDTO.getCategory()))
+                .id(productDto.getId())
+                .name(productDto.getName())
+                .description(productDto.getDescription())
+                .ean(productDto.getEan())
+                .manufacturerCode(productDto.getManufacturerCode())
+                .category(ProductCategory.valueOf(productDto.getCategory()))
                 .build();
     }
 }
