@@ -18,8 +18,6 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         show_sql: true
         format_sql: true
-  profiles:
-    active: test, test-webscraping
 server:
   port: 0
 logging:

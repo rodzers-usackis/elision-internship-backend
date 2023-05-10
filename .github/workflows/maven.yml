@@ -28,9 +28,15 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -X -DskipTests -B package --file pom.xml
     - name: Test with Maven
-      run: mvn test
+      run: mvn test -X
+    - name: Upload test report
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: target/surefire-reports
     - name: Generate Checkstyle report
       run: mvn site --file pom.xml
 
