@@ -55,10 +55,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
             .requestMatchers("/api/auth/**")
             .permitAll()
+
             .anyRequest().authenticated()
             .and()
             .csrf().disable()
             .cors()
+
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
