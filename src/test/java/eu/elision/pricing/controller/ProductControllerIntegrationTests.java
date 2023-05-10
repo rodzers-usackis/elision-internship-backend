@@ -11,6 +11,7 @@ import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.UserRepository;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -193,5 +194,11 @@ public class ProductControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tempProduct)))
                 .andExpect(status().isNotFound());
+    }
+
+    @AfterAll
+    void cleanUp() {
+        productRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }
