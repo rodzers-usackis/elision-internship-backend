@@ -39,9 +39,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
-//    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -96,5 +98,4 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
 }
