@@ -1,9 +1,11 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Product;
+
 import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.dto.ProductDTO;
 import org.springframework.stereotype.Component;
+
 
 /**
  * Implementation of {@link ProductMapper}.
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapperImpl implements ProductMapper {
     @Override
+
     public ProductDTO domainToDto(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
@@ -34,3 +37,4 @@ public class ProductMapperImpl implements ProductMapper {
                 .build();
     }
 }
+

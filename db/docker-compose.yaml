@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  db-postgres:
+    image: timescale/timescaledb:latest-pg15
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=pricingdb
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mount a persistent volume to store the PostgreSQL data
+      - db-data:/var/lib/postgresql/data
+      # Mount the create_users.sh script to the container
+      - ./db-init/create_users.sh:/docker-entrypoint-initdb.d/create_users.sh
+
+volumes:
+  db-data:
+
+networks:
+  db-network:
+    driver: bridge
