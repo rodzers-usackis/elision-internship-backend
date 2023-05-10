@@ -11,6 +11,7 @@ import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.UserRepository;
 import eu.elision.pricing.service.JwtService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -116,6 +117,11 @@ class UserRestControllerTest {
             });
 
 
+    }
+
+    @AfterAll
+    void cleanUp() {
+        userRepository.deleteAll();
     }
 
 
