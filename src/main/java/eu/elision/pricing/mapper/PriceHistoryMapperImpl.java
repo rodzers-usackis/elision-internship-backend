@@ -2,8 +2,8 @@ package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.RetailerCompany;
-import eu.elision.pricing.dto.CompanyDto;
-import eu.elision.pricing.dto.CompanyTimestampAmountsDto;
+import eu.elision.pricing.dto.RetailerCompanyDto;
+import eu.elision.pricing.dto.RetailerCompanyTimestampAmountsDto;
 import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.dto.TimestampAmountDto;
@@ -29,7 +29,7 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper {
 
         ProductDto productDto = productMapper.domainToDto(prices.get(0).getProduct());
 
-        List<CompanyTimestampAmountsDto> companyTimestampAmounts = new ArrayList<>();
+        List<RetailerCompanyTimestampAmountsDto> companyTimestampAmounts = new ArrayList<>();
 
         List<RetailerCompany> companies =
             prices.stream()
@@ -47,15 +47,15 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper {
                     .build())
                 .collect(Collectors.toList());
 
-            CompanyDto companyDto = companyMapper.domainToDto(company);
+            RetailerCompanyDto retailerCompanyDto = companyMapper.domainToDto(company);
 
-            CompanyTimestampAmountsDto companyTimestampAmountsDto =
-                CompanyTimestampAmountsDto.builder()
-                    .company(companyDto)
+            RetailerCompanyTimestampAmountsDto retailerCompanyTimestampAmountsDto =
+                RetailerCompanyTimestampAmountsDto.builder()
+                    .retailerCompanyDto(retailerCompanyDto)
                     .timestampAmounts(timestampAmounts)
                     .build();
 
-            companyTimestampAmounts.add(companyTimestampAmountsDto);
+            companyTimestampAmounts.add(retailerCompanyTimestampAmountsDto);
         });
 
 

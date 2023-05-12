@@ -3,15 +3,14 @@ package eu.elision.pricing.domain;
 import jakarta.persistence.*;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 /**
  * Represents a product whose price will be tracked by the {@link ClientCompany}.
  */
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

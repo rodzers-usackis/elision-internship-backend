@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class CompanyTimestampAmountsDto {
-    private CompanyDto company;
+public class RetailerCompanyTimestampAmountsDto {
+    private RetailerCompanyDto retailerCompanyDto;
     private List<TimestampAmountDto> timestampAmounts;
 }

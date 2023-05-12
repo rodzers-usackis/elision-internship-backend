@@ -88,10 +88,10 @@ class PriceHistoryMapperImplTests {
         assertEquals(2, priceHistoryDto.getData().size());
         //3 prices for company1
         assertEquals(3, priceHistoryDto.getData().get(0).getTimestampAmounts().size());
-        assertEquals(company1.getId(), priceHistoryDto.getData().get(0).getCompany().getId());
+        assertEquals(company1.getId(), priceHistoryDto.getData().get(0).getRetailerCompanyDto().getId());
         //1 price for company2
         assertEquals(1, priceHistoryDto.getData().get(1).getTimestampAmounts().size());
-        assertEquals(company2.getId(), priceHistoryDto.getData().get(1).getCompany().getId());
+        assertEquals(company2.getId(), priceHistoryDto.getData().get(1).getRetailerCompanyDto().getId());
 
 
     }

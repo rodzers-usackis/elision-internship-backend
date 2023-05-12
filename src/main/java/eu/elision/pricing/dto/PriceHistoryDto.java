@@ -8,13 +8,13 @@ import lombok.Data;
 /**
  * DTO for price history data for
  * a single {@link Product}
- * Contains a list of {@link CompanyTimestampAmountsDto}.
+ * Contains a list of {@link RetailerCompanyTimestampAmountsDto}.
  */
 @Data
 @Builder
 public class PriceHistoryDto {
 
     private ProductDto product;
-    private List<CompanyTimestampAmountsDto> data;
+    private List<RetailerCompanyTimestampAmountsDto> data;
 
 }
