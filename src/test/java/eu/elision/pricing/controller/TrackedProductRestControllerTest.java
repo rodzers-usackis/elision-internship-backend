@@ -365,7 +365,7 @@ public class TrackedProductRestControllerTest {
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();
 
-        mockMvc.perform(put("/api/client-company/tracked-products")
+        mockMvc.perform(patch("/api/client-company/tracked-products")
                         .with(user(user2))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(trackedProductDto)))

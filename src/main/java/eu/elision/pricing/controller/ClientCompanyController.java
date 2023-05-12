@@ -114,7 +114,7 @@ public class ClientCompanyController {
     }
 
     @CrossOrigin("http://localhost:3000")
-    @PutMapping("/client-company/tracked-products")
+    @PatchMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProduct> updateTrackedProduct(
             @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductDto trackedProductDto) {
 
