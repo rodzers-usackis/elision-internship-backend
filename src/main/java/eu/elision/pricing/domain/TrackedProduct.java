@@ -1,5 +1,6 @@
 package eu.elision.pricing.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -42,6 +43,7 @@ public class TrackedProduct {
     /**
      * The {@link ClientCompany} that tracks the price of the {@link Product}.
      */
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_company_id")
     private ClientCompany clientCompany;

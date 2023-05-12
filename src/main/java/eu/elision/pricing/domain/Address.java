@@ -1,4 +1,5 @@
 package eu.elision.pricing.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +39,7 @@ public class Address {
     @Column(nullable = false)
     private String country;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "address", optional = false)
     private ClientCompany clientCompany;
 }
