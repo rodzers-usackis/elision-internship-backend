@@ -1,7 +1,7 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.TrackedProduct;
-import eu.elision.pricing.dto.TrackedProductDto;
+import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
 import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
                 .id(String.valueOf(trackedProduct.getId()))
                 .productPurchaseCost(trackedProduct.getProductPurchaseCost())
                 .productSellPrice(trackedProduct.getProductSellPrice())
+                .isTracked(trackedProduct.isTracked())
                 .product(String.valueOf(trackedProduct.getProduct().getId()))
                 .clientCompany(String.valueOf(trackedProduct.getClientCompany().getId()))
                 .build();
@@ -40,6 +41,7 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
         return TrackedProduct.builder()
                 .productPurchaseCost(trackedProductDto.getProductPurchaseCost())
                 .productSellPrice(trackedProductDto.getProductSellPrice())
+                .isTracked(trackedProductDto.isTracked())
                 .product(productRepository.findById(UUID.fromString(trackedProductDto.getProduct())).orElse(null))
                 .clientCompany(clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompany())).orElse(null))
                 .build();

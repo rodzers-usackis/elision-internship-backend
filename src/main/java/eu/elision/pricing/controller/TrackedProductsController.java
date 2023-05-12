@@ -3,7 +3,8 @@ package eu.elision.pricing.controller;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.TrackedProductDto;
+import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
+import eu.elision.pricing.dto.TrackedProduct.TrackedProductPriceUpdateDto;
 import eu.elision.pricing.mapper.TrackedProductMapper;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class ClientCompanyController {
+public class TrackedProductsController {
 
     private final TrackedProductRepository trackedProductRepository;
     private final ProductRepository productRepository;
@@ -116,7 +117,7 @@ public class ClientCompanyController {
     @CrossOrigin("http://localhost:3000")
     @PatchMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProduct> updateTrackedProduct(
-            @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductDto trackedProductDto) {
+            @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductPriceUpdateDto trackedProductDto) {
 
         if (userDetails == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
@@ -134,13 +135,15 @@ public class ClientCompanyController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        TrackedProduct trackedProduct = trackedProductMapper.dtoToDomain(trackedProductDto);
+        TrackedProduct trackedProduct = trackedProductRepository.findById(UUID.fromString(trackedProductDto.getId())).orElse(null);
 
         if (trackedProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        trackedProduct.setId(UUID.fromString(trackedProductDto.getId()));
+        trackedProduct.setProductSellPrice(trackedProductDto.getProductSellPrice());
+        trackedProduct.setProductPurchaseCost(trackedProductDto.getProductPurchaseCost());
+        trackedProduct.setTracked(trackedProductDto.isTracked());
         trackedProduct = trackedProductRepository.save(trackedProduct);
 
         return new ResponseEntity<>(trackedProduct, HttpStatus.OK);

@@ -2,7 +2,7 @@ package eu.elision.pricing.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.elision.pricing.domain.*;
-import eu.elision.pricing.dto.TrackedProductDto;
+import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
 import eu.elision.pricing.repository.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TrackedProductRestControllerTest {
+public class TrackedProductsRestControllerTest {
 
     @Autowired
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -138,6 +138,7 @@ public class TrackedProductRestControllerTest {
         this.trackedProduct1 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product1)
                 .clientCompany(clientCompany)
                 .build();
@@ -147,6 +148,7 @@ public class TrackedProductRestControllerTest {
         this.trackedProduct2 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product2)
                 .clientCompany(clientCompany)
                 .build();
@@ -156,6 +158,7 @@ public class TrackedProductRestControllerTest {
         this.trackedProduct3 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product3)
                 .clientCompany(clientCompany)
                 .build();
@@ -228,6 +231,7 @@ public class TrackedProductRestControllerTest {
         this.trackedProduct4 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product4)
                 .clientCompany(clientCompany2)
                 .build();
@@ -237,6 +241,7 @@ public class TrackedProductRestControllerTest {
         this.trackedProduct5 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product5)
                 .clientCompany(clientCompany2)
                 .build();
@@ -259,6 +264,7 @@ public class TrackedProductRestControllerTest {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(String.valueOf(product4.getId()))
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();
@@ -281,6 +287,7 @@ public class TrackedProductRestControllerTest {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(String.valueOf(product4.getId()))
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();
@@ -297,6 +304,7 @@ public class TrackedProductRestControllerTest {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(UUID.randomUUID().toString())
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();
@@ -318,14 +326,17 @@ public class TrackedProductRestControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].productPurchaseCost", is(trackedProduct1.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[0].productSellPrice", is(trackedProduct1.getProductSellPrice())))
+                .andExpect(jsonPath("$[0].tracked", is(trackedProduct1.isTracked())))
                 .andExpect(jsonPath("$[0].product.id", is(String.valueOf(trackedProduct1.getProduct().getId()))))
                 .andExpect(jsonPath("$[0].clientCompany.id", is(String.valueOf(trackedProduct1.getClientCompany().getId()))))
                 .andExpect(jsonPath("$[1].productPurchaseCost", is(trackedProduct2.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[1].productSellPrice", is(trackedProduct2.getProductSellPrice())))
+                .andExpect(jsonPath("$[1].tracked", is(trackedProduct2.isTracked())))
                 .andExpect(jsonPath("$[1].product.id", is(String.valueOf(trackedProduct2.getProduct().getId()))))
                 .andExpect(jsonPath("$[1].clientCompany.id", is(String.valueOf(trackedProduct2.getClientCompany().getId()))))
                 .andExpect(jsonPath("$[2].productPurchaseCost", is(trackedProduct3.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[2].productSellPrice", is(trackedProduct3.getProductSellPrice())))
+                .andExpect(jsonPath("$[2].tracked", is(trackedProduct3.isTracked())))
                 .andExpect(jsonPath("$[2].product.id", is(String.valueOf(trackedProduct3.getProduct().getId()))))
                 .andExpect(jsonPath("$[2].clientCompany.id", is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
     }
@@ -356,11 +367,12 @@ public class TrackedProductRestControllerTest {
     }
 
     @Test
-    void givenTrackedProductsWhenPutTrackedProductsThenStatus200() throws Exception {
+    void givenTrackedProductsWhenPatchTrackedProductsThenStatus200() throws Exception {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .id(String.valueOf(trackedProduct4.getId()))
                 .productPurchaseCost(155.00)
                 .productSellPrice(1555.00)
+                .isTracked(true)
                 .product(String.valueOf(product4.getId()))
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();
@@ -374,15 +386,17 @@ public class TrackedProductRestControllerTest {
                 .andExpect(jsonPath("$.product.id", is(trackedProductDto.getProduct())))
                 .andExpect(jsonPath("$.productPurchaseCost", is(155.00)))
                 .andExpect(jsonPath("$.productSellPrice", is(1555.00)))
+                .andExpect(jsonPath("$.tracked", is(true)))
                 .andExpect(jsonPath("$.clientCompany.id", is(trackedProductDto.getClientCompany())));
     }
 
     @Test
-    void givenTrackedProductsWhenPutTrackedProductsWithoutAuthenticationThenStatus403() throws Exception {
+    void givenTrackedProductsWhenPatchTrackedProductsWithoutAuthenticationThenStatus403() throws Exception {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .id(String.valueOf(trackedProduct4.getId()))
                 .productPurchaseCost(155.00)
                 .productSellPrice(1555.00)
+                .isTracked(true)
                 .product(String.valueOf(product4.getId()))
                 .clientCompany(String.valueOf(user2.getClientCompany().getId()))
                 .build();

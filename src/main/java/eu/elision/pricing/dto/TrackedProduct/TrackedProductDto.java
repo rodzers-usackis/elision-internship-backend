@@ -1,4 +1,4 @@
-package eu.elision.pricing.dto;
+package eu.elision.pricing.dto.TrackedProduct;
 
 
 import eu.elision.pricing.domain.TrackedProduct;
@@ -14,6 +14,7 @@ public class TrackedProductDto {
     private String id;
     private double productPurchaseCost;
     private double productSellPrice;
+    private boolean isTracked;
     private String product;
     private String clientCompany;
 }

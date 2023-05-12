@@ -34,6 +34,12 @@ public class TrackedProduct {
     private double productSellPrice;
 
     /**
+     * Whether the {@link Product} is tracked by the {@link ClientCompany}.
+     */
+    @Column(nullable = false)
+    private boolean isTracked;
+
+    /**
      * The {@link Product} whose price is tracked by the {@link ClientCompany}.
      */
     @ManyToOne

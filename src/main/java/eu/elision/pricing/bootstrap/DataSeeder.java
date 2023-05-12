@@ -267,6 +267,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct1 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product1)
                 .clientCompany(clientCompany)
                 .build();
@@ -276,6 +277,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct2 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product2)
                 .clientCompany(clientCompany)
                 .build();
@@ -285,6 +287,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct3 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product3)
                 .clientCompany(clientCompany)
                 .build();
@@ -294,6 +297,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct4 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product4)
                 .clientCompany(clientCompany)
                 .build();
@@ -303,6 +307,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct5 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product5)
                 .clientCompany(clientCompany)
                 .build();
@@ -312,6 +317,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct6 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product6)
                 .clientCompany(clientCompany)
                 .build();
@@ -321,6 +327,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct7 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product7)
                 .clientCompany(clientCompany)
                 .build();
@@ -330,6 +337,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct8 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product8)
                 .clientCompany(clientCompany)
                 .build();
@@ -339,6 +347,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct9 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product9)
                 .clientCompany(clientCompany)
                 .build();
@@ -348,6 +357,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct10 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product10)
                 .clientCompany(clientCompany)
                 .build();
@@ -357,6 +367,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct11 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product11)
                 .clientCompany(clientCompany)
                 .build();
@@ -366,6 +377,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct12 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product12)
                 .clientCompany(clientCompany)
                 .build();
@@ -375,6 +387,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct13 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product13)
                 .clientCompany(clientCompany)
                 .build();
@@ -384,6 +397,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct14 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product14)
                 .clientCompany(clientCompany)
                 .build();
@@ -393,6 +407,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct15 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product15)
                 .clientCompany(clientCompany)
                 .build();
@@ -402,6 +417,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct16 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product16)
                 .clientCompany(clientCompany)
                 .build();
@@ -411,6 +427,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct17 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product17)
                 .clientCompany(clientCompany)
                 .build();
@@ -420,6 +437,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct18 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product18)
                 .clientCompany(clientCompany)
                 .build();
@@ -429,6 +447,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct19 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product19)
                 .clientCompany(clientCompany)
                 .build();
@@ -438,6 +457,7 @@ public class DataSeeder implements CommandLineRunner {
         TrackedProduct trackedProduct20 = TrackedProduct.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
+                .isTracked(true)
                 .product(product20)
                 .clientCompany(clientCompany)
                 .build();
