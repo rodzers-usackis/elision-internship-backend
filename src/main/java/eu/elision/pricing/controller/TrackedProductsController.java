@@ -30,11 +30,7 @@ public class TrackedProductsController {
     private final UserRepository userRepository;
     private final TrackedProductMapper trackedProductMapper;
 
-    @CrossOrigin("http://localhost:3000")
-    @PostMapping("/client-company/tracked-products")
-    public ResponseEntity<TrackedProduct> createTrackedProduct(
-            @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductDto trackedProductDto) {
-
+    private ClientCompany getClientCompanyFromUserDetails(UserDetails userDetails) {
         if (userDetails == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
@@ -50,6 +46,16 @@ public class TrackedProductsController {
         if (clientCompany == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+
+        return clientCompany;
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/client-company/tracked-products")
+    public ResponseEntity<TrackedProduct> createTrackedProduct(
+            @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductDto trackedProductDto) {
+
+        ClientCompany clientCompany = getClientCompanyFromUserDetails(userDetails);
 
         TrackedProduct trackedProduct = trackedProductMapper.dtoToDomain(trackedProductDto);
 
@@ -68,21 +74,7 @@ public class TrackedProductsController {
     @GetMapping("/client-company/tracked-products")
     public ResponseEntity<List<TrackedProduct>> getTrackedProducts(@AuthenticationPrincipal UserDetails userDetails) {
 
-        if (userDetails == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        User user = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        ClientCompany clientCompany = user.getClientCompany();
-
-        if (clientCompany == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        ClientCompany clientCompany = getClientCompanyFromUserDetails(userDetails);
 
         List<TrackedProduct> trackedProducts = trackedProductRepository.findTrackedProductByClientCompanyId(clientCompany.getId());
 
@@ -93,21 +85,7 @@ public class TrackedProductsController {
     @DeleteMapping("/client-company/tracked-products")
     public ResponseEntity<Void> deleteProducts(@AuthenticationPrincipal UserDetails userDetails, @RequestBody List<UUID> trackedProductIds) {
 
-        if (userDetails == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        User user = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        ClientCompany clientCompany = user.getClientCompany();
-
-        if (clientCompany == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        ClientCompany clientCompany = getClientCompanyFromUserDetails(userDetails);
 
         trackedProductRepository.deleteTrackedProducts(clientCompany.getId(), trackedProductIds);
 
@@ -119,21 +97,7 @@ public class TrackedProductsController {
     public ResponseEntity<TrackedProduct> updateTrackedProduct(
             @AuthenticationPrincipal UserDetails userDetails, @RequestBody TrackedProductPriceUpdateDto trackedProductDto) {
 
-        if (userDetails == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        User user = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        ClientCompany clientCompany = user.getClientCompany();
-
-        if (clientCompany == null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        ClientCompany clientCompany = getClientCompanyFromUserDetails(userDetails);
 
         TrackedProduct trackedProduct = trackedProductRepository.findById(UUID.fromString(trackedProductDto.getId())).orElse(null);
 
