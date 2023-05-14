@@ -1,5 +1,6 @@
 package eu.elision.pricing.mapper;
 
+import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
 import eu.elision.pricing.repository.ClientCompanyRepository;
@@ -26,8 +27,8 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
                 .productPurchaseCost(trackedProduct.getProductPurchaseCost())
                 .productSellPrice(trackedProduct.getProductSellPrice())
                 .isTracked(trackedProduct.isTracked())
-                .product(String.valueOf(trackedProduct.getProduct().getId()))
-                .clientCompany(String.valueOf(trackedProduct.getClientCompany().getId()))
+                .productId(String.valueOf(trackedProduct.getProduct().getId()))
+                .clientCompanyId(String.valueOf(trackedProduct.getClientCompany().getId()))
                 .build();
     }
 
@@ -38,12 +39,20 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
 
     @Override
     public TrackedProduct dtoToDomain(TrackedProductDto trackedProductDto) {
+        Product product;
+
+        if (trackedProductDto.getProductEAN() != null) {
+            product = productRepository.findByEan(trackedProductDto.getProductEAN());
+        } else {
+            product = productRepository.findById(UUID.fromString(trackedProductDto.getProductId())).orElse(null);
+        }
+
         return TrackedProduct.builder()
                 .productPurchaseCost(trackedProductDto.getProductPurchaseCost())
                 .productSellPrice(trackedProductDto.getProductSellPrice())
                 .isTracked(trackedProductDto.isTracked())
-                .product(productRepository.findById(UUID.fromString(trackedProductDto.getProduct())).orElse(null))
-                .clientCompany(clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompany())).orElse(null))
+                .product(product)
+                .clientCompany(clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null))
                 .build();
     }
 

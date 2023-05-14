@@ -59,7 +59,7 @@ public class TrackedProductsController {
 
         TrackedProduct trackedProduct = trackedProductMapper.dtoToDomain(trackedProductDto);
 
-        if (productRepository.findById(UUID.fromString(trackedProductDto.getProduct())).isEmpty()) {
+        if (trackedProduct.getProduct() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

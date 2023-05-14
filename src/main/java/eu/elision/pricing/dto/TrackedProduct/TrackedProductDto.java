@@ -15,6 +15,7 @@ public class TrackedProductDto {
     private double productPurchaseCost;
     private double productSellPrice;
     private boolean isTracked;
-    private String product;
-    private String clientCompany;
+    private String productId;
+    private String productEAN;
+    private String clientCompanyId;
 }
