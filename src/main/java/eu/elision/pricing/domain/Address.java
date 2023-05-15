@@ -39,6 +39,7 @@ public class Address {
     @Column(nullable = false)
     private String country;
 
+
     @JsonIgnore
     @OneToOne(mappedBy = "address", optional = false)
     private ClientCompany clientCompany;
