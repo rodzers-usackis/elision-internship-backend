@@ -63,7 +63,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productDto.getId()).orElse(null);
 
         if (product == null) {
-            throw new NotFoundException(String.format("Invalid product id: %s", productDto.getId()));
+            throw new NotFoundException(
+                String.format("Invalid product id: %s", productDto.getId()));
         }
 
         product = productMapper.dtoToDomain(productDto);
