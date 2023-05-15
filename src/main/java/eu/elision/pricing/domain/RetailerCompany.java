@@ -26,7 +26,7 @@ public class RetailerCompany {
     @Column(nullable = false)
     private String website;
 
-    @ElementCollection(targetClass = ProductCategory.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = ProductCategory.class, fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private Set<ProductCategory> categoriesProductsSold;
 }
