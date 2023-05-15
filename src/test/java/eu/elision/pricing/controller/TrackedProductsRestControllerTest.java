@@ -301,7 +301,7 @@ public class TrackedProductsRestControllerTest {
     }
 
     @Test
-    void givenTrackedProductsWhenPostTrackedProductWithInvalidProductThenStatus400() throws Exception {
+    void givenTrackedProductsWhenPostTrackedProductWithInvalidProductThenStatus404() throws Exception {
         TrackedProductDto trackedProductDto = TrackedProductDto.builder()
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
@@ -315,7 +315,7 @@ public class TrackedProductsRestControllerTest {
                         .with(user(user2))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(trackedProductDto)))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andDo(print());
     }
 

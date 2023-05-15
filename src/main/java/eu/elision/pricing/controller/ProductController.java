@@ -1,12 +1,13 @@
 package eu.elision.pricing.controller;
 
 import eu.elision.pricing.domain.Product;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.ProductDto;
-import eu.elision.pricing.repository.ProductRepository;
-import eu.elision.pricing.mapper.ProductMapper;
+import eu.elision.pricing.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,15 +18,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
+    private final ProductService productService;
 
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/products")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-        Product product = productMapper.dtoToDomain(productDto);
+    public ResponseEntity<ProductDto> createProduct(@AuthenticationPrincipal User user, @RequestBody ProductDto productDto) {
 
-        productRepository.save(product);
+        productService.createProduct(productDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -33,48 +32,36 @@ public class ProductController {
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productRepository.findAll();
+
+        List<Product> products = productService.getAllProducts();
 
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/products/{uuid}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable String uuid) {
-        Product product = productRepository.findById(UUID.fromString(uuid)).orElse(null);
+    public ResponseEntity<Product> getProduct(@PathVariable String uuid) {
 
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Product product = productService.getProduct(UUID.fromString(uuid));
 
-        return new ResponseEntity<>(productMapper.domainToDto(product), HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @CrossOrigin("http://localhost:3000")
     @DeleteMapping("/products/{uuid}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String uuid) {
-        Product product = productRepository.findById(UUID.fromString(uuid)).orElse(null);
 
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        productRepository.delete(product);
+        productService.deleteProductById(UUID.fromString(uuid));
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @CrossOrigin("http://localhost:3000")
-    @PutMapping("/products")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
-        Product product = productRepository.findById(productDto.getId()).orElse(null);
+    @PatchMapping("/products")
+    public ResponseEntity<Product> updateProduct(@RequestBody ProductDto productDto) {
 
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Product product = productService.updateProduct(productDto);
 
-        productRepository.save(productMapper.dtoToDomain(productDto));
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(product, HttpStatus.NO_CONTENT);
     }
 }

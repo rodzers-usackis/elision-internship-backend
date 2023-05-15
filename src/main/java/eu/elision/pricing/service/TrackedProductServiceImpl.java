@@ -6,7 +6,7 @@ import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
 import eu.elision.pricing.dto.TrackedProduct.TrackedProductPriceUpdateDto;
-import eu.elision.pricing.exceptions.BadRequestException;
+import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
@@ -39,7 +39,7 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         }
 
         if (product == null) {
-            throw new BadRequestException(String.format("Invalid product: ID=%s\nEAN=%s", trackedProductDto.getProductId(), trackedProductDto.getProductEAN()));
+            throw new NotFoundException(String.format("Invalid product: ID=%s\nEAN=%s", trackedProductDto.getProductId(), trackedProductDto.getProductEAN()));
         }
 
         ClientCompany clientCompany = clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null);
@@ -70,8 +70,7 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         TrackedProduct trackedProduct = trackedProductRepository.findById(UUID.fromString(trackedProductPriceUpdateDto.getId())).orElse(null);
 
         if (trackedProduct == null) {
-            log.error("Tracked product with id {} not found", trackedProductPriceUpdateDto.getId());
-            return null;
+            throw new NotFoundException(String.format("Invalid tracked product: ID=%s", trackedProductPriceUpdateDto.getId()));
         }
 
         trackedProduct.setProductSellPrice(trackedProductPriceUpdateDto.getProductSellPrice());

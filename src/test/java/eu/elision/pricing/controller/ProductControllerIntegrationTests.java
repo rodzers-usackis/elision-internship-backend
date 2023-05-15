@@ -167,10 +167,10 @@ public class ProductControllerIntegrationTests {
     }
 
     @Test
-    void givenProductsWhenPutProductThenStatus204() throws Exception {
+    void givenProductsWhenPatchProductThenStatus204() throws Exception {
             product3.setName("New Name");
 
-            mockMvc.perform(put("/api/products")
+            mockMvc.perform(patch("/api/products")
                             .with(user(user))
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(product3)))
@@ -178,7 +178,7 @@ public class ProductControllerIntegrationTests {
     }
 
     @Test
-    void givenProductsWhenPutInvalidProductThenStatus404() throws Exception {
+    void givenProductsWhenPatchInvalidProductThenStatus404() throws Exception {
         Product tempProduct = Product.builder()
                 .id(UUID.randomUUID())
                 .name("Apple iPhone 14 Pro")
@@ -188,7 +188,7 @@ public class ProductControllerIntegrationTests {
                 .category(ProductCategory.ELECTRONICS)
                 .build();
 
-        mockMvc.perform(put("/api/products")
+        mockMvc.perform(patch("/api/products")
                         .with(user(user))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(tempProduct)))
