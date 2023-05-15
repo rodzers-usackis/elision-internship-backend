@@ -46,9 +46,9 @@ public class TrackedProductServiceImpl implements TrackedProductService {
                 productRepository.findByManufacturerCode(trackedProductDto.getManufacturerCode());
         }
 
-//        if (product == null) {
-//            throw new NotFoundException(String.format("Invalid product: ID=%s\nEAN=%s", trackedProductDto.getProductId(), trackedProductDto.getEan()));
-//        }
+        if (product == null) {
+            throw new NotFoundException(String.format("Invalid product: Manufacturer code=%s\nEAN=%s", trackedProductDto.getManufacturerCode(), trackedProductDto.getEan()));
+        }
 
 //        ClientCompany clientCompany = clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null);
 
