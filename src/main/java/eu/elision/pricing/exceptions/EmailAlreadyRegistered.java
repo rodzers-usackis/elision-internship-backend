@@ -1,4 +1,4 @@
-package eu.elision.pricing.exception;
+package eu.elision.pricing.exceptions;
 
 /**
  * Exception thrown when a user tries to register with an email that is already registered.

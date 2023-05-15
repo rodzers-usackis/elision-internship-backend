@@ -1,17 +1,17 @@
 package eu.elision.pricing.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 /**
  * Represents a product whose price will be tracked by the {@link ClientCompany}.
  */
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +34,12 @@ public class TrackedProduct {
     private double productSellPrice;
 
     /**
+     * Whether the {@link Product} is tracked by the {@link ClientCompany}.
+     */
+    @Column(nullable = false)
+    private boolean isTracked;
+
+    /**
      * The {@link Product} whose price is tracked by the {@link ClientCompany}.
      */
     @ManyToOne
@@ -43,6 +49,7 @@ public class TrackedProduct {
     /**
      * The {@link ClientCompany} that tracks the price of the {@link Product}.
      */
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_company_id")
     private ClientCompany clientCompany;

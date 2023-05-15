@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class CompanyDto {
+public class RetailerCompanyDto {
     private UUID id;
     private String name;
 }
