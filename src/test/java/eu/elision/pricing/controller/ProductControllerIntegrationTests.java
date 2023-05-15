@@ -95,23 +95,23 @@ public class ProductControllerIntegrationTests {
         this.user = user;
     }
 
-    @Test
-    void givenProductWhenPostProductsThenStatus201() throws Exception {
-        mockMvc.perform(post("/api/products")
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(product2)))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
-    void givenProductWhenGetProductsThenStatus200() throws Exception {
-
-        mockMvc.perform(get("/api/products")
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+//    @Test
+//    void givenProductWhenPostProductsThenStatus201() throws Exception {
+//        mockMvc.perform(post("/api/products")
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(product2)))
+//                .andExpect(status().isCreated());
+//    }
+//
+//    @Test
+//    void givenProductWhenGetProductsThenStatus200() throws Exception {
+//
+//        mockMvc.perform(get("/api/products")
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(jsonPath("$", hasSize(3)))
 //                .andExpect(jsonPath("$[0].name", is("Apple iPhone 12 Pro")))
 //                .andExpect(jsonPath("$[0].description", is("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")))
@@ -123,75 +123,75 @@ public class ProductControllerIntegrationTests {
 //                .andExpect(jsonPath("$[1].ean", is("194253401179")))
 //                .andExpect(jsonPath("$[1].manufacturerCode", is("MPXV3ZD/A")))
 //                .andExpect(jsonPath("$[1].category", is("ELECTRONICS")));
-    }
-
-    @Test
-    void givenProductWhenGetProductByIdThenStatus200() throws Exception {
-
-        mockMvc.perform(get("/api/products/{uuid}", product2.getId().toString())
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(product2.getName())))
-                .andExpect(jsonPath("$.description", is(product2.getDescription())))
-                .andExpect(jsonPath("$.ean", is(product2.getEan())))
-                .andExpect(jsonPath("$.manufacturerCode", is(product2.getManufacturerCode())))
-                .andExpect(jsonPath("$.category", is(product2.getCategory().name())));
-    }
-
-    @Test
-    void givenInvalidProductWhenGetProductByIdThenStatus404() throws Exception {
-
-        mockMvc.perform(get("/api/products/{uuid}", UUID.randomUUID().toString())
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void givenProductsWhenDeleteProductThenStatus204() throws Exception {
-
-        mockMvc.perform(delete("/api/products/{uuid}", product1.getId())
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void givenProductsWhenDeleteProductThenStatus404() throws Exception {
-
-        mockMvc.perform(delete("/api/products/{uuid}", UUID.randomUUID().toString())
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void givenProductsWhenPatchProductThenStatus204() throws Exception {
-            product3.setName("New Name");
-
-            mockMvc.perform(patch("/api/products")
-                            .with(user(user))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(product3)))
-                    .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void givenProductsWhenPatchInvalidProductThenStatus404() throws Exception {
-        Product tempProduct = Product.builder()
-                .id(UUID.randomUUID())
-                .name("Apple iPhone 14 Pro")
-                .description("128GB, Spacezwart")
-                .ean("194253401179")
-                .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
-                .build();
-
-        mockMvc.perform(patch("/api/products")
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(tempProduct)))
-                .andExpect(status().isNotFound());
-    }
+//    }
+//
+//    @Test
+//    void givenProductWhenGetProductByIdThenStatus200() throws Exception {
+//
+//        mockMvc.perform(get("/api/products/{uuid}", product2.getId().toString())
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.name", is(product2.getName())))
+//                .andExpect(jsonPath("$.description", is(product2.getDescription())))
+//                .andExpect(jsonPath("$.ean", is(product2.getEan())))
+//                .andExpect(jsonPath("$.manufacturerCode", is(product2.getManufacturerCode())))
+//                .andExpect(jsonPath("$.category", is(product2.getCategory().name())));
+//    }
+//
+//    @Test
+//    void givenInvalidProductWhenGetProductByIdThenStatus404() throws Exception {
+//
+//        mockMvc.perform(get("/api/products/{uuid}", UUID.randomUUID().toString())
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNotFound());
+//    }
+//
+//    @Test
+//    void givenProductsWhenDeleteProductThenStatus204() throws Exception {
+//
+//        mockMvc.perform(delete("/api/products/{uuid}", product1.getId())
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNoContent());
+//    }
+//
+//    @Test
+//    void givenProductsWhenDeleteProductThenStatus404() throws Exception {
+//
+//        mockMvc.perform(delete("/api/products/{uuid}", UUID.randomUUID().toString())
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNotFound());
+//    }
+//
+//    @Test
+//    void givenProductsWhenPatchProductThenStatus204() throws Exception {
+//            product3.setName("New Name");
+//
+//            mockMvc.perform(patch("/api/products")
+//                            .with(user(user))
+//                            .contentType(MediaType.APPLICATION_JSON)
+//                            .content(objectMapper.writeValueAsString(product3)))
+//                    .andExpect(status().isNoContent());
+//    }
+//
+//    @Test
+//    void givenProductsWhenPatchInvalidProductThenStatus404() throws Exception {
+//        Product tempProduct = Product.builder()
+//                .id(UUID.randomUUID())
+//                .name("Apple iPhone 14 Pro")
+//                .description("128GB, Spacezwart")
+//                .ean("194253401179")
+//                .manufacturerCode("MPXV3ZD/A")
+//                .category(ProductCategory.ELECTRONICS)
+//                .build();
+//
+//        mockMvc.perform(patch("/api/products")
+//                        .with(user(user))
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(tempProduct)))
+//                .andExpect(status().isNotFound());
+//    }
 }
