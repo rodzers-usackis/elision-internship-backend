@@ -56,7 +56,7 @@ public class ProductControllerIntegrationTests {
         product1 = Product.builder()
                 .name("Apple iPhone 12 Pro")
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
-                .ean("0190199731320")
+                .ean("01901949731320")
                 .manufacturerCode("MGMH3LL/A")
                 .category(ProductCategory.ELECTRONICS)
                 .build();
@@ -66,7 +66,7 @@ public class ProductControllerIntegrationTests {
         product2 = Product.builder()
                 .name("Apple iPhone 14 Pro")
                 .description("128GB, Spacezwart")
-                .ean("194253401179")
+                .ean("1942543401179")
                 .manufacturerCode("MPXV3ZD/A")
                 .category(ProductCategory.ELECTRONICS)
                 .build();
@@ -76,7 +76,7 @@ public class ProductControllerIntegrationTests {
         product3 = Product.builder()
                 .name("Apple iPhone 22 Pro")
                 .description("128GB, Spacezwart")
-                .ean("194253401174")
+                .ean("1942453401174")
                 .manufacturerCode("MPXV3ZD/A")
                 .category(ProductCategory.ELECTRONICS)
                 .build();
