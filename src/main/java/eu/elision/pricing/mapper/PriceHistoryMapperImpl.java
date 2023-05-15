@@ -2,10 +2,10 @@ package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.RetailerCompany;
-import eu.elision.pricing.dto.RetailerCompanyDto;
-import eu.elision.pricing.dto.RetailerCompanyTimestampAmountsDto;
 import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.dto.ProductDto;
+import eu.elision.pricing.dto.RetailerCompanyDto;
+import eu.elision.pricing.dto.RetailerCompanyTimestampAmountsDto;
 import eu.elision.pricing.dto.TimestampAmountDto;
 import java.util.ArrayList;
 import java.util.List;

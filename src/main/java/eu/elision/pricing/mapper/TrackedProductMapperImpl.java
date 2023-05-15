@@ -18,11 +18,11 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
     @Override
     public TrackedProductDto domainToDto(TrackedProduct trackedProduct) {
         return TrackedProductDto.builder()
-                .id(String.valueOf(trackedProduct.getId()))
-                .productPurchaseCost(trackedProduct.getProductPurchaseCost())
-                .productSellPrice(trackedProduct.getProductSellPrice())
-                .isTracked(trackedProduct.isTracked())
-                .build();
+            .id(String.valueOf(trackedProduct.getId()))
+            .productPurchaseCost(trackedProduct.getProductPurchaseCost())
+            .productSellPrice(trackedProduct.getProductSellPrice())
+            .isTracked(trackedProduct.isTracked())
+            .build();
     }
 
     @Override
