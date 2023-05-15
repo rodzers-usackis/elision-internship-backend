@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -180,6 +181,14 @@ class PriceRestControllerIntegrationTests {
                 .param("before", LocalDate.now().toString())
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isForbidden());
+    }
+
+    @AfterAll
+    void cleanUp() {
+        priceRepository.deleteAll();
+        productRepository.deleteAll();
+        retailerCompanyRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 
