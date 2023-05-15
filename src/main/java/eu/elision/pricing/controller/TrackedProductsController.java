@@ -4,6 +4,8 @@ import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
 import eu.elision.pricing.dto.TrackedProduct.TrackedProductPriceUpdateDto;
+import eu.elision.pricing.dto.TrackedProduct.TrackedProductWithDetailsDto;
+import eu.elision.pricing.mapper.TrackedProductMapper;
 import eu.elision.pricing.service.TrackedProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,15 +22,17 @@ import java.util.UUID;
 public class TrackedProductsController {
 
     private final TrackedProductService trackedProductService;
+    private final TrackedProductMapper trackedProductMapper;
 
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/client-company/tracked-products")
-    public ResponseEntity<TrackedProduct> createTrackedProduct(
+    public ResponseEntity<TrackedProductWithDetailsDto> createTrackedProduct(
             @AuthenticationPrincipal User user, @RequestBody TrackedProductDto trackedProductDto) {
 
         TrackedProduct savedTrackedProduct = trackedProductService.createTrackedProductFromDto(user, trackedProductDto);
 
-        return new ResponseEntity<>(savedTrackedProduct, HttpStatus.CREATED);
+        TrackedProductWithDetailsDto trackedProductWithDetailsDto = trackedProductMapper.domainToDtoWithDetails(savedTrackedProduct);
+        return new ResponseEntity<>(trackedProductWithDetailsDto, HttpStatus.CREATED);
     }
 
     @CrossOrigin("http://localhost:3000")

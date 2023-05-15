@@ -265,8 +265,6 @@ public class TrackedProductsRestControllerTest {
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
                 .isTracked(true)
-                .productId(String.valueOf(product4.getId()))
-                .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
                 .build();
 
         mockMvc.perform(post("/api/client-company/tracked-products")
@@ -275,10 +273,8 @@ public class TrackedProductsRestControllerTest {
                         .content(objectMapper.writeValueAsString(trackedProductDto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(notNullValue())))
-                .andExpect(jsonPath("$.product.id", is(trackedProductDto.getProductId())))
                 .andExpect(jsonPath("$.productPurchaseCost", is(trackedProductDto.getProductPurchaseCost())))
                 .andExpect(jsonPath("$.productSellPrice", is(trackedProductDto.getProductSellPrice())))
-                .andExpect(jsonPath("$.clientCompany.id", is(trackedProductDto.getClientCompanyId())))
                 .andDo(print());
     }
 
@@ -288,9 +284,7 @@ public class TrackedProductsRestControllerTest {
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
                 .isTracked(true)
-                .productId(String.valueOf(product4.getId()))
-                .productEAN(product4.getEan())
-                .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
+                .ean(product4.getEan())
                 .build();
 
         mockMvc.perform(post("/api/client-company/tracked-products")
@@ -306,9 +300,7 @@ public class TrackedProductsRestControllerTest {
                 .productPurchaseCost(699.00)
                 .productSellPrice(1099.00)
                 .isTracked(true)
-                .productId(UUID.randomUUID().toString())
-                .productEAN("4845848945")
-                .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
+                .ean("4845848945")
                 .build();
 
         mockMvc.perform(post("/api/client-company/tracked-products")
@@ -375,9 +367,7 @@ public class TrackedProductsRestControllerTest {
                 .productPurchaseCost(155.00)
                 .productSellPrice(1555.00)
                 .isTracked(true)
-                .productId(String.valueOf(product4.getId()))
-                .productEAN(product4.getEan())
-                .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
+                .ean(product4.getEan())
                 .build();
 
         mockMvc.perform(patch("/api/client-company/tracked-products")
@@ -386,11 +376,9 @@ public class TrackedProductsRestControllerTest {
                         .content(objectMapper.writeValueAsString(trackedProductDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(notNullValue())))
-                .andExpect(jsonPath("$.product.id", is(trackedProductDto.getProductId())))
                 .andExpect(jsonPath("$.productPurchaseCost", is(155.00)))
                 .andExpect(jsonPath("$.productSellPrice", is(1555.00)))
-                .andExpect(jsonPath("$.tracked", is(true)))
-                .andExpect(jsonPath("$.clientCompany.id", is(trackedProductDto.getClientCompanyId())));
+                .andExpect(jsonPath("$.tracked", is(true)));
     }
 
     @Test
@@ -400,9 +388,7 @@ public class TrackedProductsRestControllerTest {
                 .productPurchaseCost(155.00)
                 .productSellPrice(1555.00)
                 .isTracked(true)
-                .productId(String.valueOf(product4.getId()))
-                .productEAN(product4.getEan())
-                .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
+                .ean(product4.getEan())
                 .build();
 
         mockMvc.perform(put("/api/client-company/tracked-products")

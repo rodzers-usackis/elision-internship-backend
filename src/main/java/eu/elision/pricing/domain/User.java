@@ -47,7 +47,7 @@ public class User implements UserDetails {
     private Role role;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_company_id")
     private ClientCompany clientCompany;
 

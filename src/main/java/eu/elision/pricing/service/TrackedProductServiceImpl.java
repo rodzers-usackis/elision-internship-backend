@@ -1,5 +1,6 @@
 package eu.elision.pricing.service;
 
+import ch.qos.logback.core.net.server.Client;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.TrackedProduct;
@@ -13,6 +14,7 @@ import eu.elision.pricing.repository.TrackedProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,32 +29,46 @@ public class TrackedProductServiceImpl implements TrackedProductService {
     private final ProductRepository productRepository;
     private final ClientCompanyRepository clientCompanyRepository;
 
+    @Transactional
     @Override
-    public TrackedProduct createTrackedProductFromDto(User user, TrackedProductDto trackedProductDto) {
+    public TrackedProduct createTrackedProductFromDto(User user,
+                                                      TrackedProductDto trackedProductDto) {
 
         Product product;
 
-        if (trackedProductDto.getProductEAN() != null) {
-            product = productRepository.findByEan(trackedProductDto.getProductEAN());
+        if (trackedProductDto.getEan() != null && !trackedProductDto.getEan().isEmpty()) {
+            log.debug(">>> Creating TP by EAN: {}", trackedProductDto.getEan());
+            product = productRepository.findByEan(trackedProductDto.getEan());
         } else {
-            product = productRepository.findById(UUID.fromString(trackedProductDto.getProductId())).orElse(null);
+            log.debug(">>> Creating TP by manufacturer code: {}",
+                trackedProductDto.getManufacturerCode());
+            product =
+                productRepository.findByManufacturerCode(trackedProductDto.getManufacturerCode());
         }
 
-        if (product == null) {
-            throw new NotFoundException(String.format("Invalid product: ID=%s\nEAN=%s", trackedProductDto.getProductId(), trackedProductDto.getProductEAN()));
-        }
+//        if (product == null) {
+//            throw new NotFoundException(String.format("Invalid product: ID=%s\nEAN=%s", trackedProductDto.getProductId(), trackedProductDto.getEan()));
+//        }
 
-        ClientCompany clientCompany = clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null);
+//        ClientCompany clientCompany = clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null);
+
+        ClientCompany clientCompany = user.getClientCompany();
+        Hibernate.initialize(clientCompany);
+        log.debug(">>> Creating TP for client company: {}", user.getClientCompany().getId());
 
         TrackedProduct trackedProduct = TrackedProduct.builder()
-                .productPurchaseCost(trackedProductDto.getProductPurchaseCost())
-                .productSellPrice(trackedProductDto.getProductSellPrice())
-                .isTracked(trackedProductDto.isTracked())
-                .product(product)
-                .clientCompany(clientCompany)
-                .build();
+            .productPurchaseCost(trackedProductDto.getProductPurchaseCost())
+            .productSellPrice(trackedProductDto.getProductSellPrice())
+            .isTracked(true)
+            .product(product)
+            .clientCompany(clientCompany)
+            .build();
+
+        log.debug(">>> Creating TP: {}", trackedProduct);
 
         trackedProductRepository.save(trackedProduct);
+
+        log.debug(">>> Created TP: {}", trackedProduct);
 
         return trackedProduct;
     }
@@ -60,21 +76,27 @@ public class TrackedProductServiceImpl implements TrackedProductService {
     @Override
     public List<TrackedProduct> getTrackedProducts(User user) {
 
-        return trackedProductRepository.findTrackedProductByClientCompanyId(user.getClientCompany().getId());
+        return trackedProductRepository.findTrackedProductByClientCompanyId(
+            user.getClientCompany().getId());
     }
 
     @Transactional
     @Override
-    public TrackedProduct updateTrackedProduct(User user, TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
+    public TrackedProduct updateTrackedProduct(User user,
+                                               TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
 
-        TrackedProduct trackedProduct = trackedProductRepository.findById(UUID.fromString(trackedProductPriceUpdateDto.getId())).orElse(null);
+        TrackedProduct trackedProduct =
+            trackedProductRepository.findById(UUID.fromString(trackedProductPriceUpdateDto.getId()))
+                .orElse(null);
 
         if (trackedProduct == null) {
-            throw new NotFoundException(String.format("Invalid tracked product: ID=%s", trackedProductPriceUpdateDto.getId()));
+            throw new NotFoundException(String.format("Invalid tracked product: ID=%s",
+                trackedProductPriceUpdateDto.getId()));
         }
 
         trackedProduct.setProductSellPrice(trackedProductPriceUpdateDto.getProductSellPrice());
-        trackedProduct.setProductPurchaseCost(trackedProductPriceUpdateDto.getProductPurchaseCost());
+        trackedProduct.setProductPurchaseCost(
+            trackedProductPriceUpdateDto.getProductPurchaseCost());
         trackedProduct.setTracked(trackedProductPriceUpdateDto.isTracked());
         trackedProduct = trackedProductRepository.save(trackedProduct);
 
@@ -84,6 +106,7 @@ public class TrackedProductServiceImpl implements TrackedProductService {
     @Override
     public void deleteTrackedProducts(User user, List<UUID> trackedProductIds) {
 
-        trackedProductRepository.deleteTrackedProducts(user.getClientCompany().getId(), trackedProductIds);
+        trackedProductRepository.deleteTrackedProducts(user.getClientCompany().getId(),
+            trackedProductIds);
     }
 }
