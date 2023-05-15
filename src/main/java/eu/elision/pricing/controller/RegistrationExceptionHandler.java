@@ -1,6 +1,6 @@
 package eu.elision.pricing.controller;
 
-import eu.elision.pricing.exception.EmailAlreadyRegistered;
+import eu.elision.pricing.exceptions.EmailAlreadyRegistered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

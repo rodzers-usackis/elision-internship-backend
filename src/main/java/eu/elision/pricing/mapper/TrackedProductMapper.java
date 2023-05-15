@@ -9,6 +9,4 @@ public interface TrackedProductMapper {
 
     TrackedProductDto domainToDto(TrackedProduct trackedProduct);
     List<TrackedProductDto> domainsToDtos(List<TrackedProduct> trackedProducts);
-    TrackedProduct dtoToDomain(TrackedProductDto trackedProductDTO);
-    List<TrackedProduct> dtosToDomains(List<TrackedProductDto> trackedProductDTOs);
 }

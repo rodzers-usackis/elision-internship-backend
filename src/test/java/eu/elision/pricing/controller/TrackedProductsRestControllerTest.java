@@ -307,7 +307,7 @@ public class TrackedProductsRestControllerTest {
                 .productSellPrice(1099.00)
                 .isTracked(true)
                 .productId(UUID.randomUUID().toString())
-                .productEAN("484584894")
+                .productEAN("4845848945")
                 .clientCompanyId(String.valueOf(user2.getClientCompany().getId()))
                 .build();
 
