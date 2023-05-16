@@ -1,16 +1,15 @@
 package eu.elision.pricing.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.UUID;
 
 /**
  * Postal address of a {@link ClientCompany}.
  */
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +37,6 @@ public class Address {
 
     @Column(nullable = false)
     private String country;
-
 
     @JsonIgnore
     @OneToOne(mappedBy = "address", optional = false)
