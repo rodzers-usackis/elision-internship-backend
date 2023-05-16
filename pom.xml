@@ -101,6 +101,16 @@
             <artifactId>checkstyle</artifactId>
             <version>10.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>6.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.0.8</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -118,23 +128,22 @@
                 </configuration>
             </plugin>
             <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>4.0.0-M8</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>4.0.0-M8</version>
                 <configuration>
                     <outputDirectory>target/site</outputDirectory>
                 </configuration>
             </plugin>
-      
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <version>3.1.0</version>
-      <configuration>
-        <useFile>false</useFile>
-        <outputFormat>plain</outputFormat>
-      </configuration>
-    </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <useFile>false</useFile>
+                </configuration>
+            </plugin>
 
 
             <plugin>
@@ -157,7 +166,7 @@
 
         </plugins>
     </build>
-    
+
     <reporting>
         <plugins>
             <plugin>
