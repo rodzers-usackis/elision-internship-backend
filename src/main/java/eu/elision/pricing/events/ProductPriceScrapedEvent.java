@@ -6,8 +6,10 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.context.ApplicationEvent;
 
+/**
+ * Event that is published when a product's price is scraped.
+ */
 @Data
 @Builder
 @AllArgsConstructor

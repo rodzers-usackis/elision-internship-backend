@@ -1,14 +1,16 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.TrackedProduct;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductWithDetailsDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductWithDetailsDto;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+/**
+ * Implementation of {@link TrackedProductMapper}.
+ */
 @RequiredArgsConstructor
 @Component
 public class TrackedProductMapperImpl implements TrackedProductMapper {

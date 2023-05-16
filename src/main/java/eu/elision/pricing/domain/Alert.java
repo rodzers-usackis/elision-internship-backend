@@ -13,6 +13,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents an alert message
+ * that will be shown to the client
+ * when a {@link Price} of a {@link Product}
+ * fulfills the {@link AlertRule} conditions.
+ */
 @Data
 @Builder
 @NoArgsConstructor

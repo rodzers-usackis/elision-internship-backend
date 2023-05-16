@@ -1,7 +1,6 @@
 package eu.elision.pricing.domain;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -45,7 +44,21 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<AlertRule> alertRules;
 
-    public Product(String name, String description, String ean, String manufacturerCode, ProductCategory productCategory) {
+    /**
+     * Constructor for Product.
+     *
+     * @param name             The name of the product.
+     * @param description      The description of the product.
+     * @param ean              The EAN code of the product.
+     * @param manufacturerCode The manufacturer code of the product.
+     * @param productCategory  The category of the product.
+     */
+    public Product(String name,
+                   String description,
+                   String ean,
+                   String manufacturerCode,
+                   ProductCategory productCategory
+    ) {
         this.name = name;
         this.description = description;
         this.ean = ean;

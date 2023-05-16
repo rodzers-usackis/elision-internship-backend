@@ -13,6 +13,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents notification settings for a {@link ClientCompany}.
+ * Contains {@link AlertRule}s.
+ */
 @Data
 @Builder
 @NoArgsConstructor

@@ -1,9 +1,18 @@
 package eu.elision.pricing.controller;
 
+import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.elision.pricing.domain.*;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
 import eu.elision.pricing.repository.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,22 +23,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
-
-import static org.hamcrest.Matchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(properties = {"spring.sql.init.mode=never"})
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TrackedProductsRestControllerTest {
+class TrackedProductsRestControllerTest {
 
     @Autowired
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -61,7 +60,7 @@ public class TrackedProductsRestControllerTest {
     @BeforeAll
     void setup() {
         // First user
-        Address address = Address.builder()
+        final Address address = Address.builder()
             .street("Main Street")
             .streetNumber("123")
             .apartmentNumber("1")
@@ -178,7 +177,7 @@ public class TrackedProductsRestControllerTest {
 
 
         // Second user
-        Address address2 = Address.builder()
+        final Address address2 = Address.builder()
             .street("Main Street")
             .streetNumber("123")
             .apartmentNumber("1")

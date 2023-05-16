@@ -1,11 +1,12 @@
 package eu.elision.pricing.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.UUID;
 
 /**
  * Postal address of a {@link ClientCompany}.

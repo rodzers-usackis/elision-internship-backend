@@ -1,15 +1,12 @@
 package eu.elision.pricing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import eu.elision.pricing.domain.AlertRule;
-import eu.elision.pricing.domain.NotificationSettings;
 import eu.elision.pricing.domain.Price;
-import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.domain.PriceScrapingConfig;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;

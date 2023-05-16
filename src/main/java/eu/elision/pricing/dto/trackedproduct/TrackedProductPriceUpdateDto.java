@@ -1,4 +1,4 @@
-package eu.elision.pricing.dto.TrackedProduct;
+package eu.elision.pricing.dto.trackedproduct;
 
 import eu.elision.pricing.domain.TrackedProduct;
 import lombok.Builder;

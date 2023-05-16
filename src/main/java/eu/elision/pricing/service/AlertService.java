@@ -13,5 +13,6 @@ import java.util.List;
  */
 public interface AlertService {
     List<AlertDto> getUsersAlerts(User user);
+
     void createAlerts(Product product, List<Price> prices);
 }

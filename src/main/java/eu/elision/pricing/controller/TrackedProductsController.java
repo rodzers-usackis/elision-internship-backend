@@ -2,20 +2,22 @@ package eu.elision.pricing.controller;
 
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductPriceUpdateDto;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductWithDetailsDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductPriceUpdateDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductWithDetailsDto;
 import eu.elision.pricing.mapper.TrackedProductMapper;
 import eu.elision.pricing.service.TrackedProductService;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.UUID;
-
+/**
+ * Rest controller for {@link TrackedProduct}s.
+ */
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -27,17 +29,20 @@ public class TrackedProductsController {
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProductWithDetailsDto> createTrackedProduct(
-            @AuthenticationPrincipal User user, @RequestBody TrackedProductDto trackedProductDto) {
+        @AuthenticationPrincipal User user, @RequestBody TrackedProductDto trackedProductDto) {
 
-        TrackedProduct savedTrackedProduct = trackedProductService.createTrackedProductFromDto(user, trackedProductDto);
+        TrackedProduct savedTrackedProduct =
+            trackedProductService.createTrackedProductFromDto(user, trackedProductDto);
 
-        TrackedProductWithDetailsDto trackedProductWithDetailsDto = trackedProductMapper.domainToDtoWithDetails(savedTrackedProduct);
+        TrackedProductWithDetailsDto trackedProductWithDetailsDto =
+            trackedProductMapper.domainToDtoWithDetails(savedTrackedProduct);
         return new ResponseEntity<>(trackedProductWithDetailsDto, HttpStatus.CREATED);
     }
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/client-company/tracked-products")
-    public ResponseEntity<List<TrackedProduct>> getTrackedProducts(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<TrackedProduct>> getTrackedProducts(
+        @AuthenticationPrincipal User user) {
 
         List<TrackedProduct> trackedProducts = trackedProductService.getTrackedProducts(user);
 
@@ -46,7 +51,8 @@ public class TrackedProductsController {
 
     @CrossOrigin("http://localhost:3000")
     @DeleteMapping("/client-company/tracked-products")
-    public ResponseEntity<Void> deleteProducts(@AuthenticationPrincipal User user, @RequestBody List<UUID> trackedProductIds) {
+    public ResponseEntity<Void> deleteProducts(@AuthenticationPrincipal User user,
+                                               @RequestBody List<UUID> trackedProductIds) {
 
         trackedProductService.deleteTrackedProducts(user, trackedProductIds);
 
@@ -56,9 +62,11 @@ public class TrackedProductsController {
     @CrossOrigin("http://localhost:3000")
     @PatchMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProduct> updateTrackedProduct(
-            @AuthenticationPrincipal User user, @RequestBody TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
+        @AuthenticationPrincipal User user,
+        @RequestBody TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
 
-        TrackedProduct trackedProduct = trackedProductService.updateTrackedProduct(user, trackedProductPriceUpdateDto);
+        TrackedProduct trackedProduct =
+            trackedProductService.updateTrackedProduct(user, trackedProductPriceUpdateDto);
 
         return new ResponseEntity<>(trackedProduct, HttpStatus.OK);
     }

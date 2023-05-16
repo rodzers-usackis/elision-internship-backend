@@ -1,9 +1,9 @@
 package eu.elision.pricing.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.List;
-
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

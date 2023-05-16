@@ -41,67 +41,6 @@ public class AlertServiceImpl implements AlertService {
 
     }
 
-//    @Transactional
-//    @Override
-//    public void createAlerts(Product product, List<Price> prices) {
-//
-//        if (prices.isEmpty()) {
-//            log.warn("No prices found for product {}", product.getId());
-//            return;
-//        }
-//
-//        List<AlertRule> alertRules = product.getAlertRules();
-//
-//        alertRules.forEach(alertRule -> {
-//
-//            var companiesToCompare = alertRule.getRetailerCompanies();
-//            List<Price> pricesToCompare = prices.stream().filter(price -> {
-//                if (companiesToCompare.isEmpty()) {
-//                    return true;
-//                }
-//                return companiesToCompare.contains(price.getRetailerCompany());
-//            }).collect(Collectors.toList());
-//
-//
-//            if (alertRule.getRetailerCompanies().isEmpty()) {
-//                Price price;
-//
-//                if (alertRule.getPriceComparisonType() == PriceComparisonType.LOWER) {
-//                    price = pricesToCompare.stream().min(Comparator.comparing(Price::getAmount)).get();
-//
-//                    if (price.getAmount() <= alertRule.getPrice()) {
-//                        Alert alert = Alert.builder()
-//                            .product(product)
-//                            .clientCompany(alertRule.getNotificationSettings().getClientCompany())
-//                            .price(price)
-//                            .retailerCompany(price.getRetailerCompany())
-//                            .read(false)
-//                            .timestamp(LocalDateTime.now())
-//                            .build();
-//                    }
-//
-//                } else {
-//                    price = pricesToCompare.stream().max(Comparator.comparing(Price::getAmount)).get();
-//
-//                    if (price.getAmount() >= alertRule.getPrice()) {
-//                        Alert alert = Alert.builder()
-//                            .product(product)
-//                            .clientCompany(alertRule.getNotificationSettings().getClientCompany())
-//                            .price(price)
-//                            .retailerCompany(price.getRetailerCompany())
-//                            .read(false)
-//                            .timestamp(LocalDateTime.now())
-//                            .build();
-//                    }
-//                }
-//
-//            }
-//
-//        });
-//
-//
-//    }
-
 
     @Transactional
     @Override
@@ -155,10 +94,10 @@ public class AlertServiceImpl implements AlertService {
     }
 
     private boolean isPriceMatched(AlertRule alertRule, double price) {
-        return (alertRule.getPriceComparisonType() == PriceComparisonType.LOWER &&
-            price <= alertRule.getPrice()) ||
-            (alertRule.getPriceComparisonType() == PriceComparisonType.HIGHER &&
-                price >= alertRule.getPrice());
+        return (alertRule.getPriceComparisonType() == PriceComparisonType.LOWER
+            && price <= alertRule.getPrice())
+            || (alertRule.getPriceComparisonType() == PriceComparisonType.HIGHER
+            && price >= alertRule.getPrice());
     }
 
     private void createAlert(Product product, AlertRule alertRule, Price price) {
