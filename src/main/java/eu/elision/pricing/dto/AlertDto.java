@@ -1,6 +1,7 @@
 package eu.elision.pricing.dto;
 
 import eu.elision.pricing.domain.Alert;
+import eu.elision.pricing.domain.PriceComparisonType;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class AlertDto {
     private LocalDateTime timestamp;
 
     private double price;
+
+    private PriceComparisonType priceComparisonType;
 
     private ProductDto product;
 

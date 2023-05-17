@@ -105,6 +105,7 @@ public class AlertServiceImpl implements AlertService {
             .product(product)
             .clientCompany(alertRule.getNotificationSettings().getClientCompany())
             .price(price)
+            .priceComparisonType(alertRule.getPriceComparisonType())
             .retailerCompany(price.getRetailerCompany())
             .read(false)
             .timestamp(LocalDateTime.now())

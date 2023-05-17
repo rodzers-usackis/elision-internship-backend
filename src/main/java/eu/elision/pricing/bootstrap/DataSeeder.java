@@ -2,6 +2,7 @@ package eu.elision.pricing.bootstrap;
 
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.repository.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,11 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final ClientCompanyRepository clientCompanyRepository;
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
+    private final PriceRepository priceRepository;
     private final ProductRepository productRepository;
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final TrackedProductRepository trackedProductRepository;
+    private final AlertRepository alertRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -499,6 +502,59 @@ public class DataSeeder implements CommandLineRunner {
             .build();
 
         retailerCompanyRepository.save(retailerCompany);
+
+        //Notification settings
+        NotificationSettings notificationSettings = NotificationSettings.builder()
+            .clientCompany(clientCompany)
+            .notifyViaEmail(true)
+            .alertRules(List.of())
+            .build();
+
+        clientCompany.setNotificationSettings(notificationSettings);
+
+        clientCompanyRepository.save(clientCompany);
+
+        //Price
+        Price price = Price.builder()
+            .amount(699.00)
+            .product(product1)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        priceRepository.save(price);
+
+        Price price2 = Price.builder()
+            .amount(699.00)
+            .product(product2)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        priceRepository.save(price2);
+
+        //Alerts
+        Alert alert = Alert.builder()
+            .price(price)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .retailerCompany(retailerCompany)
+            .product(product1)
+            .clientCompany(clientCompany)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        alertRepository.save(alert);
+
+        Alert alert2 = Alert.builder()
+            .price(price2)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .retailerCompany(retailerCompany)
+            .product(product2)
+            .clientCompany(clientCompany)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        alertRepository.save(alert2);
 
 
         // Price Scraping Config

@@ -37,6 +37,8 @@ public class Alert {
     @ManyToOne
     private Price price;
 
+    private PriceComparisonType priceComparisonType;
+
     /**
      * The client company that owns this alert.
      */
