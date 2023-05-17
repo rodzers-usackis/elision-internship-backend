@@ -113,4 +113,8 @@ public class AlertServiceImpl implements AlertService {
         alertRepository.save(alert);
     }
 
+    public int getUnreadAlertCount(User user) {
+
+        return alertRepository.countAlertByClientCompanyAndReadIsFalse(user.getClientCompany().getId());
+    }
 }
