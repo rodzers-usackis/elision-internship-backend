@@ -48,7 +48,7 @@ public class User implements UserDetails {
     private ClientCompany clientCompany;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user")
     private AlertSettings alertSettings;
 
     /**

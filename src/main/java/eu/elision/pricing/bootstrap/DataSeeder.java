@@ -28,6 +28,7 @@ public class DataSeeder implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final TrackedProductRepository trackedProductRepository;
+    private final AlertSettingsRepository alertSettingsRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -47,6 +48,8 @@ public class DataSeeder implements CommandLineRunner {
                 .alertSettings(alertSettings)
                 .build();
 
+        alertSettings.setEmailAddress(user.getEmail());
+        alertSettings.setUser(user);
 
         // Addresses
         Address address = Address.builder()
@@ -496,6 +499,7 @@ public class DataSeeder implements CommandLineRunner {
                 trackedProduct20
         )));
 
+        alertSettingsRepository.save(alertSettings);
         user.setClientCompany(clientCompany);
         userRepository.save(user);
 

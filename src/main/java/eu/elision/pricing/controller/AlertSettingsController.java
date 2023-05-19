@@ -1,6 +1,5 @@
 package eu.elision.pricing.controller;
 
-
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertSettingsDto;
 import eu.elision.pricing.service.AlertSettingsService;

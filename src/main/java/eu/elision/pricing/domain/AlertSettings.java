@@ -1,6 +1,5 @@
 package eu.elision.pricing.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +25,7 @@ public class AlertSettings {
     @Enumerated(EnumType.STRING)
     private AlertStorageDuration alertStorageDuration;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

@@ -22,12 +22,10 @@ public class AlertSettingsServiceImpl implements AlertSettingsService {
 
     private final AlertSettingsRepository alertSettingRepository;
     private final AlertSettingsMapper alertSettingsMapper;
-    private static final Logger logger = LoggerFactory.getLogger(AlertSettingsServiceImpl.class);
-
 
     @Override
     public AlertSettingsDto getAlertSettings(User user) {
-        AlertSettings alertSettings = alertSettingRepository.findAlertSettingsByUser_Id(user.getId());
+        AlertSettings alertSettings = user.getAlertSettings();
 
         return alertSettingsMapper.domainToDto(alertSettings);
     }
