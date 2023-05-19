@@ -19,11 +19,12 @@ public class AlertMapperImpl implements AlertMapper {
     @Override
     public AlertDto domainToDto(Alert alert) {
         return AlertDto.builder()
-            .price(alert.getPrice().getAmount())
-            .read(alert.isRead())
-            .retailerCompany(retailerCompanyMapper.domainToDto(alert.getRetailerCompany()))
-            .product(productMapper.domainToDto(alert.getPrice().getProduct()))
-            .timestamp(alert.getTimestamp())
-            .build();
+                .uuid(alert.getId())
+                .price(alert.getPrice().getAmount())
+                .read(alert.isRead())
+                .retailerCompany(retailerCompanyMapper.domainToDto(alert.getRetailerCompany()))
+                .product(productMapper.domainToDto(alert.getPrice().getProduct()))
+                .timestamp(alert.getTimestamp())
+                .build();
     }
 }

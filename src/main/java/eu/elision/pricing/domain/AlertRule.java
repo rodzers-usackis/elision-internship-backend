@@ -59,6 +59,4 @@ public class AlertRule {
     @ToString.Exclude
     @ManyToOne
     private NotificationSettings notificationSettings;
-
-
 }

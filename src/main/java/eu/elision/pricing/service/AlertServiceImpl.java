@@ -12,6 +12,7 @@ import eu.elision.pricing.mapper.AlertMapper;
 import eu.elision.pricing.repository.AlertRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -113,8 +114,24 @@ public class AlertServiceImpl implements AlertService {
         alertRepository.save(alert);
     }
 
+    @Override
     public int getUnreadAlertCount(User user) {
 
-        return alertRepository.countAlertByClientCompanyAndReadIsFalse(user.getClientCompany().getId());
+        return alertRepository.countAlertByClientCompany_IdAndReadIsFalse(user.getClientCompany().getId());
+    }
+
+    @Override
+    public List<AlertDto> markAlertsAsRead(List<AlertDto> alerts) {
+        List<Alert> updatedAlerts = alerts.stream()
+                .map(alertDto -> {
+                    Alert alertEntity = alertRepository.findById(alertDto.getUuid()).orElseThrow();
+                    alertEntity.setRead(true);
+                    return alertEntity;
+                })
+                .collect(Collectors.toList());
+
+        alertRepository.saveAll(updatedAlerts);
+
+        return updatedAlerts.stream().map(alertMapper::domainToDto).toList();
     }
 }
