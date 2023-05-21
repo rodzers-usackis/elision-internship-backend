@@ -15,10 +15,11 @@ public class AlertSettingsMapperImpl implements AlertSettingsMapper {
     @Override
     public AlertSettingsDto domainToDto(AlertSettings alertSettings) {
         return AlertSettingsDto.builder()
-                .uuid(alertSettings.getId())
-                .emailNotifications(alertSettings.isEmailNotifications())
-                .emailAddress(alertSettings.getEmailAddress())
-                .alertStorageDuration(alertSettings.getAlertStorageDuration())
-                .build();
+            .id(alertSettings.getId())
+            .notifyViaEmail(alertSettings.isNotifyViaEmail())
+            .alertsActive(alertSettings.isAlertsActive())
+            .emailAddress(alertSettings.getEmailAddress())
+            .alertStorageDuration(alertSettings.getAlertStorageDuration())
+            .build();
     }
 }

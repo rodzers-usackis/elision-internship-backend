@@ -11,13 +11,12 @@ import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.ProductDto;
-import eu.elision.pricing.dto.notifications.AlertRuleDto;
+import eu.elision.pricing.dto.AlertSettingsDto;
 import eu.elision.pricing.dto.notifications.NotificationSettingsWithAlertRulesDto;
 import eu.elision.pricing.dto.notifications.NotificationSettingsDto;
 import eu.elision.pricing.repository.AlertRuleRepository;
+import eu.elision.pricing.repository.AlertSettingsRepository;
 import eu.elision.pricing.repository.ClientCompanyRepository;
-import eu.elision.pricing.repository.NotificationSettingsRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.RetailerCompanyRepository;
 import eu.elision.pricing.repository.UserRepository;
@@ -38,7 +37,7 @@ import org.springframework.test.context.ActiveProfiles;
 class AlertSettingsServiceImplIntegrationTests {
 
     @Autowired
-    private NotificationSettingsRepository notificationSettingsRepository;
+    private AlertSettingsRepository alertSettingsRepository;
 
     @Autowired
     private ClientCompanyRepository clientCompanyRepository;
@@ -50,7 +49,7 @@ class AlertSettingsServiceImplIntegrationTests {
     private RetailerCompanyRepository retailerCompanyRepository;
 
     @Autowired
-    private NotificationSettingsServiceImpl notificationSettingsService;
+    private AlertSettingsServiceImpl alertSettingsService;
 
     @Autowired
     private UserRepository userRepository;
@@ -93,21 +92,21 @@ class AlertSettingsServiceImplIntegrationTests {
         clientCompany = clientCompanyRepository.save(clientCompany);
 
         user.setClientCompany(clientCompany);
-        userRepository.save(user);
+        user = userRepository.save(user);
 
 
         // Create NotificationSettings object
         AlertSettings alertSettings = AlertSettings.builder()
-            .clientCompany(clientCompany)
+            .user(user)
             .notifyViaEmail(true)
+            .alertsActive(true)
             .build();
 
 
-        clientCompany.setAlertSettings(alertSettings);
-
         // Save the NotificationSettings object
-        notificationSettingsRepository.save(alertSettings);
-
+//        user.setAlertSettings(alertSettings);
+//        user = userRepository.save(user);
+        alertSettings = alertSettingsRepository.save(alertSettings);
 
         // Create Products
         Product p1 = productRepository.save(Product.builder()
@@ -150,10 +149,12 @@ class AlertSettingsServiceImplIntegrationTests {
             .priceComparisonType(PriceComparisonType.HIGHER)
             .build();
 
+        alertSettings.setAlertRules(List.of(ar1, ar2));
+        alertSettings.setUser(user);
+//        alertSettingsRepository.save(alertSettings);
+
         alertRuleRepository.saveAll(List.of(ar1, ar2));
 
-        alertSettings.setAlertRules(List.of(ar1, ar2));
-        notificationSettingsRepository.save(alertSettings);
 
         this.numberOfAlertRulesInDbForUser1 = alertSettings.getAlertRules().size();
 
@@ -182,13 +183,14 @@ class AlertSettingsServiceImplIntegrationTests {
 
         //create another notification settings
         AlertSettings alertSettings2 = AlertSettings.builder()
-            .clientCompany(clientCompany2)
+            .user(user2)
             .notifyViaEmail(true)
+            .alertsActive(true)
             .build();
 
-        clientCompany2.setAlertSettings(alertSettings2);
+        user2.setAlertSettings(alertSettings2);
 
-        alertSettings2 = notificationSettingsRepository.save(alertSettings2);
+        alertSettings2 = alertSettingsRepository.save(alertSettings2);
 
         //create another alert rule
         AlertRule ar3 = AlertRule.builder()
@@ -205,7 +207,7 @@ class AlertSettingsServiceImplIntegrationTests {
     void tearDown() {
         log.debug(">>>>> tearDown");
         clientCompanyRepository.deleteAll();
-        notificationSettingsRepository.deleteAll();
+        alertSettingsRepository.deleteAll();
         userRepository.deleteAll();
         retailerCompanyRepository.deleteAll();
         productRepository.deleteAll();
@@ -234,35 +236,23 @@ class AlertSettingsServiceImplIntegrationTests {
     }
 
     @Test
-    void getNotificationSettingsForTheUserCorrectly() {
-
-        NotificationSettingsWithAlertRulesDto notificationSettingsWithAlertRulesDto =
-            notificationSettingsService.getNotificationSettings(user);
-
-        assertNotNull(notificationSettingsWithAlertRulesDto);
-        assertNotNull(notificationSettingsWithAlertRulesDto.getAlertRules());
-        assertEquals(numberOfAlertRulesInDbForUser1,
-            notificationSettingsWithAlertRulesDto.getAlertRules().size());
-        assertTrue(notificationSettingsWithAlertRulesDto.isNotifyViaEmail());
-
-    }
-
-    @Test
     void updateNotifyByEmailCorrectly() {
 
         User user = this.user;
 
-        NotificationSettingsDto notificationSettingsDto =
-            NotificationSettingsDto.builder()
-                .notifyViaEmail(false)
-                .build();
+        AlertSettingsDto alertSettingsDto = AlertSettingsDto
+            .builder()
+            .notifyViaEmail(false)
+            .alertsActive(false)
+            .build();
 
-        notificationSettingsService.updateNotificationSettings(user, notificationSettingsDto);
+        alertSettingsService.updateNotificationSettings(user, alertSettingsDto);
 
-        NotificationSettingsWithAlertRulesDto notificationSettingsWithAlertRulesDto =
-            notificationSettingsService.getNotificationSettings(user);
+        AlertSettingsDto notificationSettingsWithAlertRulesDto =
+            alertSettingsService.getNotificationSettings(user);
 
         assertFalse(notificationSettingsWithAlertRulesDto.isNotifyViaEmail());
+        assertFalse(notificationSettingsWithAlertRulesDto.isAlertsActive());
 
     }
 

@@ -9,10 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface AlertRuleRepository extends JpaRepository<AlertRule, UUID> {
 
 
-    @Query("SELECT COUNT(DISTINCT ar) FROM AlertRule ar "
-        + " WHERE ar.id IN (:id) "
-        + " AND ar.alertSettings.clientCompany.id = :clientCompanyId")
-    long countAllByIdAndNotificationSettingsClientCompany_Id(List<UUID> id, UUID clientCompanyId);
 
     void deleteAllByIdIn(List<UUID> id);
 

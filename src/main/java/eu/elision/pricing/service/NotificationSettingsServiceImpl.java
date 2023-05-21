@@ -12,7 +12,6 @@ import eu.elision.pricing.dto.notifications.NotificationSettingsDto;
 import eu.elision.pricing.mapper.AlertRuleMapper;
 import eu.elision.pricing.mapper.NotificationSettingsMapper;
 import eu.elision.pricing.repository.AlertRuleRepository;
-import eu.elision.pricing.repository.NotificationSettingsRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.RetailerCompanyRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,37 +28,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class NotificationSettingsServiceImpl implements NotificationSettingsService {
 
-    private final NotificationSettingsRepository notificationSettingsRepository;
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final AlertRuleRepository alertRuleRepository;
     private final ProductRepository productRepository;
     private final NotificationSettingsMapper notificationSettingsMapper;
     private final AlertRuleMapper alertRuleMapper;
-
-    @Transactional
-    @Override
-    public NotificationSettingsWithAlertRulesDto getNotificationSettings(User user) {
-        AlertSettings alertSettings =
-            notificationSettingsRepository.findByClientCompany_Id(user.getClientCompany().getId());
-
-        log.debug(">>> getting notifications settings for client company id: {}", user.getClientCompany().getId());
-
-        if (alertSettings == null) {
-            throw new EntityNotFoundException("Notification settings not found");
-        }
-        return notificationSettingsMapper.domainToDto(alertSettings);
-
-    }
-
-    @Override
-    public void updateNotificationSettings(User user,
-                                           NotificationSettingsDto notificationSettingsDto) {
-
-        user.getClientCompany().getAlertSettings()
-            .setNotifyViaEmail(notificationSettingsDto.isNotifyViaEmail());
-        notificationSettingsRepository.save(user.getClientCompany().getAlertSettings());
-
-    }
 
 
 

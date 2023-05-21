@@ -61,7 +61,7 @@ public class AlertRuleServiceImpl implements AlertRuleService {
             .build();
 
         AlertSettings alertSettings =
-            user.getClientCompany().getAlertSettings();
+            user.getAlertSettings();
 
         alertRule.setAlertSettings(alertSettings);
         alertRule = alertRuleRepository.save(alertRule);

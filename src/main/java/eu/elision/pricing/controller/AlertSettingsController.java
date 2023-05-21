@@ -1,9 +1,11 @@
 package eu.elision.pricing.controller;
 
 import eu.elision.pricing.domain.User;
+import eu.elision.pricing.dto.AlertSettingsDto;
 import eu.elision.pricing.dto.notifications.AlertRuleDto;
 import eu.elision.pricing.dto.notifications.NotificationSettingsWithAlertRulesDto;
 import eu.elision.pricing.dto.notifications.NotificationSettingsDto;
+import eu.elision.pricing.service.AlertSettingsService;
 import eu.elision.pricing.service.NotificationSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/notification-settings")
+@RequestMapping("/api/alert-settings")
 public class AlertSettingsController {
 
     private final AlertSettingsService alertSettingsService;
@@ -36,10 +38,10 @@ public class AlertSettingsController {
     @PatchMapping
     public ResponseEntity<Void> updateNotificationSettings(
         @AuthenticationPrincipal User user,
-        @RequestBody NotificationSettingsDto notificationSettingsDto
+        @RequestBody AlertSettingsDto alertSettingsDto
     ) {
 
-        notificationSettingsService.updateNotificationSettings(user, notificationSettingsDto);
+        alertSettingsService.updateNotificationSettings(user, alertSettingsDto);
         return ResponseEntity.noContent().build();
     }
 

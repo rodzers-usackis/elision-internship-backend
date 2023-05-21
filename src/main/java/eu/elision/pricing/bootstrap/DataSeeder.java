@@ -35,12 +35,12 @@ public class DataSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         AlertSettings alertSettings = AlertSettings.builder()
-                .emailNotifications(true)
-                .alertStorageDuration(AlertStorageDuration.ONE_MONTH)
+                .notifyViaEmail(true)
+                .alertStorageDuration(30)
                 .build();
 
         // Users
-        final User user = User.builder()
+        User user = User.builder()
                 .email("test@elision.eu")
                 .password(passwordEncoder.encode("secure_password"))
                 .firstName("John")
@@ -500,8 +500,9 @@ public class DataSeeder implements CommandLineRunner {
             trackedProduct20
         )));
 
-        alertSettingsRepository.save(alertSettings);
         user.setClientCompany(clientCompany);
+        user = userRepository.save(user);
+        alertSettingsRepository.save(alertSettings);
         userRepository.save(user);
 
 
@@ -538,7 +539,7 @@ public class DataSeeder implements CommandLineRunner {
             .priceComparisonType(PriceComparisonType.HIGHER)
             .retailerCompany(retailerCompany)
             .product(product1)
-            .clientCompany(clientCompany)
+            .user(user)
             .timestamp(LocalDateTime.now().minusDays(1))
             .build();
 
@@ -549,7 +550,7 @@ public class DataSeeder implements CommandLineRunner {
             .priceComparisonType(PriceComparisonType.LOWER)
             .retailerCompany(retailerCompany)
             .product(product2)
-            .clientCompany(clientCompany)
+            .user(user)
             .timestamp(LocalDateTime.now().minusDays(2))
             .build();
 

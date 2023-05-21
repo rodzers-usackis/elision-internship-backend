@@ -12,7 +12,6 @@ import eu.elision.pricing.mapper.AlertMapper;
 import eu.elision.pricing.repository.AlertRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,7 +35,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public List<AlertDto> getUsersAlerts(User user) {
         List<Alert> alerts =
-            alertRepository.findAllByClientCompany_Id(user.getClientCompany().getId());
+            alertRepository.findAllByUser_Id(user.getClientCompany().getId());
 
         return alerts.stream().map(alertMapper::domainToDto).toList();
 
@@ -104,7 +103,7 @@ public class AlertServiceImpl implements AlertService {
     private void createAlert(Product product, AlertRule alertRule, Price price) {
         Alert alert = Alert.builder()
             .product(product)
-            .clientCompany(alertRule.getAlertSettings().getClientCompany())
+            .user(alertRule.getAlertSettings().getUser())
             .price(price)
             .priceComparisonType(alertRule.getPriceComparisonType())
             .retailerCompany(price.getRetailerCompany())
@@ -118,7 +117,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public int getUnreadAlertCount(User user) {
 
-        return alertRepository.countAlertByClientCompany_IdAndReadIsFalse(user.getClientCompany().getId());
+        return (int)alertRepository.countAlertByUser_IdAndReadIsFalse(user.getClientCompany().getId());
     }
 
     @Override

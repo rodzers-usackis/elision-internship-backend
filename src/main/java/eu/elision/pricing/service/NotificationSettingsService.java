@@ -9,9 +9,6 @@ import java.util.UUID;
 
 public interface NotificationSettingsService {
 
-    NotificationSettingsWithAlertRulesDto getNotificationSettings(User user);
 
-    void updateNotificationSettings(User user,
-                                    NotificationSettingsDto notificationSettingsDto);
 
 }

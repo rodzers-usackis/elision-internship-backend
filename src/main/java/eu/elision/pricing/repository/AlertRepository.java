@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * JPA repository for {@link Alert}s.
  */
 public interface AlertRepository extends JpaRepository<Alert, UUID> {
-    List<Alert> findAllByClientCompany_Id(UUID clientCompanyId);
+    List<Alert> findAllByUser_Id(UUID userId);
 
-    int countAlertByClientCompany_IdAndReadIsFalse(UUID clientCompanyId);
+    long countAlertByUser_IdAndReadIsFalse(UUID userId);
 }

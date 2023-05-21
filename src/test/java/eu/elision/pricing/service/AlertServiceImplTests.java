@@ -12,6 +12,7 @@ import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.AlertRepository;
 import java.util.List;
 import java.util.UUID;
@@ -53,10 +54,20 @@ class AlertServiceImplTests {
             .name("Test company")
             .build();
 
+        User user = User.builder()
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser.be")
+            .clientCompany(clientCompany)
+            .build();
+
+        clientCompany.setUsers(List.of(user));
+
         AlertSettings alertSettings = AlertSettings.builder()
             .id(UUID.randomUUID())
             .notifyViaEmail(true)
-            .clientCompany(clientCompany)
+            .user(user)
             .build();
 
         AlertRule alertRule1 = AlertRule.builder()
@@ -110,8 +121,8 @@ class AlertServiceImplTests {
         List<Alert> capturedAlerts = alertCaptor.getAllValues();
 
         assertEquals(2, capturedAlerts.size());
-        assertEquals(clientCompany, capturedAlerts.get(0).getClientCompany());
-        assertEquals(clientCompany, capturedAlerts.get(1).getClientCompany());
+        assertEquals(user, capturedAlerts.get(0).getUser());
+        assertEquals(user, capturedAlerts.get(1).getUser());
         assertEquals(product, capturedAlerts.get(0).getProduct());
         assertEquals(product, capturedAlerts.get(1).getProduct());
         assertEquals(price1, capturedAlerts.get(0).getPrice());
@@ -137,10 +148,21 @@ class AlertServiceImplTests {
             .name("Test company")
             .build();
 
+        User user = User.builder()
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser2.be")
+            .clientCompany(clientCompany)
+            .build();
+
+        clientCompany.setUsers(List.of(user));
+
+
         AlertSettings alertSettings = AlertSettings.builder()
             .id(UUID.randomUUID())
             .notifyViaEmail(true)
-            .clientCompany(clientCompany)
+            .user(user)
             .build();
 
         AlertRule alertRule1 = AlertRule.builder()

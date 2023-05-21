@@ -49,11 +49,13 @@ public class AlertSettings {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alertSettings")
     private List<AlertRule> alertRules;
 
-    @Enumerated(EnumType.STRING)
-    private AlertStorageDuration alertStorageDuration;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private int alertStorageDuration = 30;
+
+    private String emailAddress;
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 }
