@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class AlertMapperImpl implements AlertMapper {
 
     private final ProductMapper productMapper;
-    private final CompanyMapper retailerCompanyMapper;
+    private final RetailerCompanyMapper retailerCompanyMapper;
 
     @Override
     public AlertDto domainToDto(Alert alert) {

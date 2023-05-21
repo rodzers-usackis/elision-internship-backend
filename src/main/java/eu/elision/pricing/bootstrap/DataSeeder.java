@@ -29,6 +29,7 @@ public class DataSeeder implements CommandLineRunner {
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final TrackedProductRepository trackedProductRepository;
     private final AlertRepository alertRepository;
+    private final NotificationSettingsRepository notificationSettingsRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -504,13 +505,14 @@ public class DataSeeder implements CommandLineRunner {
         retailerCompanyRepository.save(retailerCompany);
 
         //Notification settings
-        NotificationSettings notificationSettings = NotificationSettings.builder()
+        AlertSettings alertSettings = AlertSettings.builder()
             .clientCompany(clientCompany)
+            .alertsActive(true)
             .notifyViaEmail(true)
             .alertRules(List.of())
             .build();
 
-        clientCompany.setNotificationSettings(notificationSettings);
+        clientCompany.setAlertSettings(alertSettings);
 
         clientCompanyRepository.save(clientCompany);
 

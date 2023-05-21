@@ -35,7 +35,7 @@ public class ClientCompany extends RetailerCompany {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientCompany")
     private List<Alert> alerts;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private NotificationSettings notificationSettings;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "clientCompany", orphanRemoval = true)
+    private AlertSettings alertSettings;
 
 }

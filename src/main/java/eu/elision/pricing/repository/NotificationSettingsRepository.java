@@ -1,15 +1,21 @@
 package eu.elision.pricing.repository;
 
-import eu.elision.pricing.domain.NotificationSettings;
+import eu.elision.pricing.domain.AlertSettings;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
- * JPA repository for {@link NotificationSettings}.
+ * JPA repository for {@link AlertSettings}.
  */
-public interface NotificationSettingsRepository extends JpaRepository<NotificationSettings, UUID> {
+public interface NotificationSettingsRepository extends JpaRepository<AlertSettings, UUID> {
 
 
-    NotificationSettings findByClientCompany_Id(UUID clientCompanyId);
+    @Query("SELECT als FROM AlertSettings als "
+        + " JOIN FETCH als.alertRules ar "
+        + " WHERE als.clientCompany.id = :clientCompanyId")
+    AlertSettings findByClientCompany_IdWithAlertRules(UUID clientCompanyId);
+
+    AlertSettings findByClientCompany_Id(UUID clientCompanyId);
 
 }

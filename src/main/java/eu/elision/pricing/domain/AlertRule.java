@@ -7,10 +7,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Represents a rule that will be used to generate Alerts
@@ -52,13 +54,20 @@ public class AlertRule {
      */
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany
+    @JoinTable(
+            name = "alert_rule_retailer_company",
+            joinColumns = @JoinColumn(name = "alert_rule_id"),
+            inverseJoinColumns = @JoinColumn(name = "retailer_company_id")
+    )
     private List<RetailerCompany> retailerCompanies;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
-    private NotificationSettings notificationSettings;
+    @JoinColumn(name = "alert_settings_id", nullable = false)
+    private AlertSettings alertSettings;
 
 
 }

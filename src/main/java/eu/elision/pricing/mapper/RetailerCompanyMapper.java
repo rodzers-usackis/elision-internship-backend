@@ -6,8 +6,9 @@ import eu.elision.pricing.dto.RetailerCompanyDto;
 /**
  * Mapper for mapping {@link RetailerCompany} to {@link RetailerCompanyDto}.
  */
-public interface CompanyMapper {
+public interface RetailerCompanyMapper {
 
     RetailerCompanyDto domainToDto(RetailerCompany company);
+    RetailerCompany dtoToDomain(RetailerCompanyDto companyDto);
 
 }
