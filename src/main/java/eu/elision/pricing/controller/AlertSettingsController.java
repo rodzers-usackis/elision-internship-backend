@@ -22,19 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/notification-settings")
 public class AlertSettingsController {
 
-    private final NotificationSettingsService notificationSettingsService;
+    private final AlertSettingsService alertSettingsService;
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
-    public ResponseEntity<NotificationSettingsWithAlertRulesDto> getNotificationsSettings(
-        @AuthenticationPrincipal User user
-    ) {
+    public ResponseEntity<AlertSettingsDto> getAlertSettings(@AuthenticationPrincipal User user) {
+        AlertSettingsDto alertSettingsDto = alertSettingsService.getAlertSettings(user);
 
-        NotificationSettingsWithAlertRulesDto notificationSettingsWithAlertRulesDto = notificationSettingsService
-            .getNotificationSettings(user);
-
-        return ResponseEntity.ok(notificationSettingsWithAlertRulesDto);
-
+        return ResponseEntity.ok(alertSettingsDto);
     }
 
     @CrossOrigin("http://localhost:3000")
@@ -47,7 +42,5 @@ public class AlertSettingsController {
         notificationSettingsService.updateNotificationSettings(user, notificationSettingsDto);
         return ResponseEntity.noContent().build();
     }
-
-
 
 }

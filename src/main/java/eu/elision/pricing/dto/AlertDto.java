@@ -3,6 +3,8 @@ package eu.elision.pricing.dto;
 import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.PriceComparisonType;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +18,7 @@ import lombok.Data;
 @Data
 @Builder
 public class AlertDto {
+    private UUID uuid;
 
     private boolean read;
 
@@ -28,6 +31,4 @@ public class AlertDto {
     private ProductDto product;
 
     private RetailerCompanyDto retailerCompany;
-
-
 }
