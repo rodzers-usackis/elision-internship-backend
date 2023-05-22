@@ -117,6 +117,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public int getUnreadAlertCount(User user) {
 
+
         return (int) alertRepository.countAlertByUser_IdAndReadIsFalse(
             user.getClientCompany().getId());
     }
@@ -134,5 +135,6 @@ public class AlertServiceImpl implements AlertService {
         alertRepository.saveAll(updatedAlerts);
 
         return updatedAlerts.stream().map(alertMapper::domainToDto).toList();
+
     }
 }
