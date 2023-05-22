@@ -1,25 +1,26 @@
 package eu.elision.pricing.service;
 
-import ch.qos.logback.core.net.server.Client;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductDto;
-import eu.elision.pricing.dto.TrackedProduct.TrackedProductPriceUpdateDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductPriceUpdateDto;
 import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
+/**
+ * Implementation of {@link TrackedProductService}.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -47,10 +48,13 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         }
 
         if (product == null) {
-            throw new NotFoundException(String.format("Invalid product: Manufacturer code=%s\nEAN=%s", trackedProductDto.getManufacturerCode(), trackedProductDto.getEan()));
+            throw new NotFoundException(
+                String.format("Invalid product: Manufacturer code=%s\nEAN=%s",
+                    trackedProductDto.getManufacturerCode(), trackedProductDto.getEan()));
         }
 
-//        ClientCompany clientCompany = clientCompanyRepository.findById(UUID.fromString(trackedProductDto.getClientCompanyId())).orElse(null);
+        //        ClientCompany clientCompany = clientCompanyRepository.findById(UUID
+        //        .fromString(trackedProductDto.getClientCompanyId())).orElse(null);
 
         ClientCompany clientCompany = user.getClientCompany();
         Hibernate.initialize(clientCompany);
@@ -82,8 +86,9 @@ public class TrackedProductServiceImpl implements TrackedProductService {
 
     @Transactional
     @Override
-    public TrackedProduct updateTrackedProduct(User user,
-                                               TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
+    public TrackedProduct updateTrackedProduct(
+        User user,
+        TrackedProductPriceUpdateDto trackedProductPriceUpdateDto) {
 
         TrackedProduct trackedProduct =
             trackedProductRepository.findById(UUID.fromString(trackedProductPriceUpdateDto.getId()))

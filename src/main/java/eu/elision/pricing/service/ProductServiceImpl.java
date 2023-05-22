@@ -5,13 +5,15 @@ import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.mapper.ProductMapper;
 import eu.elision.pricing.repository.ProductRepository;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
+/**
+ * Implementation of {@link ProductService}.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

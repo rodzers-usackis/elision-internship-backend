@@ -1,6 +1,7 @@
 package eu.elision.pricing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -10,6 +11,7 @@ import eu.elision.pricing.domain.PriceScrapingConfig;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.domain.RetailerCompany;
+import eu.elision.pricing.listeners.ProductPriceScrapedEventListener;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
@@ -35,6 +37,9 @@ class PriceServiceImplMockingTests {
 
     @MockBean
     private PriceScrapingConfigRepository priceScrapingConfigRepository;
+
+    @MockBean
+    private ProductPriceScrapedEventListener productPriceScrapedEventListener;
 
     @Autowired
     private PriceService priceService;
@@ -77,7 +82,7 @@ class PriceServiceImplMockingTests {
 
         List<PriceScrapingConfig> priceScrapingConfigs = List.of(psc1);
 
-        when(priceScrapingConfigRepository.findAll()).thenReturn(priceScrapingConfigs);
+        when(priceScrapingConfigRepository.findAllByActiveTrue()).thenReturn(priceScrapingConfigs);
         when(scraperService.scrapePrice(psc1)).thenReturn(price1);
 
 
@@ -85,6 +90,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
+        verify(productPriceScrapedEventListener, times(1)).handleEvent(any());
 
         assertEquals(price1, priceCaptor.getValue());
 
@@ -141,7 +147,7 @@ class PriceServiceImplMockingTests {
 
         List<PriceScrapingConfig> priceScrapingConfigs = List.of(psc1, psc2);
 
-        when(priceScrapingConfigRepository.findAll()).thenReturn(priceScrapingConfigs);
+        when(priceScrapingConfigRepository.findAllByActiveTrue()).thenReturn(priceScrapingConfigs);
         when(scraperService.scrapePrice(psc1)).thenThrow(new NumberFormatException());
         when(scraperService.scrapePrice(psc2)).thenReturn(price2);
 
@@ -150,6 +156,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
+        verify(productPriceScrapedEventListener, times(1)).handleEvent(any());
         assertEquals(price2, priceCaptor.getValue());
 
 

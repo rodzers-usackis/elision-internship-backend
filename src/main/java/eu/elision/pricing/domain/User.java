@@ -1,10 +1,7 @@
 package eu.elision.pricing.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;

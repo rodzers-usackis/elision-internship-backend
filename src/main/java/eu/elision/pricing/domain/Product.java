@@ -1,12 +1,14 @@
 package eu.elision.pricing.domain;
 
 import jakarta.persistence.*;
-
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Represents a product whose price will be scraped and monitored.
@@ -37,7 +39,26 @@ public class Product {
     @Column(nullable = false)
     private ProductCategory category;
 
-    public Product(String name, String description, String ean, String manufacturerCode, ProductCategory productCategory) {
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "product")
+    private List<AlertRule> alertRules;
+
+    /**
+     * Constructor for Product.
+     *
+     * @param name             The name of the product.
+     * @param description      The description of the product.
+     * @param ean              The EAN code of the product.
+     * @param manufacturerCode The manufacturer code of the product.
+     * @param productCategory  The category of the product.
+     */
+    public Product(String name,
+                   String description,
+                   String ean,
+                   String manufacturerCode,
+                   ProductCategory productCategory
+    ) {
         this.name = name;
         this.description = description;
         this.ean = ean;

@@ -9,6 +9,7 @@ import eu.elision.pricing.dto.ProductDto;
 public interface ProductMapper {
 
     ProductDto domainToDto(Product product);
-    Product dtoToDomain(ProductDto productDTO);
+
+    Product dtoToDomain(ProductDto productDto);
 }
 

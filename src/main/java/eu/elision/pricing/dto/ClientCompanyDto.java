@@ -1,10 +1,9 @@
 package eu.elision.pricing.dto;
 
 import eu.elision.pricing.domain.ClientCompany;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * DTO for {@link ClientCompany}.
