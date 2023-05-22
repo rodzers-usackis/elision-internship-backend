@@ -7,7 +7,6 @@ import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductPriceUpdateDto;
 import eu.elision.pricing.exceptions.NotFoundException;
-import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
 import jakarta.transaction.Transactional;
@@ -28,7 +27,6 @@ public class TrackedProductServiceImpl implements TrackedProductService {
 
     private final TrackedProductRepository trackedProductRepository;
     private final ProductRepository productRepository;
-    private final ClientCompanyRepository clientCompanyRepository;
 
     @Transactional
     @Override
@@ -113,5 +111,10 @@ public class TrackedProductServiceImpl implements TrackedProductService {
 
         trackedProductRepository.deleteTrackedProducts(user.getClientCompany().getId(),
             trackedProductIds);
+    }
+
+    @Override
+    public List<TrackedProduct> getTrackedProductsByProductId(UUID productId) {
+        return trackedProductRepository.findTrackedProductsByProduct_Id(productId);
     }
 }

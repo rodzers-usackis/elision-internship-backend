@@ -20,4 +20,6 @@ public interface TrackedProductService {
                                         TrackedProductPriceUpdateDto trackedProductPriceUpdateDto);
 
     void deleteTrackedProducts(User user, List<UUID> trackedProductIds);
+
+    List<TrackedProduct> getTrackedProductsByProductId(UUID productId);
 }

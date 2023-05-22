@@ -40,7 +40,7 @@ public class DataSeeder implements CommandLineRunner {
 
         // Users
         final User user = User.builder()
-                .email("test@elision.eu")
+                .email("rodzers.usackis@student.kdg.be")
                 .password(passwordEncoder.encode("secure_password"))
                 .firstName("John")
                 .lastName("Smith")
