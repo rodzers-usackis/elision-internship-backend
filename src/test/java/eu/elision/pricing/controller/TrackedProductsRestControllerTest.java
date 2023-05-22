@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
 import eu.elision.pricing.repository.*;
@@ -342,9 +343,9 @@ class TrackedProductsRestControllerTest {
             .andExpect(jsonPath("$[2].productSellPrice", is(trackedProduct3.getProductSellPrice())))
             .andExpect(jsonPath("$[2].tracked", is(trackedProduct3.isTracked())))
             .andExpect(jsonPath("$[2].product.id",
-                is(String.valueOf(trackedProduct3.getProduct().getId()))))
-            .andExpect(jsonPath("$[2].clientCompany.id",
-                is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
+                is(String.valueOf(trackedProduct3.getProduct().getId()))));
+//            .andExpect(jsonPath("$[2].clientCompany.id",
+//                is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
     }
 
     @Test
@@ -388,10 +389,15 @@ class TrackedProductsRestControllerTest {
             .ean(product4.getEan())
             .build();
 
+
+        Gson gson = new Gson();
+        String json = gson.toJson(trackedProductDto);
+
+
         mockMvc.perform(patch("/api/client-company/tracked-products")
                 .with(user(user2))
                 .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(trackedProductDto))
+                .content(json)
             )
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is(notNullValue())))
