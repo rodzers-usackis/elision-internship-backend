@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.dto.ProductDto;
@@ -75,7 +74,7 @@ class AlertsControllerTests {
 
 
         AlertDto alertDto1 = AlertDto.builder()
-                .uuid(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .read(false)
                 .timestamp(LocalDateTime.now().minusDays(10))
                 .product(product)
@@ -83,7 +82,7 @@ class AlertsControllerTests {
                 .build();
 
         AlertDto alertDto2 = AlertDto.builder()
-                .uuid(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .read(true)
                 .timestamp(LocalDateTime.now().minusDays(20))
                 .product(product)
@@ -97,7 +96,7 @@ class AlertsControllerTests {
                         .with(user(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].uuid").value(alertDto1.getUuid().toString()))
+                .andExpect(jsonPath("$[0].uuid").value(alertDto1.getId().toString()))
                 .andExpect(jsonPath("$[0].read").value(alertDto1.isRead()))
                 .andExpect(jsonPath("$[0].product.id").value(alertDto1.getProduct().getId().toString()))
                 .andExpect(jsonPath("$[1].product.name").value(alertDto2.getProduct().getName()))
@@ -231,7 +230,7 @@ class AlertsControllerTests {
                 .build();
 
         AlertDto alertDto1 = AlertDto.builder()
-                .uuid(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .read(true)
                 .timestamp(LocalDateTime.now().minusDays(10))
                 .product(product)
@@ -239,7 +238,7 @@ class AlertsControllerTests {
                 .build();
 
         AlertDto alertDto2 = AlertDto.builder()
-                .uuid(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .read(true)
                 .timestamp(LocalDateTime.now().minusDays(20))
                 .product(product)

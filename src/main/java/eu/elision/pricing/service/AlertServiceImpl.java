@@ -126,15 +126,22 @@ public class AlertServiceImpl implements AlertService {
     public List<AlertDto> markAlertsAsRead(List<AlertDto> alerts) {
         List<Alert> updatedAlerts = alerts.stream()
             .map(alertDto -> {
-                Alert alertEntity = alertRepository.findById(alertDto.getUuid()).orElseThrow();
+                Alert alertEntity = alertRepository.findById(alertDto.getId()).orElseThrow();
                 alertEntity.setRead(true);
                 return alertEntity;
             })
             .collect(Collectors.toList());
 
+        log.debug(">>> Marking {} alerts as read", updatedAlerts.size());
+
         alertRepository.saveAll(updatedAlerts);
 
-        return updatedAlerts.stream().map(alertMapper::domainToDto).toList();
+        List<AlertDto> updatedAlertDtos =
+            updatedAlerts.stream().map(alertMapper::domainToDto).toList();
+
+        log.debug(">>> {} alerts mapped correctly", updatedAlertDtos.size());
+
+        return updatedAlertDtos;
 
     }
 }
