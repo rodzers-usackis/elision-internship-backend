@@ -37,12 +37,15 @@ public class Alert {
     @ManyToOne
     private Price price;
 
+    private PriceComparisonType priceComparisonType;
+
     /**
-     * The client company that owns this alert.
+     * The user that owns this alert.
      */
     @ManyToOne
-    private ClientCompany clientCompany;
+    private User user;
 
+    //TODO: DELETE retailerCompany and product - it's already in the price
     /**
      * The retailer company whose price change triggered the alert creation.
      */

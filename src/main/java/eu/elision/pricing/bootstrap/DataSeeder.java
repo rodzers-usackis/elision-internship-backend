@@ -2,9 +2,8 @@ package eu.elision.pricing.bootstrap;
 
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.repository.*;
-
+import java.time.LocalDateTime;
 import java.util.*;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -25,22 +24,24 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final ClientCompanyRepository clientCompanyRepository;
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
+    private final PriceRepository priceRepository;
     private final ProductRepository productRepository;
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final TrackedProductRepository trackedProductRepository;
+    private final AlertRepository alertRepository;
     private final AlertSettingsRepository alertSettingsRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
         AlertSettings alertSettings = AlertSettings.builder()
-                .emailNotifications(true)
-                .alertStorageDuration(AlertStorageDuration.ONE_MONTH)
+                .notifyViaEmail(true)
+                .alertStorageDuration(30)
                 .build();
 
         // Users
         final User user = User.builder()
-                .email("rodzers.usackis@student.kdg.be")
+                .email("test@elision.eu")
                 .password(passwordEncoder.encode("secure_password"))
                 .firstName("John")
                 .lastName("Smith")
@@ -499,8 +500,9 @@ public class DataSeeder implements CommandLineRunner {
                 trackedProduct20
         )));
 
-        alertSettingsRepository.save(alertSettings);
         user.setClientCompany(clientCompany);
+        user = userRepository.save(user);
+        alertSettingsRepository.save(alertSettings);
         userRepository.save(user);
 
 
@@ -512,17 +514,59 @@ public class DataSeeder implements CommandLineRunner {
 
         retailerCompanyRepository.save(retailerCompany);
 
+        //Price
+        Price price = Price.builder()
+            .amount(699.00)
+            .product(product1)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        priceRepository.save(price);
+
+        Price price2 = Price.builder()
+            .amount(699.00)
+            .product(product2)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        priceRepository.save(price2);
+
+        //Alerts
+        Alert alert = Alert.builder()
+            .price(price)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .retailerCompany(retailerCompany)
+            .product(product1)
+            .user(user)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        alertRepository.save(alert);
+
+        Alert alert2 = Alert.builder()
+            .price(price2)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .retailerCompany(retailerCompany)
+            .product(product2)
+            .user(user)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        alertRepository.save(alert2);
+
 
         // Price Scraping Config
         PriceScrapingConfig priceScrapingConfig = PriceScrapingConfig.builder()
-                .cssSelector("//span[@id='priceblock_ourprice']")
-                .url(
-                        "https://www.amazon.com/Apple-iPhone-128GB-Graphite-Unlocked/dp/B08L5TNJHG/ref=sr_1_3?dchild=1&keywords=iphone+12+pro&qid=1621430008&sr=8-3")
-                .active(true)
-                .retailerCompany(retailerCompany)
-                .product(product1)
-                .commaSeparatedDecimal(true)
-                .build();
+            .cssSelector("//span[@id='priceblock_ourprice']")
+            .url(
+                "https://www.amazon.com/Apple-iPhone-128GB-Graphite-Unlocked/dp/B08L5TNJHG/ref=sr_1_3?dchild=1&keywords=iphone+12+pro&qid=1621430008&sr=8-3")
+            .active(true)
+            .retailerCompany(retailerCompany)
+            .product(product1)
+            .commaSeparatedDecimal(true)
+            .build();
 
         priceScrapingConfigRepository.save(priceScrapingConfig);
     }

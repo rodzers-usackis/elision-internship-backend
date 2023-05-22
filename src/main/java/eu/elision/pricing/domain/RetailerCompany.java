@@ -1,6 +1,7 @@
 package eu.elision.pricing.domain;
 
 import jakarta.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,7 @@ public class RetailerCompany {
     @ElementCollection(targetClass = ProductCategory.class, fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private Set<ProductCategory> categoriesProductsSold;
+
+//    @ManyToMany(mappedBy = "retailerCompanies")
+//    private List<AlertRule> alertRules;
 }

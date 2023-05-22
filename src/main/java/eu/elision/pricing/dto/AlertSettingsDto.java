@@ -13,9 +13,9 @@ import java.util.UUID;
 @Data
 @Builder
 public class AlertSettingsDto {
-    private UUID uuid;
-    private boolean emailNotifications;
+    private UUID id;
+    private boolean alertsActive;
+    private boolean notifyViaEmail;
     private String emailAddress;
-    private AlertStorageDuration alertStorageDuration;
-    private UserDto user;
+    private int alertStorageDuration;
 }

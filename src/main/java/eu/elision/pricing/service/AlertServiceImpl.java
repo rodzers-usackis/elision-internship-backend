@@ -12,7 +12,6 @@ import eu.elision.pricing.mapper.AlertMapper;
 import eu.elision.pricing.repository.AlertRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,7 +35,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public List<AlertDto> getUsersAlerts(User user) {
         List<Alert> alerts =
-            alertRepository.findAllByClientCompany_Id(user.getClientCompany().getId());
+            alertRepository.findAllByUser_Id(user.getId());
 
         return alerts.stream().map(alertMapper::domainToDto).toList();
 
@@ -104,8 +103,9 @@ public class AlertServiceImpl implements AlertService {
     private void createAlert(Product product, AlertRule alertRule, Price price) {
         Alert alert = Alert.builder()
             .product(product)
-            .clientCompany(alertRule.getNotificationSettings().getClientCompany())
+            .user(alertRule.getAlertSettings().getUser())
             .price(price)
+            .priceComparisonType(alertRule.getPriceComparisonType())
             .retailerCompany(price.getRetailerCompany())
             .read(false)
             .timestamp(LocalDateTime.now())
@@ -123,15 +123,23 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public List<AlertDto> markAlertsAsRead(List<AlertDto> alerts) {
         List<Alert> updatedAlerts = alerts.stream()
-                .map(alertDto -> {
-                    Alert alertEntity = alertRepository.findById(alertDto.getUuid()).orElseThrow();
-                    alertEntity.setRead(true);
-                    return alertEntity;
-                })
-                .collect(Collectors.toList());
+            .map(alertDto -> {
+                Alert alertEntity = alertRepository.findById(alertDto.getId()).orElseThrow();
+                alertEntity.setRead(true);
+                return alertEntity;
+            })
+            .collect(Collectors.toList());
+
+        log.debug(">>> Marking {} alerts as read", updatedAlerts.size());
 
         alertRepository.saveAll(updatedAlerts);
 
-        return updatedAlerts.stream().map(alertMapper::domainToDto).toList();
+        List<AlertDto> updatedAlertDtos =
+            updatedAlerts.stream().map(alertMapper::domainToDto).toList();
+
+        log.debug(">>> {} alerts mapped correctly", updatedAlertDtos.size());
+
+        return updatedAlertDtos;
+
     }
 }

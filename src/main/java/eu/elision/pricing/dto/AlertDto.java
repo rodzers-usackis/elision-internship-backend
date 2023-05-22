@@ -1,6 +1,9 @@
 package eu.elision.pricing.dto;
 
 import eu.elision.pricing.domain.Alert;
+import eu.elision.pricing.domain.PriceComparisonType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,13 +20,16 @@ import lombok.Data;
 @Data
 @Builder
 public class AlertDto {
-    private UUID uuid;
+    private UUID id;
 
     private boolean read;
 
     private LocalDateTime timestamp;
 
     private double price;
+
+    @Enumerated(EnumType.STRING)
+    private PriceComparisonType priceComparisonType;
 
     private ProductDto product;
 

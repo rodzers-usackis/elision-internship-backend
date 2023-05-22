@@ -7,11 +7,12 @@ import static org.mockito.Mockito.verify;
 import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.AlertRule;
 import eu.elision.pricing.domain.ClientCompany;
-import eu.elision.pricing.domain.NotificationSettings;
+import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.AlertRepository;
 import java.util.List;
 import java.util.UUID;
@@ -53,10 +54,20 @@ class AlertServiceImplTests {
             .name("Test company")
             .build();
 
-        NotificationSettings notificationSettings = NotificationSettings.builder()
+        User user = User.builder()
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser.be")
+            .clientCompany(clientCompany)
+            .build();
+
+        clientCompany.setUsers(List.of(user));
+
+        AlertSettings alertSettings = AlertSettings.builder()
             .id(UUID.randomUUID())
             .notifyViaEmail(true)
-            .clientCompany(clientCompany)
+            .user(user)
             .build();
 
         AlertRule alertRule1 = AlertRule.builder()
@@ -64,7 +75,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.LOWER)
             .price(100.0)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         AlertRule alertRule2 = AlertRule.builder()
@@ -72,7 +83,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.HIGHER)
             .price(5000.0)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         AlertRule alertRule3 = AlertRule.builder()
@@ -80,7 +91,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.HIGHER)
             .price(200.0)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         product.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
@@ -99,7 +110,7 @@ class AlertServiceImplTests {
             .amount(1000.0)
             .build();
 
-        notificationSettings.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
+        alertSettings.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
 
 
         alertService.createAlerts(product, List.of(price1, price2));
@@ -110,8 +121,8 @@ class AlertServiceImplTests {
         List<Alert> capturedAlerts = alertCaptor.getAllValues();
 
         assertEquals(2, capturedAlerts.size());
-        assertEquals(clientCompany, capturedAlerts.get(0).getClientCompany());
-        assertEquals(clientCompany, capturedAlerts.get(1).getClientCompany());
+        assertEquals(user, capturedAlerts.get(0).getUser());
+        assertEquals(user, capturedAlerts.get(1).getUser());
         assertEquals(product, capturedAlerts.get(0).getProduct());
         assertEquals(product, capturedAlerts.get(1).getProduct());
         assertEquals(price1, capturedAlerts.get(0).getPrice());
@@ -137,10 +148,21 @@ class AlertServiceImplTests {
             .name("Test company")
             .build();
 
-        NotificationSettings notificationSettings = NotificationSettings.builder()
+        User user = User.builder()
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser2.be")
+            .clientCompany(clientCompany)
+            .build();
+
+        clientCompany.setUsers(List.of(user));
+
+
+        AlertSettings alertSettings = AlertSettings.builder()
             .id(UUID.randomUUID())
             .notifyViaEmail(true)
-            .clientCompany(clientCompany)
+            .user(user)
             .build();
 
         AlertRule alertRule1 = AlertRule.builder()
@@ -148,7 +170,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.LOWER)
             .price(500)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         AlertRule alertRule2 = AlertRule.builder()
@@ -156,7 +178,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.HIGHER)
             .price(5000.0)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         AlertRule alertRule3 = AlertRule.builder()
@@ -164,7 +186,7 @@ class AlertServiceImplTests {
             .product(product)
             .priceComparisonType(PriceComparisonType.LOWER)
             .price(200.0)
-            .notificationSettings(notificationSettings)
+            .alertSettings(alertSettings)
             .build();
 
         product.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
