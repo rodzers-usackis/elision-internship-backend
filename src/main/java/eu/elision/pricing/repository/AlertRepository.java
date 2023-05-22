@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AlertRepository extends JpaRepository<Alert, UUID> {
     List<Alert> findAllByClientCompany_Id(UUID clientCompanyId);
 
-    int countAlertByClientCompanyAndReadIsFalse(UUID clientCompanyId);
+    int countAlertByClientCompany_IdAndReadIsFalse(UUID clientCompanyId);
 }
