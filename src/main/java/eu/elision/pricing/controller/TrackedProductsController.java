@@ -41,10 +41,10 @@ public class TrackedProductsController {
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/client-company/tracked-products")
-    public ResponseEntity<List<TrackedProduct>> getTrackedProducts(
+    public ResponseEntity<List<TrackedProductWithDetailsDto>> getTrackedProducts(
         @AuthenticationPrincipal User user) {
 
-        List<TrackedProduct> trackedProducts = trackedProductService.getTrackedProducts(user);
+        List<TrackedProductWithDetailsDto> trackedProducts = trackedProductService.getTrackedProducts(user);
 
         return new ResponseEntity<>(trackedProducts, HttpStatus.OK);
     }

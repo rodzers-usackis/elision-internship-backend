@@ -1,11 +1,15 @@
 package eu.elision.pricing.controller;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.dto.ProductDto;
@@ -40,6 +44,8 @@ class AlertsControllerTests {
     @MockBean
     private AlertService alertService;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
     void getAlertsCorrectlyForTheAuthenticatedUser() throws Exception {
 
@@ -69,6 +75,7 @@ class AlertsControllerTests {
 
 
         AlertDto alertDto1 = AlertDto.builder()
+                .uuid(UUID.randomUUID())
                 .read(false)
                 .timestamp(LocalDateTime.now().minusDays(10))
                 .product(product)
@@ -76,6 +83,7 @@ class AlertsControllerTests {
                 .build();
 
         AlertDto alertDto2 = AlertDto.builder()
+                .uuid(UUID.randomUUID())
                 .read(true)
                 .timestamp(LocalDateTime.now().minusDays(20))
                 .product(product)
@@ -89,6 +97,7 @@ class AlertsControllerTests {
                         .with(user(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].uuid").value(alertDto1.getUuid().toString()))
                 .andExpect(jsonPath("$[0].read").value(alertDto1.isRead()))
                 .andExpect(jsonPath("$[0].product.id").value(alertDto1.getProduct().getId().toString()))
                 .andExpect(jsonPath("$[1].product.name").value(alertDto2.getProduct().getName()))
@@ -141,9 +150,10 @@ class AlertsControllerTests {
                 .build();
 
         Alert alert1 = Alert.builder()
+                .id(UUID.randomUUID())
                 .read(false)
                 .timestamp(LocalDateTime.now().minusDays(10))
-                .clientCompany(clientCompany)
+                .user(user)
                 .retailerCompany(retailerCompany)
                 .product(product)
                 .retailerCompany(retailerCompany)
@@ -151,9 +161,10 @@ class AlertsControllerTests {
                 .build();
 
         Alert alert2 = Alert.builder()
+                .id(UUID.randomUUID())
                 .read(false)
                 .timestamp(LocalDateTime.now().minusDays(10))
-                .clientCompany(clientCompany)
+                .user(user)
                 .retailerCompany(retailerCompany)
                 .product(product)
                 .retailerCompany(retailerCompany)
@@ -161,9 +172,10 @@ class AlertsControllerTests {
                 .build();
 
         Alert alert3 = Alert.builder()
+                .id(UUID.randomUUID())
                 .read(true)
                 .timestamp(LocalDateTime.now().minusDays(10))
-                .clientCompany(clientCompany)
+                .user(user)
                 .retailerCompany(retailerCompany)
                 .product(product)
                 .retailerCompany(retailerCompany)
@@ -177,5 +189,70 @@ class AlertsControllerTests {
                         .with(user(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(2));
+    }
+
+    @Test
+    void givenMarkAlertAsReadForTheAuthenticatedUser() throws Exception {
+
+        ProductDto product = ProductDto.builder()
+                .name("Test Product")
+                .id(UUID.randomUUID())
+                .build();
+
+        Address address = Address.builder()
+                .street("Main Street")
+                .streetNumber("123")
+                .apartmentNumber("1")
+                .city("New York")
+                .postalCode("10001")
+                .country("USA")
+                .build();
+
+        ClientCompany clientCompany = ClientCompany.builder()
+                .address(address)
+                .name("Elision")
+                .website("https://elision.eu")
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .build();
+
+        User user = User.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .role(Role.CLIENT)
+                .email("john.doe@gmail.com")
+                .build();
+
+        clientCompany.setUsers((List.of(user)));
+        user.setClientCompany(clientCompany);
+
+        RetailerCompanyDto retailerCompany = RetailerCompanyDto.builder()
+                .name("Test Retailer")
+                .id(UUID.randomUUID())
+                .build();
+
+        AlertDto alertDto1 = AlertDto.builder()
+                .uuid(UUID.randomUUID())
+                .read(true)
+                .timestamp(LocalDateTime.now().minusDays(10))
+                .product(product)
+                .retailerCompany(retailerCompany)
+                .build();
+
+        AlertDto alertDto2 = AlertDto.builder()
+                .uuid(UUID.randomUUID())
+                .read(true)
+                .timestamp(LocalDateTime.now().minusDays(20))
+                .product(product)
+                .retailerCompany(retailerCompany)
+                .build();
+
+//        mockMvc.perform(patch("/api/alerts")
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .with(user(user))
+//                        .content(objectMapper.writeValueAsString(List.of(alertDto1, alertDto2))))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(2)))
+//                .andExpect(jsonPath("$[0].read").value(true))
+//                .andExpect(jsonPath("$[1].read").value(true));
     }
 }

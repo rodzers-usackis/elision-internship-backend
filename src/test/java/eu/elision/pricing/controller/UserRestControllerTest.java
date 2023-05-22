@@ -3,6 +3,7 @@ package eu.elision.pricing.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -68,17 +69,11 @@ class UserRestControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .with(user(user)))
             .andExpect(status().isOk())
-            .andExpect(result -> {
-                String json = result.getResponse().getContentAsString();
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(json);
+            .andExpect(jsonPath("$.email").value(user.getEmail()))
+            .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
+            .andExpect(jsonPath("$.lastName").value(user.getLastName()))
+            .andExpect(jsonPath("$.role").value(user.getRole().toString()));
 
-                assertEquals(user.getEmail(), jsonNode.get("email").asText());
-                assertEquals(user.getFirstName(), jsonNode.get("firstName").asText());
-                assertEquals(user.getLastName(), jsonNode.get("lastName").asText());
-                assertEquals(user.getRole().toString(), jsonNode.get("role").asText());
-
-            });
 
 
     }
@@ -104,17 +99,11 @@ class UserRestControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + jwt))
             .andExpect(status().isOk())
-            .andExpect(result -> {
-                String json = result.getResponse().getContentAsString();
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(json);
+            .andExpect(jsonPath("$.email").value(user.getEmail()))
+            .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
+            .andExpect(jsonPath("$.lastName").value(user.getLastName()))
+            .andExpect(jsonPath("$.role").value(user.getRole().toString()));
 
-                assertEquals(user.getEmail(), jsonNode.get("email").asText());
-                assertEquals(user.getFirstName(), jsonNode.get("firstName").asText());
-                assertEquals(user.getLastName(), jsonNode.get("lastName").asText());
-                assertEquals(user.getRole().toString(), jsonNode.get("role").asText());
-
-            });
 
 
     }

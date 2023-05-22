@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Entity(name = "user_account")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -47,6 +46,14 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_company_id")
     private ClientCompany clientCompany;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AlertSettings alertSettings;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Alert> alerts;
 
     /**
      * Creates a new user with the given email and password.

@@ -2,6 +2,7 @@ package eu.elision.pricing.bootstrap;
 
 import eu.elision.pricing.domain.*;
 import eu.elision.pricing.repository.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,102 +24,113 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final ClientCompanyRepository clientCompanyRepository;
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
+    private final PriceRepository priceRepository;
     private final ProductRepository productRepository;
     private final RetailerCompanyRepository retailerCompanyRepository;
     private final TrackedProductRepository trackedProductRepository;
+    private final AlertRepository alertRepository;
+    private final AlertSettingsRepository alertSettingsRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        // Users
-        final User user = User.builder()
-            .email("test@elision.eu")
-            .password(passwordEncoder.encode("secure_password"))
-            .firstName("John")
-            .lastName("Smith")
-            .role(Role.ADMIN)
-            .build();
+        AlertSettings alertSettings = AlertSettings.builder()
+                .notifyViaEmail(true)
+                .alertStorageDuration(30)
+                .build();
 
+        // Users
+        User user = User.builder()
+                .email("test@elision.eu")
+                .password(passwordEncoder.encode("secure_password"))
+                .firstName("John")
+                .lastName("Smith")
+                .role(Role.ADMIN)
+                .alertSettings(alertSettings)
+                .build();
+
+        alertSettings.setEmailAddress(user.getEmail());
+        alertSettings.setUser(user);
 
         // Addresses
         Address address = Address.builder()
-            .street("Main Street")
-            .streetNumber("123")
-            .apartmentNumber("1")
-            .city("New York")
-            .postalCode("10001")
-            .country("USA")
-            .build();
+                .street("Main Street")
+                .streetNumber("123")
+                .apartmentNumber("1")
+                .city("New York")
+                .postalCode("10001")
+                .country("USA")
+                .build();
 
 
         // Products
         Product product1 = Product.builder()
-            .name("Apple iPhone 12 Pro")
-            .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
-            .ean("0190199731320")
-            .manufacturerCode("MGMH3LL/A")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Apple iPhone 12 Pro")
+                .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
+                .ean("0190199731320")
+                .manufacturerCode("MGMH3LL/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product1);
 
         Product product2 = Product.builder()
-            .name("Apple iPhone 14 Pro")
-            .description("128GB, Spacezwart")
-            .ean("194253401179")
-            .manufacturerCode("MPXV3ZD/A")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Apple iPhone 14 Pro")
+                .description("128GB, Spacezwart")
+                .ean("194253401179")
+                .manufacturerCode("MPXV3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product2);
 
         Product product3 = Product.builder()
-            .name("Apple iPhone 14")
-            .description("128GB, Middernacht")
-            .ean("194253408253")
-            .manufacturerCode("MPUF3ZD/A")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Apple iPhone 14")
+                .description("128GB, Middernacht")
+                .ean("194253408253")
+                .manufacturerCode("MPUF3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product3);
 
         Product product4 = Product.builder()
-            .name("Apple iPhone 13")
-            .description("128GB, Black")
-            .ean("194252707289")
-            .manufacturerCode("MLPF3ZD/A")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Apple iPhone 13")
+                .description("128GB, Black")
+                .ean("194252707289")
+                .manufacturerCode("MLPF3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product4);
 
         Product product5 = Product.builder()
-            .name("Apple iPhone 12")
-            .description("128GB, Black")
-            .ean("194252031315")
-            .manufacturerCode("MGJA3ZD/A")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Apple iPhone 12")
+                .description("128GB, Black")
+                .ean("194252031315")
+                .manufacturerCode("MGJA3ZD/A")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product5);
 
         Product product6 = Product.builder()
-            .name("Samsung Galaxy S23 Ultra 5G")
-            .description("512GB, Phantom Black")
-            .ean("8806094729207")
-            .manufacturerCode("SM-S918BZKHEUB")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Samsung Galaxy S23 Ultra 5G")
+                .description("512GB, Phantom Black")
+                .ean("8806094729207")
+                .manufacturerCode("SM-S918BZKHEUB")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product6);
 
         Product product7 = Product.builder()
-            .name("Samsung Galaxy S22 Ultra 5G")
-            .description("128GB, Phantom Black")
-            .ean("8806092879140")
-            .manufacturerCode("SM-S908BZKDEUB")
-            .category(ProductCategory.ELECTRONICS)
-            .build();
+                .name("Samsung Galaxy S22 Ultra 5G")
+                .description("128GB, Phantom Black")
+                .ean("8806092879140")
+                .manufacturerCode("SM-S908BZKDEUB")
+                .category(ProductCategory.ELECTRONICS)
+                .build();
 
         productRepository.save(product7);
 
@@ -489,16 +501,60 @@ public class DataSeeder implements CommandLineRunner {
         )));
 
         user.setClientCompany(clientCompany);
+        user = userRepository.save(user);
+        alertSettingsRepository.save(alertSettings);
         userRepository.save(user);
 
 
         // Retailer Company
         RetailerCompany retailerCompany = RetailerCompany.builder()
-            .name("Amazon")
-            .website("https://amazon.com")
-            .build();
+                .name("Amazon")
+                .website("https://amazon.com")
+                .build();
 
         retailerCompanyRepository.save(retailerCompany);
+
+        //Price
+        Price price = Price.builder()
+            .amount(699.00)
+            .product(product1)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        priceRepository.save(price);
+
+        Price price2 = Price.builder()
+            .amount(699.00)
+            .product(product2)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        priceRepository.save(price2);
+
+        //Alerts
+        Alert alert = Alert.builder()
+            .price(price)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .retailerCompany(retailerCompany)
+            .product(product1)
+            .user(user)
+            .timestamp(LocalDateTime.now().minusDays(1))
+            .build();
+
+        alertRepository.save(alert);
+
+        Alert alert2 = Alert.builder()
+            .price(price2)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .retailerCompany(retailerCompany)
+            .product(product2)
+            .user(user)
+            .timestamp(LocalDateTime.now().minusDays(2))
+            .build();
+
+        alertRepository.save(alert2);
 
 
         // Price Scraping Config

@@ -32,7 +32,7 @@ public class ClientCompany extends RetailerCompany {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientCompany")
     private List<User> users;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientCompany")
-    private List<Alert> alerts;
+
+
 
 }

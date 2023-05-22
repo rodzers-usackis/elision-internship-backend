@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PriceHistoryMapperImpl implements PriceHistoryMapper {
 
-    private final CompanyMapper companyMapper;
+    private final RetailerCompanyMapper retailerCompanyMapper;
     private final ProductMapper productMapper;
 
     @Override
@@ -47,7 +47,7 @@ public class PriceHistoryMapperImpl implements PriceHistoryMapper {
                     .build())
                 .collect(Collectors.toList());
 
-            RetailerCompanyDto retailerCompanyDto = companyMapper.domainToDto(company);
+            RetailerCompanyDto retailerCompanyDto = retailerCompanyMapper.domainToDto(company);
 
             RetailerCompanyTimestampAmountsDto retailerCompanyTimestampAmountsDto =
                 RetailerCompanyTimestampAmountsDto.builder()

@@ -4,6 +4,7 @@ import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductPriceUpdateDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductWithDetailsDto;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public interface TrackedProductService {
 
     TrackedProduct createTrackedProductFromDto(User user, TrackedProductDto trackedProductDto);
 
-    List<TrackedProduct> getTrackedProducts(User user);
+    List<TrackedProductWithDetailsDto> getTrackedProducts(User user);
 
     TrackedProduct updateTrackedProduct(User user,
                                         TrackedProductPriceUpdateDto trackedProductPriceUpdateDto);

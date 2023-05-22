@@ -14,12 +14,13 @@ import org.springframework.stereotype.Component;
 public class AlertMapperImpl implements AlertMapper {
 
     private final ProductMapper productMapper;
-    private final CompanyMapper retailerCompanyMapper;
+    private final RetailerCompanyMapper retailerCompanyMapper;
 
     @Override
     public AlertDto domainToDto(Alert alert) {
         return AlertDto.builder()
             .price(alert.getPrice().getAmount())
+            .priceComparisonType(alert.getPriceComparisonType())
             .read(alert.isRead())
             .retailerCompany(retailerCompanyMapper.domainToDto(alert.getRetailerCompany()))
             .product(productMapper.domainToDto(alert.getPrice().getProduct()))

@@ -6,7 +6,9 @@ import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductDto;
 import eu.elision.pricing.dto.trackedproduct.TrackedProductPriceUpdateDto;
+import eu.elision.pricing.dto.trackedproduct.TrackedProductWithDetailsDto;
 import eu.elision.pricing.exceptions.NotFoundException;
+import eu.elision.pricing.mapper.TrackedProductMapper;
 import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.ProductRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class TrackedProductServiceImpl implements TrackedProductService {
 
     private final TrackedProductRepository trackedProductRepository;
+    private final TrackedProductMapper trackedProductMapper;
     private final ProductRepository productRepository;
     private final ClientCompanyRepository clientCompanyRepository;
 
@@ -78,10 +81,14 @@ public class TrackedProductServiceImpl implements TrackedProductService {
     }
 
     @Override
-    public List<TrackedProduct> getTrackedProducts(User user) {
+    public List<TrackedProductWithDetailsDto> getTrackedProducts(User user) {
 
-        return trackedProductRepository.findTrackedProductByClientCompanyId(
-            user.getClientCompany().getId());
+        List<TrackedProduct> trackedProducts =
+            trackedProductRepository.findTrackedProductByClientCompanyId(
+                user.getClientCompany().getId());
+
+        return trackedProducts.stream().map(trackedProductMapper::domainToDtoWithDetails)
+            .toList();
     }
 
     @Transactional

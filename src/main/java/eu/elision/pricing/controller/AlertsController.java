@@ -5,18 +5,17 @@ import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.service.AlertService;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Rest controller for {@link Alert}s.
  */
+@CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alerts")
@@ -44,5 +43,13 @@ public class AlertsController {
 
         int unreadAlertCount = alertService.getUnreadAlertCount(user);
         return ResponseEntity.ok(unreadAlertCount);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PatchMapping()
+    public ResponseEntity<List<AlertDto>> markAlertsAsRead(@RequestBody List<AlertDto> alertDto) {
+
+        List<AlertDto> updatedAlerts = alertService.markAlertsAsRead(alertDto);
+        return ResponseEntity.ok(updatedAlerts);
     }
 }
