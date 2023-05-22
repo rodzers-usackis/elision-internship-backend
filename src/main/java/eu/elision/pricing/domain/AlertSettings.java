@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.util.UUID;
 
+/**
+ * Represents notification settings for each {@link User}.
+ */
 @Getter
 @Setter
 @Builder

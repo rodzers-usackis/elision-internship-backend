@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * JPA repository for {@link RetailerCompany} entities.
  */
-
 public interface RetailerCompanyRepository extends JpaRepository<RetailerCompany, UUID> {
 }

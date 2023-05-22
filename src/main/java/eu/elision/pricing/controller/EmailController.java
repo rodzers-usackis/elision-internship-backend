@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest controller for {@link EmailService}.
+ * This controller is used to send out emails to users
+ * whenever the price of a product changes.
+ *
+ * Execution depends on:
+ * @see EmailService
+ */
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

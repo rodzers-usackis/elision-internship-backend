@@ -4,7 +4,7 @@ import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.domain.emailService.EmailDetails;
+import eu.elision.pricing.dto.emailService.EmailDetailsDto;
 import eu.elision.pricing.events.ProductPriceScrapedEvent;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import eu.elision.pricing.service.AlertService;
@@ -48,7 +48,7 @@ public class ProductPriceScrapedEventListener {
     /**
      * Handles the {@link ProductsPricesScrapedEvent} event
      * by creating {@link Alert}s
-     * and sending an {@link EmailDetails} to the affected {@link User}s.
+     * and sending an {@link EmailDetailsDto} to the affected {@link User}s.
      *
      * @param event the event containing the product and the new prices
      */

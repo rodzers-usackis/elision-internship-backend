@@ -1,7 +1,7 @@
 package eu.elision.pricing.service;
 
 import eu.elision.pricing.domain.*;
-import eu.elision.pricing.domain.emailService.EmailDetails;
+import eu.elision.pricing.dto.emailService.EmailDetailsDto;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.*;
 
+/**
+ * Implementation of {@link EmailService}.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -67,7 +70,7 @@ public class EmailServiceImpl implements EmailService {
             List<Product> subscribedProducts = entry.getValue();
 
             // Send the email to the user with their subscribed products
-            EmailDetails emailDetails = EmailDetails.builder()
+            EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
                     .from(senderEmail)
                     .to(user.getEmail())
                     .subject("Products prices update")
@@ -81,7 +84,7 @@ public class EmailServiceImpl implements EmailService {
                     .build();
 
 
-            sendEmailToUser(emailDetails);
+            sendEmailToUser(emailDetailsDto);
         }
 
         // Return a success message or any relevant information
@@ -90,9 +93,9 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Override
-    public String sendEmailToUser(EmailDetails emailDetails) {
-        logger.debug("Sending email to: {}", emailDetails.getTo());
-        logger.debug("Sender email: {}", emailDetails.getFrom());
+    public String sendEmailToUser(EmailDetailsDto emailDetailsDto) {
+        logger.debug("Sending email to: {}", emailDetailsDto.getTo());
+        logger.debug("Sender email: {}", emailDetailsDto.getFrom());
 
         // Create a mail message
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -101,13 +104,13 @@ public class EmailServiceImpl implements EmailService {
         try {
             // Prepare the email
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setSubject(emailDetails.getSubject());
+            mimeMessageHelper.setSubject(emailDetailsDto.getSubject());
             mimeMessageHelper.setFrom(senderEmail);
-            mimeMessageHelper.setTo(emailDetails.getTo());
-            mimeMessageHelper.setText(emailDetails.getBody(), true);
+            mimeMessageHelper.setTo(emailDetailsDto.getTo());
+            mimeMessageHelper.setText(emailDetailsDto.getBody(), true);
 
             // Get file from the file system
-            FileSystemResource fileSystemResource = new FileSystemResource(new File(emailDetails.getAttachment()));
+            FileSystemResource fileSystemResource = new FileSystemResource(new File(emailDetailsDto.getAttachment()));
 
             // Add the attachment
             mimeMessageHelper.addAttachment(Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);

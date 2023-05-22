@@ -1,6 +1,7 @@
 package eu.elision.pricing.controller;
 
 import eu.elision.pricing.domain.User;
+import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.dto.AlertSettingsDto;
 import eu.elision.pricing.service.AlertSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest controller for {@link AlertSettings}s.
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alert-settings")
