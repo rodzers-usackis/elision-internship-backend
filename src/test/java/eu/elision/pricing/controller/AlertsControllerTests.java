@@ -96,7 +96,7 @@ class AlertsControllerTests {
                         .with(user(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].uuid").value(alertDto1.getId().toString()))
+                .andExpect(jsonPath("$[0].id").value(alertDto1.getId().toString()))
                 .andExpect(jsonPath("$[0].read").value(alertDto1.isRead()))
                 .andExpect(jsonPath("$[0].product.id").value(alertDto1.getProduct().getId().toString()))
                 .andExpect(jsonPath("$[1].product.name").value(alertDto2.getProduct().getName()))

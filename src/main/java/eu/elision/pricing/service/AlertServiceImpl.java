@@ -117,7 +117,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public int getUnreadAlertCount(User user) {
 
-        return alertRepository.countAlertByClientCompany_IdAndReadIsFalse(user.getClientCompany().getId());
+        return (int) alertRepository.countAlertByUser_IdAndReadIsFalse(user.getId());
     }
 
     @Override
