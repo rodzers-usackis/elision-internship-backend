@@ -3,8 +3,6 @@ package eu.elision.pricing.service;
 import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertSettingsDto;
-import eu.elision.pricing.dto.notifications.NotificationSettingsDto;
-import eu.elision.pricing.dto.notifications.NotificationSettingsWithAlertRulesDto;
 import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.mapper.AlertSettingsMapper;
 import eu.elision.pricing.repository.AlertSettingsRepository;
