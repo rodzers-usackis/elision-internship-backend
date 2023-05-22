@@ -35,7 +35,7 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public List<AlertDto> getUsersAlerts(User user) {
         List<Alert> alerts =
-            alertRepository.findAllByUser_Id(user.getClientCompany().getId());
+            alertRepository.findAllByUser_Id(user.getId());
 
         return alerts.stream().map(alertMapper::domainToDto).toList();
 
@@ -117,18 +117,19 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public int getUnreadAlertCount(User user) {
 
-        return (int)alertRepository.countAlertByUser_IdAndReadIsFalse(user.getClientCompany().getId());
+        return (int) alertRepository.countAlertByUser_IdAndReadIsFalse(
+            user.getClientCompany().getId());
     }
 
     @Override
     public List<AlertDto> markAlertsAsRead(List<AlertDto> alerts) {
         List<Alert> updatedAlerts = alerts.stream()
-                .map(alertDto -> {
-                    Alert alertEntity = alertRepository.findById(alertDto.getUuid()).orElseThrow();
-                    alertEntity.setRead(true);
-                    return alertEntity;
-                })
-                .collect(Collectors.toList());
+            .map(alertDto -> {
+                Alert alertEntity = alertRepository.findById(alertDto.getUuid()).orElseThrow();
+                alertEntity.setRead(true);
+                return alertEntity;
+            })
+            .collect(Collectors.toList());
 
         alertRepository.saveAll(updatedAlerts);
 
