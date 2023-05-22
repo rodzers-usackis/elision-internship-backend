@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 /**
  * Represents a client company that will track prices of chosen {@link Product}s.
  */
-@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Getter
 @Setter

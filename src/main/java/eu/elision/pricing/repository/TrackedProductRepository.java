@@ -22,4 +22,6 @@ public interface TrackedProductRepository extends JpaRepository<TrackedProduct, 
         + "AND t.id IN :trackedProductIds")
     void deleteTrackedProducts(@Param("companyId") UUID companyId,
                                @Param("trackedProductIds") List<UUID> trackedProductIds);
+
+    List<TrackedProduct> findTrackedProductsByProduct_Id(UUID productId);
 }

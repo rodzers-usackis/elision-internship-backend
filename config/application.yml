@@ -12,6 +12,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
         format_sql: true
+  mail:
+    host: smtp-mail.outlook.com
+    port: 587
+    username: pricespy19052023@outlook.com
+    password: price_spy_secure_password_123
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
   profiles:
       active:
         - seed-data

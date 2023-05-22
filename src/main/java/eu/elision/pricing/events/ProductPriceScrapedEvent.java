@@ -17,6 +17,4 @@ public class ProductPriceScrapedEvent {
 
     private Product product;
     private List<Price> newPrices;
-
-
 }

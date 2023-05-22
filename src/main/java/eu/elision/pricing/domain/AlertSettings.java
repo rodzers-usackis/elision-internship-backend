@@ -23,9 +23,9 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+
 /**
- * Represents notification settings for a {@link ClientCompany}.
- * Contains {@link AlertRule}s.
+ * Represents notification settings for each {@link User}.
  */
 @Getter
 @Setter

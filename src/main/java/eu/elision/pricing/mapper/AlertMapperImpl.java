@@ -19,6 +19,7 @@ public class AlertMapperImpl implements AlertMapper {
     @Override
     public AlertDto domainToDto(Alert alert) {
         return AlertDto.builder()
+            .id(alert.getId())
             .price(alert.getPrice().getAmount())
             .priceComparisonType(alert.getPriceComparisonType())
             .read(alert.isRead())

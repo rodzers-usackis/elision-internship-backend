@@ -31,7 +31,6 @@ public class TrackedProductServiceImpl implements TrackedProductService {
     private final TrackedProductRepository trackedProductRepository;
     private final TrackedProductMapper trackedProductMapper;
     private final ProductRepository productRepository;
-    private final ClientCompanyRepository clientCompanyRepository;
 
     @Transactional
     @Override
@@ -120,5 +119,10 @@ public class TrackedProductServiceImpl implements TrackedProductService {
 
         trackedProductRepository.deleteTrackedProducts(user.getClientCompany().getId(),
             trackedProductIds);
+    }
+
+    @Override
+    public List<TrackedProduct> getTrackedProductsByProductId(UUID productId) {
+        return trackedProductRepository.findTrackedProductsByProduct_Id(productId);
     }
 }

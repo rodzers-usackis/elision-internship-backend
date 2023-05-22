@@ -1,14 +1,10 @@
 package eu.elision.pricing.repository;
 
 import eu.elision.pricing.domain.Price;
-import eu.elision.pricing.domain.Product;
-import eu.elision.pricing.domain.RetailerCompany;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * JPA repository for {@link Price} entities.
@@ -27,4 +23,7 @@ public interface PriceRepository extends JpaRepository<Price, UUID> {
         UUID retailerCompanyId);
 
 
+    Price getPriceById(UUID priceId);
+
+    List<Price> getPricesByProduct_Id(UUID productId);
 }
