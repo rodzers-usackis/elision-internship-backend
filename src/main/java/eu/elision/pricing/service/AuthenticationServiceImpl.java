@@ -7,12 +7,12 @@ import eu.elision.pricing.dto.AuthenticationResponse;
 import eu.elision.pricing.dto.RegistrationRequest;
 import eu.elision.pricing.exceptions.EmailAlreadyRegistered;
 import eu.elision.pricing.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 /**
  * Implementation of {@link AuthenticationService}.
@@ -36,10 +36,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
-        User user = new User(registrationRequest.getFirstName(), registrationRequest.getLastName(), registrationRequest.getEmail(),
-            passwordEncoder.encode(registrationRequest.getPassword()));
+        User user = new User(
+            registrationRequest.getFirstName(),
+            registrationRequest.getLastName(),
+            registrationRequest.getEmail(),
+            passwordEncoder.encode(registrationRequest.getPassword())
+        );
 
-      
 
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {

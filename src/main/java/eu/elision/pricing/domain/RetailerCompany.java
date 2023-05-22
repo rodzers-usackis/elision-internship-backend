@@ -1,4 +1,5 @@
 package eu.elision.pricing.domain;
+
 import jakarta.persistence.*;
 import java.util.Set;
 import java.util.UUID;

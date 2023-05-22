@@ -5,8 +5,11 @@ import eu.elision.pricing.dto.ClientCompanyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link ClientCompanyMapper}.
+ */
 @Component
-public class ClientCompanyMapperImpl implements  ClientCompanyMapper {
+public class ClientCompanyMapperImpl implements ClientCompanyMapper {
 
     @Override
     public ClientCompanyDto domainToDto(ClientCompany clientCompany) {
@@ -14,7 +17,7 @@ public class ClientCompanyMapperImpl implements  ClientCompanyMapper {
     }
 
     @Override
-    public ClientCompany dtoToDomain(ClientCompanyDto clientCompanyDTO) {
+    public ClientCompany dtoToDomain(ClientCompanyDto clientCompanyDto) {
         return null;
     }
 }
