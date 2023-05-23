@@ -45,7 +45,8 @@ public class AlertSettingsServiceImpl implements AlertSettingsService {
         AlertSettings alertSettings =
             alertSettingRepository.findAlertSettingsByUser_Id(user.getId());
 
-        log.debug(">>> getting notifications settings for client company id: {}", user.getClientCompany().getId());
+        log.debug(">>> getting notifications settings for client company id: {}",
+            user.getClientCompany().getId());
 
         if (alertSettings == null) {
             throw new EntityNotFoundException("Notification settings not found");
@@ -58,16 +59,17 @@ public class AlertSettingsServiceImpl implements AlertSettingsService {
     public void updateNotificationSettings(User user,
                                            AlertSettingsDto alertSettingsDto) {
 
-        AlertSettings alertSettings = alertSettingRepository.findAlertSettingsByUser_Id(user.getId());
+        AlertSettings alertSettings =
+            alertSettingRepository.findAlertSettingsByUser_Id(user.getId());
 
         if (alertSettings == null) {
             throw new NotFoundException("Settings not found");
         }
 
-//        alertSettings.setEmailAddress(alertSettingsDto.getEmailAddress());
+        //alertSettings.setEmailAddress(alertSettingsDto.getEmailAddress());
         alertSettings.setNotifyViaEmail(alertSettingsDto.isNotifyViaEmail());
         alertSettings.setAlertsActive(alertSettingsDto.isAlertsActive());
-//        alertSettings.setAlertStorageDuration(alertSettingsDto.getAlertStorageDuration());
+        //alertSettings.setAlertStorageDuration(alertSettingsDto.getAlertStorageDuration());
 
         alertSettingRepository.save(alertSettings);
 

@@ -118,7 +118,7 @@ public class AlertServiceImpl implements AlertService {
         Alert alert = Alert.builder()
             .product(product)
             .user(alertRule.getAlertSettings().getUser())
-            .price(price)
+            .price(price.getAmount())
             .priceComparisonType(alertRule.getPriceComparisonType())
             .retailerCompany(price.getRetailerCompany())
             .read(false)

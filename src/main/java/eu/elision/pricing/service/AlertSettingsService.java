@@ -11,7 +11,9 @@ import eu.elision.pricing.dto.AlertSettingsDto;
 public interface AlertSettingsService {
 
     AlertSettingsDto getAlertSettings(User user);
+
     AlertSettings createAlertSettings(AlertSettings alertSettings);
+
     AlertSettingsDto getNotificationSettings(User user);
 
     void updateNotificationSettings(User user,

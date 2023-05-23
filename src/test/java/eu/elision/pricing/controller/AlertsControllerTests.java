@@ -5,26 +5,28 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import eu.elision.pricing.domain.*;
+import eu.elision.pricing.domain.Address;
+import eu.elision.pricing.domain.Alert;
+import eu.elision.pricing.domain.ClientCompany;
+import eu.elision.pricing.domain.Product;
+import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.RetailerCompany;
+import eu.elision.pricing.domain.Role;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.dto.RetailerCompanyDto;
 import eu.elision.pricing.service.AlertService;
-
 import eu.elision.pricing.util.LocalDateTimeAdapter;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -256,7 +258,8 @@ class AlertsControllerTests {
             .retailerCompany(retailerCompany)
             .build();
 
-        when(alertService.markAlertsAsRead(List.of(alertDto1, alertDto2))).thenReturn(List.of(alertDto1, alertDto2));
+        when(alertService.markAlertsAsRead(List.of(alertDto1, alertDto2))).thenReturn(
+            List.of(alertDto1, alertDto2));
 
         mockMvc.perform(patch("/api/alerts")
                 .accept(MediaType.APPLICATION_JSON)

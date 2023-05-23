@@ -5,8 +5,8 @@ import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.RetailerCompanyDto;
 import eu.elision.pricing.dto.AlertRuleDto;
+import eu.elision.pricing.dto.RetailerCompanyDto;
 import eu.elision.pricing.mapper.AlertRuleMapper;
 import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.ProductRepository;
@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service for {@link AlertRule}s.
+ */
 @RequiredArgsConstructor
 @Service
 public class AlertRuleServiceImpl implements AlertRuleService {

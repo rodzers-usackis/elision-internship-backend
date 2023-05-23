@@ -25,6 +25,12 @@ public class AlertSettingsController {
 
     private final AlertSettingsService alertSettingsService;
 
+    /**
+     * Retrieves the alert settings for the authenticated user.
+     *
+     * @param user the authenticated user
+     * @return the updated alert settings
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<AlertSettingsDto> getAlertSettings(@AuthenticationPrincipal User user) {
@@ -33,6 +39,13 @@ public class AlertSettingsController {
         return ResponseEntity.ok(alertSettingsDto);
     }
 
+    /**
+     * Updates the alert settings for the authenticated user.
+     *
+     * @param user             the authenticated user
+     * @param alertSettingsDto AlertSettingsDto with updated values
+     * @return no content
+     */
     @CrossOrigin("http://localhost:3000")
     @PatchMapping
     public ResponseEntity<Void> updateNotificationSettings(

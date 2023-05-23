@@ -42,7 +42,6 @@ public class PriceServiceImpl implements PriceService {
                 .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
 
 
-
         productToPriceScrapingConfigMap.forEach((product, pscs) -> {
 
             List<Price> pricesForCurrentProduct = new ArrayList<>();
@@ -68,12 +67,12 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public void scrapeAndSavePricesV2() {
         List<PriceScrapingConfig> priceScrapingConfigs =
-                priceScrapingConfigRepository.findAllByActiveTrue();
+            priceScrapingConfigRepository.findAllByActiveTrue();
 
 
         Map<Product, List<PriceScrapingConfig>> productToPriceScrapingConfigMap =
-                priceScrapingConfigs.stream()
-                        .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
+            priceScrapingConfigs.stream()
+                .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
 
         productToPriceScrapingConfigMap.forEach((product, pscs) -> {
 
@@ -84,14 +83,15 @@ public class PriceServiceImpl implements PriceService {
                     Price scrapedPrice = scraperService.scrapePrice(psc);
                     priceRepository.save(scrapedPrice);
 
-                    List<UUID> pricesForCurrentProduct = productToPricesMap.getOrDefault(psc.getProduct().getId(), new ArrayList<>());
+                    List<UUID> pricesForCurrentProduct = productToPricesMap.getOrDefault(
+                        psc.getProduct().getId(), new ArrayList<>());
                     pricesForCurrentProduct.add(scrapedPrice.getId());
                     productToPricesMap.put(psc.getProduct().getId(), pricesForCurrentProduct);
                 } catch (Exception e) {
                     log.error(
-                            "Error while scraping price for Product (name:{}; id:{}). "
-                                    + "PriceScrapingConfig id:{})",
-                            psc.getProduct().getId(), psc.getProduct().getName(), psc.getId());
+                        "Error while scraping price for Product (name:{}; id:{}). "
+                            + "PriceScrapingConfig id:{})",
+                        psc.getProduct().getId(), psc.getProduct().getName(), psc.getId());
                 }
             });
 

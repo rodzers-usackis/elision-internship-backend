@@ -9,6 +9,7 @@ import eu.elision.pricing.dto.RetailerCompanyDto;
 public interface RetailerCompanyMapper {
 
     RetailerCompanyDto domainToDto(RetailerCompany company);
+
     RetailerCompany dtoToDomain(RetailerCompanyDto companyDto);
 
 }

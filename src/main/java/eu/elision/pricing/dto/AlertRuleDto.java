@@ -8,6 +8,9 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Represents an alert rule that a user can set.
+ */
 @Data
 @Builder
 public class AlertRuleDto {

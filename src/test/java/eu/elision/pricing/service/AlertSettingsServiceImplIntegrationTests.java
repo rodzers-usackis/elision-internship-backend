@@ -102,8 +102,8 @@ class AlertSettingsServiceImplIntegrationTests {
 
 
         // Save the NotificationSettings object
-//        user.setAlertSettings(alertSettings);
-//        user = userRepository.save(user);
+        //user.setAlertSettings(alertSettings);
+        //user = userRepository.save(user);
         alertSettings = alertSettingsRepository.save(alertSettings);
 
         // Create Products
@@ -149,7 +149,7 @@ class AlertSettingsServiceImplIntegrationTests {
 
         alertSettings.setAlertRules(List.of(ar1, ar2));
         alertSettings.setUser(user);
-//        alertSettingsRepository.save(alertSettings);
+        //alertSettingsRepository.save(alertSettings);
 
         alertRuleRepository.saveAll(List.of(ar1, ar2));
 
@@ -214,21 +214,22 @@ class AlertSettingsServiceImplIntegrationTests {
     @Test
     void newAlertRuleAddedCorrectly() {
 
-//        AlertRuleDto alertRuleDto = AlertRuleDto.builder()
-//            .product(ProductDto.builder()
-//                .id(product.getId())
-//                .build())
-//            .priceThreshold(1000)
-//            .priceComparisonType(PriceComparisonType.LOWER)
-//            .build();
-//
-//        AlertRuleDto newRule = notificationSettingsService.createAlertRule(user, alertRuleDto);
-//        assertNotNull(newRule);
-//        assertNotNull(newRule.getId());
-//        assertEquals(numberOfAlertRulesInDbForUser1 + 1, notificationSettingsRepository
-//            .findByClientCompany_IdWithAlertRules(user.getClientCompany().getId()).getAlertRules().size());
-//
-//
+        /*AlertRuleDto alertRuleDto = AlertRuleDto.builder()
+            .product(ProductDto.builder()
+                .id(product.getId())
+                .build())
+            .priceThreshold(1000)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .build();
+
+        AlertRuleDto newRule = notificationSettingsService.createAlertRule(user, alertRuleDto);
+        assertNotNull(newRule);
+        assertNotNull(newRule.getId());
+        assertEquals(numberOfAlertRulesInDbForUser1 + 1, notificationSettingsRepository
+            .findByClientCompany_IdWithAlertRules(user.getClientCompany().getId())
+            .getAlertRules().size());*/
+
+
 
 
     }

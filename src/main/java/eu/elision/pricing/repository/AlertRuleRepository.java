@@ -6,6 +6,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+/**
+ * JPA repository for {@link AlertRule}.
+ */
 public interface AlertRuleRepository extends JpaRepository<AlertRule, UUID> {
 
 

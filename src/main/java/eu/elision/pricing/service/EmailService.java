@@ -1,6 +1,6 @@
 package eu.elision.pricing.service;
 
-import eu.elision.pricing.dto.emailService.EmailDetailsDto;
+import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 
 /**
@@ -9,5 +9,5 @@ import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 public interface EmailService {
     String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent);
 
-    String sendEmailToUser (EmailDetailsDto emailDetailsDto);
+    String sendEmailToUser(EmailDetailsDto emailDetailsDto);
 }

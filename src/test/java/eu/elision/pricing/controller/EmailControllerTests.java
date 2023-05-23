@@ -1,9 +1,5 @@
 package eu.elision.pricing.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.elision.pricing.domain.*;
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.springframework.http.MediaType;
-
-
-import java.util.*;
-
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
-public class EmailControllerTests {
+class EmailControllerTests {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
 
-    private final static Logger logger = LoggerFactory.getLogger(EmailControllerTests.class);
+//    private final static Logger logger = LoggerFactory.getLogger(EmailControllerTests.class);
 
 //    @Test
 //    void givenPostRequestSendOutEmailsWhenScrapingIsDoneReturns200() throws Exception {
