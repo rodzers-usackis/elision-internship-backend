@@ -33,42 +33,46 @@ public class AlertSettingsControllerTests {
     @Autowired
     private UserRepository userRepository;
 
-//    @Test
-//    void givenAlertSettingsWhenGetAlertSettingsThenReturnAlertSettings() throws Exception {
-//        ClientCompany clientCompany = ClientCompany.builder()
-//            .id(UUID.randomUUID())
-//            .name("Test Company")
-//            .build();
-//
-//// Create the AlertSettings
-//        AlertSettings alertSettings = AlertSettings.builder()
-//            .notifyViaEmail(true)
-//            .alertStorageDuration(AlertStorageDuration.ONE_MONTH)
-//            .build();
-//
-//// Create the User
-//        User user = User.builder()
-//            .id(UUID.randomUUID())
-//            .email("test@elision.eu")
-//            .password("secure_password")
-//            .firstName("John")
-//            .lastName("Smith")
-//            .role(Role.ADMIN)
-//            .build();
-//
-//        user.setAlertSettings(alertSettings);
-//        alertSettings.setUser(user);
-//        alertSettings.setEmailAddress(user.getEmail());
-//        user.setClientCompany(clientCompany);
-//
-//
-//        mockMvc.perform(get("/api/alert-settings")
-//                .accept(MediaType.APPLICATION_JSON)
-//                .with(user(user)))
-//            .andExpect(status().isOk())
-//            .andExpect(jsonPath("$.emailNotifications").value(alertSettings.isNotifyViaEmail()))
-//            .andExpect(jsonPath("$.emailAddress").value(alertSettings.getEmailAddress()))
-//            .andExpect(jsonPath("$.alertStorageDuration").value(
-//                alertSettings.getAlertStorageDuration().toString()));
-//    }
+    @Test
+    void givenAlertSettingsWhenGetAlertSettingsThenReturnAlertSettings() throws Exception {
+
+        // Create the AlertSettings
+        AlertSettings alertSettings = AlertSettings.builder()
+            .notifyViaEmail(true)
+            .alertsActive(false)
+            .alertStorageDuration(30)
+            .build();
+
+
+        // Create the User
+        User user = User.builder()
+            .id(UUID.randomUUID())
+            .email("test@elision.eu")
+            .password("secure_password")
+            .firstName("John")
+            .lastName("Smith")
+            .role(Role.ADMIN)
+            .build();
+
+        final ClientCompany clientCompany = ClientCompany.builder()
+            .id(UUID.randomUUID())
+            .name("Test Company")
+            .build();
+
+        user.setAlertSettings(alertSettings);
+        alertSettings.setUser(user);
+        alertSettings.setEmailAddress(user.getEmail());
+        user.setClientCompany(clientCompany);
+
+
+        mockMvc.perform(get("/api/alert-settings")
+                .accept(MediaType.APPLICATION_JSON)
+                .with(user(user)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.notifyViaEmail").value(alertSettings.isNotifyViaEmail()))
+            .andExpect(jsonPath("$.alertsActive").value(alertSettings.isAlertsActive()))
+            .andExpect(jsonPath("$.emailAddress").value(alertSettings.getEmailAddress()))
+            .andExpect(jsonPath("$.alertStorageDuration").value(
+                alertSettings.getAlertStorageDuration()));
+    }
 }
