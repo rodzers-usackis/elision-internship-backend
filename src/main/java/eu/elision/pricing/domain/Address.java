@@ -2,8 +2,8 @@ package eu.elision.pricing.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
 import java.util.UUID;
+import lombok.*;
 
 /**
  * Postal address of a {@link ClientCompany}.
@@ -26,7 +26,6 @@ public class Address {
     @Column(nullable = false)
     private String streetNumber;
 
-    @Column(nullable = false)
     private String apartmentNumber;
 
     @Column(nullable = false)

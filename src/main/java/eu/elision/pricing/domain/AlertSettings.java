@@ -22,6 +22,8 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 /**
@@ -49,13 +51,16 @@ public class AlertSettings {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alertSettings")
     private List<AlertRule> alertRules;
 
-
+    /**
+     * The number of days that an {@link Alert} will be stored in the database.
+     */
     private int alertStorageDuration = 30;
 
     private String emailAddress;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id", unique = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
 }
