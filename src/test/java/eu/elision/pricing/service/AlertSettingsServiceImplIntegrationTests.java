@@ -1,10 +1,10 @@
 package eu.elision.pricing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import eu.elision.pricing.domain.AlertRule;
-import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.AlertSettings;
+import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
@@ -12,8 +12,6 @@ import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertSettingsDto;
-import eu.elision.pricing.dto.notifications.NotificationSettingsWithAlertRulesDto;
-import eu.elision.pricing.dto.notifications.NotificationSettingsDto;
 import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.AlertSettingsRepository;
 import eu.elision.pricing.repository.ClientCompanyRepository;

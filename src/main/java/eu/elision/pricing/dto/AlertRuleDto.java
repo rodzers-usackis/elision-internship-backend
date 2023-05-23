@@ -1,4 +1,4 @@
-package eu.elision.pricing.dto.notifications;
+package eu.elision.pricing.dto;
 
 import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.dto.ProductDto;

@@ -10,11 +10,13 @@ import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.mapper.AlertMapper;
 import eu.elision.pricing.repository.AlertRepository;
+import eu.elision.pricing.repository.PriceRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,7 @@ public class AlertServiceImpl implements AlertService {
 
     private final AlertRepository alertRepository;
     private final AlertMapper alertMapper;
+    private final PriceRepository priceRepository;
 
     @Transactional
     @Override
@@ -64,6 +67,17 @@ public class AlertServiceImpl implements AlertService {
             if (price == null) {
                 continue;
             }
+
+            Optional<Price> previousPrice =
+                priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(
+                    product.getId(), price.getRetailerCompany().getId());
+
+            if (previousPrice.isPresent()) {
+                if (isPriceMatched(alertRule, previousPrice.get().getAmount())) {
+                    continue;
+                }
+            }
+
 
             if (isPriceMatched(alertRule, price.getAmount())) {
                 createAlert(product, alertRule, price);
