@@ -148,8 +148,8 @@ class AlertServiceImplTests {
         assertEquals(user, capturedAlerts.get(1).getUser());
         assertEquals(product, capturedAlerts.get(0).getProduct());
         assertEquals(product, capturedAlerts.get(1).getProduct());
-        assertEquals(price1, capturedAlerts.get(0).getPrice());
-        assertEquals(price2, capturedAlerts.get(1).getPrice());
+        assertEquals(price1.getAmount(), capturedAlerts.get(0).getPrice());
+        assertEquals(price2.getAmount(), capturedAlerts.get(1).getPrice());
 
 
     }
