@@ -118,11 +118,11 @@ class AlertsControllerTests {
                 .build();
 
         Address address = Address.builder()
-                .street("Main Street")
+                .streetAddress("Main Street")
                 .streetNumber("123")
                 .apartmentNumber("1")
                 .city("New York")
-                .postalCode("10001")
+                .zipCode("10001")
                 .country("USA")
                 .build();
 
@@ -201,11 +201,11 @@ class AlertsControllerTests {
                 .build();
 
         Address address = Address.builder()
-                .street("Main Street")
+                .streetAddress("Main Street")
                 .streetNumber("123")
                 .apartmentNumber("1")
                 .city("New York")
-                .postalCode("10001")
+                .zipCode("10001")
                 .country("USA")
                 .build();
 

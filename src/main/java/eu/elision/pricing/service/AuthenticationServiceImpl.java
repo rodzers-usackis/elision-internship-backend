@@ -1,13 +1,17 @@
 package eu.elision.pricing.service;
 
 
+import eu.elision.pricing.domain.Address;
+import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AuthenticationRequest;
 import eu.elision.pricing.dto.AuthenticationResponse;
 import eu.elision.pricing.dto.RegistrationRequest;
 import eu.elision.pricing.exceptions.EmailAlreadyRegistered;
 import eu.elision.pricing.repository.UserRepository;
+
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,13 +40,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
-        User user = new User(
-            registrationRequest.getFirstName(),
-            registrationRequest.getLastName(),
-            registrationRequest.getEmail(),
-            passwordEncoder.encode(registrationRequest.getPassword())
-        );
+        Address address = Address.builder()
+                .streetAddress(registrationRequest.getStreetAddress())
+                .streetNumber(registrationRequest.getStreetNumber())
+                .city(registrationRequest.getCity())
+                .country(registrationRequest.getCountry())
+                .zipCode(registrationRequest.getZipCode())
+                .build();
 
+        ClientCompany clientCompany = ClientCompany.builder()
+                .name(registrationRequest.getCompanyName())
+                .VATNumber(registrationRequest.getVATNumber())
+                .address(address)
+                .website(registrationRequest.getCompanyWebsite())
+                .categoriesProductsSold(registrationRequest.getProductCategory())
+                .build();
+
+        User user = User.builder()
+                .firstName(registrationRequest.getFirstName())
+                .lastName(registrationRequest.getLastName())
+                .email(registrationRequest.getEmail())
+                .password(passwordEncoder.encode(registrationRequest.getPassword()))
+                .clientCompany(clientCompany)
+                .build();
 
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
@@ -66,11 +86,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
-                authenticationRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+                        authenticationRequest.getPassword()));
 
         User user = userRepository.findByEmail(authenticationRequest.getEmail())
-            .orElseThrow(() -> new IllegalArgumentException("User not found."));
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         var jwt = jwtService.generateToken(user);
         return new AuthenticationResponse(jwt);

@@ -64,11 +64,11 @@ class TrackedProductsRestControllerTest {
     void setup() {
         // First user
         final Address address = Address.builder()
-                .street("Main Street")
+                .streetAddress("Main Street")
                 .streetNumber("123")
                 .apartmentNumber("1")
                 .city("New York")
-                .postalCode("10001")
+                .zipCode("10001")
                 .country("USA")
                 .build();
 
@@ -182,11 +182,11 @@ class TrackedProductsRestControllerTest {
 
         // Second user
         final Address address2 = Address.builder()
-                .street("Main Street")
+                .streetAddress("Main Street")
                 .streetNumber("123")
                 .apartmentNumber("1")
                 .city("New York")
-                .postalCode("10001")
+                .zipCode("10001")
                 .country("USA")
                 .build();
 
