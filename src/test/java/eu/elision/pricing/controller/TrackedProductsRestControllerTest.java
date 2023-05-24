@@ -212,7 +212,7 @@ class TrackedProductsRestControllerTest {
 
         ClientCompany clientCompany2 = ClientCompany.builder()
                 .address(address2)
-                .VATNumber("NL123456789B01")
+                .VATNumber("NL1234567189B01")
                 .name("Elision")
                 .website("https://elision.eu")
                 .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
