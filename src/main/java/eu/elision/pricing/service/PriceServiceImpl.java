@@ -124,4 +124,46 @@ public class PriceServiceImpl implements PriceService {
     public List<Price> getPricesByProductId(UUID productId) {
         return priceRepository.getPricesByProduct_Id(productId);
     }
+
+    @Override
+    public void scrapeProductsPrices(List<UUID> productIds) {
+
+        List<PriceScrapingConfig> allPriceScrapingConfigs =
+            priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds);
+
+        if (allPriceScrapingConfigs.isEmpty()) {
+            log.error("No active PriceScrapingConfigs for Product with id: {}", productIds);
+            return;
+        }
+
+
+        Map<Product, List<PriceScrapingConfig>> productToPriceScrapingConfigMap =
+            allPriceScrapingConfigs.stream()
+                .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
+
+
+        productToPriceScrapingConfigMap.forEach((product, pscs) -> {
+
+            List<Price> pricesForCurrentProduct = new ArrayList<>();
+
+            pscs.forEach(psc -> {
+                try {
+                    Price scrapedPrice = scraperService.scrapePrice(psc);
+                    scrapedPrice = priceRepository.save(scrapedPrice);
+                    pricesForCurrentProduct.add(scrapedPrice);
+                } catch (Exception e) {
+                    log.error(
+                        "Error while scraping price for Product (name:{}; id:{}). "
+                            + "PriceScrapingConfig id:{})",
+                        psc.getProduct().getId(), psc.getProduct().getName(), psc.getId());
+                }
+            });
+
+            productPriceScrapedEventPublisher.publish(product, pricesForCurrentProduct);
+
+        });
+
+    }
+
+
 }

@@ -19,6 +19,8 @@ public interface PriceService {
 
     void scrapeAndSavePricesV2();
 
+    void scrapeProductsPrices(List<UUID> productIds);
+
     PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before, LocalDateTime after);
 
     PriceHistoryDto getPriceHistory(UUID productId, LocalDate before, LocalDate after);
