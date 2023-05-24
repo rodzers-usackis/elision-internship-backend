@@ -261,7 +261,7 @@ class AlertServiceImplTests {
         Product product = Product.builder()
             .name("Test product")
             .id(UUID.randomUUID())
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .manufacturerCode("123A")
             .ean("1234567890123")
             .description("Test description")
