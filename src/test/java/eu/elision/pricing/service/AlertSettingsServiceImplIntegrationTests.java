@@ -72,7 +72,7 @@ class AlertSettingsServiceImplIntegrationTests {
                 .role(Role.CLIENT)
                 .firstName("John")
                 .lastName("Doe")
-                .email("test@test.test")
+                .email("te1st@test.test.com")
                 .password("password")
                 .build();
 
@@ -164,7 +164,7 @@ class AlertSettingsServiceImplIntegrationTests {
                 .role(Role.CLIENT)
                 .firstName("John")
                 .lastName("Doe")
-                .email("test2@test.be")
+                .email("test2@tesgft.be")
                 .password("password")
                 .build();
 

@@ -58,7 +58,7 @@ class AlertsControllerTests {
                 .firstName("John")
                 .lastName("Doe")
                 .role(Role.CLIENT)
-                .email("test@email.com.be")
+                .email("tes1t@email.com.be")
                 .id(UUID.randomUUID())
                 .clientCompany(clientCompany)
                 .build();
@@ -138,7 +138,7 @@ class AlertsControllerTests {
                 .firstName("John")
                 .lastName("Doe")
                 .role(Role.CLIENT)
-                .email("john.doe@gmail.com")
+                .email("joh1n.doe@gmail.com")
                 .build();
 
         clientCompany.setUsers((List.of(user)));
@@ -221,7 +221,7 @@ class AlertsControllerTests {
                 .firstName("John")
                 .lastName("Doe")
                 .role(Role.CLIENT)
-                .email("john.doe@gmail.com")
+                .email("joh1n.doe@gmail.com")
                 .build();
 
         clientCompany.setUsers((List.of(user)));

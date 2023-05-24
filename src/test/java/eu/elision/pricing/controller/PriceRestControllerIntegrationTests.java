@@ -133,7 +133,7 @@ class PriceRestControllerIntegrationTests {
 
 
         User user = User.builder()
-            .email("test@test.com")
+            .email("teaast@test.com")
             .password("somepassword")
             .role(Role.CLIENT)
             .firstName("Test")

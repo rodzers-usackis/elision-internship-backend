@@ -76,7 +76,7 @@ class ProductControllerIntegrationTests {
         productRepository.save(product3);
 
         User user = User.builder()
-                .email("test@test2.com")
+                .email("teaa1st@test2.com")
                 .password("somepassword")
                 .role(Role.CLIENT)
                 .firstName("Test")
