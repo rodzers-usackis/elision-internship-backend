@@ -75,6 +75,7 @@ public class EmailControllerTests {
 //
 //        ClientCompany clientCompany = ClientCompany.builder()
 //            .address(address)
+//            .VATNumber("BE123456789")
 //            .name("Elision")
 //            .website("https://elision.eu")
 //            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))

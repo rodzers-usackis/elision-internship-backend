@@ -19,6 +19,9 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ClientCompany extends RetailerCompany {
 
+    @Column(nullable = false)
+    private String VATNumber;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")

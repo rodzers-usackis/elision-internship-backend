@@ -56,7 +56,7 @@ public class SecurityConfig {
             .permitAll()
 
 
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
 
             .and()
             .csrf().disable()
