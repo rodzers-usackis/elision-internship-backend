@@ -26,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+// Why is this failing when deploying ?
 @ActiveProfiles("test")
 @SpringBootTest
 class AlertServiceImplTests {
