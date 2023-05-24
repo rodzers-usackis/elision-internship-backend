@@ -1,7 +1,7 @@
 package eu.elision.pricing.service;
 
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.notifications.AlertRuleDto;
+import eu.elision.pricing.dto.AlertRuleDto;
 import java.util.List;
 import java.util.UUID;
 

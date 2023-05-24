@@ -32,6 +32,5 @@ public class RetailerCompany {
     @Enumerated(EnumType.STRING)
     private Set<ProductCategory> categoriesProductsSold;
 
-//    @ManyToMany(mappedBy = "retailerCompanies")
-//    private List<AlertRule> alertRules;
+
 }
