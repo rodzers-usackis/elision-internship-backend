@@ -82,7 +82,7 @@
 //            .description("Product 1 description")
 //            .ean("1234567890123")
 //            .manufacturerCode("1234567890123")
-//            .category(ProductCategory.ELECTRONICS)
+//            .category(ProductCategory.CONSUMER_ELECTRONICS)
 //            .build());
 //
 //        Product p2 = productRepository.save(Product.builder()
@@ -90,7 +90,7 @@
 //            .description("Product 2 description")
 //            .ean("1234567890124")
 //            .manufacturerCode("1234567890124")
-//            .category(ProductCategory.ELECTRONICS)
+//            .category(ProductCategory.CONSUMER_ELECTRONICS)
 //            .build());
 //
 //

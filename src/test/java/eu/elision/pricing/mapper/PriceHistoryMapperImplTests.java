@@ -41,7 +41,7 @@ class PriceHistoryMapperImplTests {
         Product product = Product.builder()
             .id(java.util.UUID.randomUUID())
             .name("Product 1")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .description("A product")
             .ean("1234567890123")
             .manufacturerCode("1234567890")

@@ -116,7 +116,7 @@ class AlertSettingsServiceImplIntegrationTests {
                 .description("Product 1 description")
                 .ean("1234567890123")
                 .manufacturerCode("1234567890123")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build());
 
         this.product = p1;
@@ -126,7 +126,7 @@ class AlertSettingsServiceImplIntegrationTests {
                 .description("Product 2 description")
                 .ean("1234567890124")
                 .manufacturerCode("1234567890124")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build());
 
 

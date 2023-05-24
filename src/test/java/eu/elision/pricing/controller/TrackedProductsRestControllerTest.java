@@ -78,7 +78,7 @@ class TrackedProductsRestControllerTest {
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
                 .ean("01901997313220")
                 .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product1);
@@ -88,7 +88,7 @@ class TrackedProductsRestControllerTest {
                 .description("128GB, Spacezwart")
                 .ean("1942534011719")
                 .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product2);
@@ -98,7 +98,7 @@ class TrackedProductsRestControllerTest {
                 .description("128GB, Middernacht")
                 .ean("1942534082530")
                 .manufacturerCode("MPUF3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product3);
@@ -108,7 +108,7 @@ class TrackedProductsRestControllerTest {
                 .description("128GB, Middernacht")
                 .ean("1943253408254")
                 .manufacturerCode("MPUF3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product6);
@@ -118,7 +118,7 @@ class TrackedProductsRestControllerTest {
                 .VATNumber("NL123456789B01")
                 .name("Elision")
                 .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         clientCompanyRepository.save(clientCompany);
@@ -195,7 +195,7 @@ class TrackedProductsRestControllerTest {
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
                 .ean("01901997331320")
                 .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product4);
@@ -205,7 +205,7 @@ class TrackedProductsRestControllerTest {
                 .description("128GB, Spacezwart")
                 .ean("1943253401179")
                 .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product5);
@@ -215,7 +215,7 @@ class TrackedProductsRestControllerTest {
                 .VATNumber("NL123456789B01")
                 .name("Elision")
                 .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         clientCompanyRepository.save(clientCompany2);

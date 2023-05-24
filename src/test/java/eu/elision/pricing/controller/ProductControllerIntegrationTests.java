@@ -50,7 +50,7 @@ class ProductControllerIntegrationTests {
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
                 .ean("01901949731320")
                 .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product1);
@@ -60,7 +60,7 @@ class ProductControllerIntegrationTests {
                 .description("128GB, Spacezwart")
                 .ean("1942543401179")
                 .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product2);
@@ -70,7 +70,7 @@ class ProductControllerIntegrationTests {
                 .description("128GB, Spacezwart")
                 .ean("1942453401174")
                 .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product3);
@@ -110,12 +110,12 @@ class ProductControllerIntegrationTests {
     //                "Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")))
     //                .andExpect(jsonPath("$[0].ean", is("0190199731320")))
     //                .andExpect(jsonPath("$[0].manufacturerCode", is("MGMH3LL/A")))
-    //                .andExpect(jsonPath("$[0].category", is("ELECTRONICS")))
+    //                .andExpect(jsonPath("$[0].category", is("CONSUMER_ELECTRONICS")))
     //                .andExpect(jsonPath("$[1].name", is("Apple iPhone 14 Pro")))
     //                .andExpect(jsonPath("$[1].description", is("128GB, Spacezwart")))
     //                .andExpect(jsonPath("$[1].ean", is("194253401179")))
     //                .andExpect(jsonPath("$[1].manufacturerCode", is("MPXV3ZD/A")))
-    //                .andExpect(jsonPath("$[1].category", is("ELECTRONICS")));
+    //                .andExpect(jsonPath("$[1].category", is("CONSUMER_ELECTRONICS")));
     //    }
     //
     //    @Test
@@ -178,7 +178,7 @@ class ProductControllerIntegrationTests {
     //                .description("128GB, Spacezwart")
     //                .ean("194253401179")
     //                .manufacturerCode("MPXV3ZD/A")
-    //                .category(ProductCategory.ELECTRONICS)
+    //                .category(ProductCategory.CONSUMER_ELECTRONICS)
     //                .build();
     //
     //        mockMvc.perform(patch("/api/products")

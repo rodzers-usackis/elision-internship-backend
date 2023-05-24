@@ -67,7 +67,7 @@ class PriceRestControllerIntegrationTests {
         RetailerCompany company1 = RetailerCompany.builder()
             .name("Company 1")
             .website("www.company1.com")
-            .categoriesProductsSold(Set.of(ProductCategory.ELECTRONICS))
+            .categoriesProductsSold(Set.of(ProductCategory.CONSUMER_ELECTRONICS))
             .build();
 
         RetailerCompany company2 = RetailerCompany.builder()
@@ -77,7 +77,7 @@ class PriceRestControllerIntegrationTests {
 
         Product product = Product.builder()
             .name("Product 1")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .description("A product")
             .ean("1234567890123")
             .manufacturerCode("1234567890")
@@ -86,7 +86,7 @@ class PriceRestControllerIntegrationTests {
 
         Product product2 = Product.builder()
             .name("Product 2")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .description("A product2")
             .ean("121212121")
             .manufacturerCode("999999999")

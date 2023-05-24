@@ -114,7 +114,7 @@ class AlertsControllerTests {
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
                 .ean("01901997313220")
                 .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         Address address = Address.builder()
@@ -131,7 +131,7 @@ class AlertsControllerTests {
                 .VATNumber("BE1234567819")
                 .name("Elision")
                 .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         User user = User.builder()
@@ -147,7 +147,7 @@ class AlertsControllerTests {
         RetailerCompany retailerCompany = RetailerCompany.builder()
                 .name("Amazon")
                 .website("www.amazon.com")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         Alert alert1 = Alert.builder()
@@ -214,7 +214,7 @@ class AlertsControllerTests {
                 .VATNumber("BE01233456789")
                 .name("Elision")
                 .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         User user = User.builder()

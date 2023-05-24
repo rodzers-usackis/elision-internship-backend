@@ -70,7 +70,7 @@ public class EmailControllerTests {
 //            .description("Apple iPhone 12")
 //            .ean("0190199731320")
 //            .manufacturerCode("MGMH3LL/A")
-//            .category(ProductCategory.ELECTRONICS)
+//            .category(ProductCategory.CONSUMER_ELECTRONICS)
 //            .build();
 //
 //        ClientCompany clientCompany = ClientCompany.builder()
@@ -78,7 +78,7 @@ public class EmailControllerTests {
 //            .VATNumber("BE123456789")
 //            .name("Elision")
 //            .website("https://elision.eu")
-//            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+//            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
 //            .build();
 //
 //        TrackedProduct trackedProduct1 = TrackedProduct.builder()

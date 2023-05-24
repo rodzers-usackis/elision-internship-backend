@@ -25,7 +25,7 @@ public class RegistrationRequest {
     private String companyName;
 
     @Length(min = 2, max = 100)
-    private String VATNumber;
+    private String vatNumber;
 
     @Length(min = 2, max = 100)
     private String companyWebsite;
@@ -56,7 +56,7 @@ public class RegistrationRequest {
 
     @Email
     @Length(min = 5, max = 100)
-    private String email;
+    private String emailAddress;
 
     @Length(min = 6, max = 100)
     private String password;

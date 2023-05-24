@@ -69,7 +69,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
                 .ean("0190199731320")
                 .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product1);
@@ -79,7 +79,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("128GB, Spacezwart")
                 .ean("194253401179")
                 .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product2);
@@ -89,7 +89,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("128GB, Middernacht")
                 .ean("194253408253")
                 .manufacturerCode("MPUF3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product3);
@@ -99,7 +99,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("128GB, Black")
                 .ean("194252707289")
                 .manufacturerCode("MLPF3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product4);
@@ -109,7 +109,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("128GB, Black")
                 .ean("194252031315")
                 .manufacturerCode("MGJA3ZD/A")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product5);
@@ -119,7 +119,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("512GB, Phantom Black")
                 .ean("8806094729207")
                 .manufacturerCode("SM-S918BZKHEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product6);
@@ -129,7 +129,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("128GB, Phantom Black")
                 .ean("8806092879140")
                 .manufacturerCode("SM-S908BZKDEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product7);
@@ -139,7 +139,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("256GB, Phantom Black")
                 .ean("8806094504682")
                 .manufacturerCode("SM-F936BZKBEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product8);
@@ -149,7 +149,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Samsung Galaxy A54 5G 128 GB Awesome Graphite")
                 .ean("8806094885699")
                 .manufacturerCode("SM-A546BZKCEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product9);
@@ -159,7 +159,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Samsung Galaxy A34 5G 128 GB Awesome Graphite")
                 .ean("8806094813845")
                 .manufacturerCode("SM-A346BZKAEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product10);
@@ -169,7 +169,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Samsung Galaxy A23 5G 128 GB Awesome Black")
                 .ean("8806094534047")
                 .manufacturerCode("SM-A236BZKVEUB")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product11);
@@ -179,7 +179,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("OnePlus Nord 2T Grey Shadow 128GB")
                 .ean("6921815621331")
                 .manufacturerCode("5011102071")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product12);
@@ -189,7 +189,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("OnePlus Nord CE 2 Lite Black 128GB 6GB 5G")
                 .ean("6921815620716")
                 .manufacturerCode("5011102002")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product13);
@@ -199,7 +199,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("OnePlus 9 Astral Black 128GB")
                 .ean("6921815615378")
                 .manufacturerCode("5011101552")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product14);
@@ -209,7 +209,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("OnePlus Nord Blue 128GB")
                 .ean("6921815611752")
                 .manufacturerCode("5011101199")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product15);
@@ -219,7 +219,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Xiaomi Redmi Note 11 Pro 128 GB Graphite Gray")
                 .ean("6934177769733")
                 .manufacturerCode("37969")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product16);
@@ -229,7 +229,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Xiaomi 12 5G 256 GB Blauw")
                 .ean("6934177763892")
                 .manufacturerCode("37071")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product17);
@@ -239,7 +239,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Xiaomi Redmi Note 10 Pro 128 GB Onyx Gray")
                 .ean("6934177734687")
                 .manufacturerCode("31753")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product18);
@@ -249,7 +249,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Xiaomi Redmi Note 12 4G 128 GB Onyx Gray")
                 .ean("6941812716922")
                 .manufacturerCode("45813")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product19);
@@ -259,7 +259,7 @@ public class DataSeeder implements CommandLineRunner {
                 .description("Xiaomi Redmi Note 11 128 GB Graphite Gray")
                 .ean("6934177767333")
                 .manufacturerCode("37651")
-                .category(ProductCategory.ELECTRONICS)
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
                 .build();
 
         productRepository.save(product20);
@@ -271,7 +271,7 @@ public class DataSeeder implements CommandLineRunner {
                 .VATNumber("BE0123456789")
                 .name("Elision")
                 .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
                 .build();
 
         clientCompanyRepository.save(clientCompany);
