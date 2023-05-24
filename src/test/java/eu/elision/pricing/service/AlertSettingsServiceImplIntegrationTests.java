@@ -20,7 +20,9 @@ import eu.elision.pricing.repository.RetailerCompanyRepository;
 import eu.elision.pricing.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,21 +69,21 @@ class AlertSettingsServiceImplIntegrationTests {
     void setUp() {
         //Create user
         User user = User.builder()
-            .role(Role.CLIENT)
-            .firstName("John")
-            .lastName("Doe")
-            .email("test@test.test")
-            .password("password")
-            .build();
+                .role(Role.CLIENT)
+                .firstName("John")
+                .lastName("Doe")
+                .email("te1st@test.test.com")
+                .password("password")
+                .build();
 
         user = userRepository.save(user);
 
         // Create a ClientCompany object
         ClientCompany clientCompany = ClientCompany.builder()
-            .name("Client Company")
-            .website("https://www.clientcompany.test")
-            .build();
-
+                .VATNumber("BE12345678902")
+                .name("Client Company")
+                .website("https://www.clientcompany.test")
+                .build();
 
         this.user = user;
 
@@ -95,10 +97,10 @@ class AlertSettingsServiceImplIntegrationTests {
 
         // Create NotificationSettings object
         AlertSettings alertSettings = AlertSettings.builder()
-            .user(user)
-            .notifyViaEmail(true)
-            .alertsActive(true)
-            .build();
+                .user(user)
+                .notifyViaEmail(true)
+                .alertsActive(true)
+                .build();
 
 
         // Save the NotificationSettings object
@@ -108,44 +110,44 @@ class AlertSettingsServiceImplIntegrationTests {
 
         // Create Products
         Product p1 = productRepository.save(Product.builder()
-            .name("Product 1")
-            .description("Product 1 description")
-            .ean("1234567890123")
-            .manufacturerCode("1234567890123")
-            .category(ProductCategory.ELECTRONICS)
-            .build());
+                .name("Product 1")
+                .description("Product 1 description")
+                .ean("1234567890123")
+                .manufacturerCode("1234567890123")
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
+                .build());
 
         this.product = p1;
 
         Product p2 = productRepository.save(Product.builder()
-            .name("Product 2")
-            .description("Product 2 description")
-            .ean("1234567890124")
-            .manufacturerCode("1234567890124")
-            .category(ProductCategory.ELECTRONICS)
-            .build());
+                .name("Product 2")
+                .description("Product 2 description")
+                .ean("1234567890124")
+                .manufacturerCode("1234567890124")
+                .category(ProductCategory.CONSUMER_ELECTRONICS)
+                .build());
 
 
         // Create RetailerCompany
         RetailerCompany rc = retailerCompanyRepository.save(RetailerCompany.builder()
-            .name("Retailer Company")
-            .website("https://www.retailercompany.test")
-            .build());
+                .name("Retailer Company")
+                .website("https://www.retailercompany.test")
+                .build());
 
         // Create new alert rules
         AlertRule ar1 = AlertRule.builder()
-            .product(p1)
-            .alertSettings(alertSettings)
-            .priceComparisonType(PriceComparisonType.LOWER)
-            .price(500)
-            .build();
+                .product(p1)
+                .alertSettings(alertSettings)
+                .priceComparisonType(PriceComparisonType.LOWER)
+                .price(500)
+                .build();
 
         AlertRule ar2 = AlertRule.builder()
-            .product(p2)
-            .alertSettings(alertSettings)
-            .price(999)
-            .priceComparisonType(PriceComparisonType.HIGHER)
-            .build();
+                .product(p2)
+                .alertSettings(alertSettings)
+                .price(999)
+                .priceComparisonType(PriceComparisonType.HIGHER)
+                .build();
 
         alertSettings.setAlertRules(List.of(ar1, ar2));
         alertSettings.setUser(user);
@@ -159,20 +161,21 @@ class AlertSettingsServiceImplIntegrationTests {
 
         //create another user
         User user2 = User.builder()
-            .role(Role.CLIENT)
-            .firstName("John")
-            .lastName("Doe")
-            .email("test2@test.be")
-            .password("password")
-            .build();
+                .role(Role.CLIENT)
+                .firstName("John")
+                .lastName("Doe")
+                .email("test2@tesgft.be")
+                .password("password")
+                .build();
 
         user2 = userRepository.save(user2);
 
         //create another client company
         ClientCompany clientCompany2 = ClientCompany.builder()
-            .name("Client Company 2")
-            .website("https://www.clientcompany2.test")
-            .build();
+                .VATNumber("BE1234567891")
+                .name("Client Company 2")
+                .website("https://www.clientcompany2.test")
+                .build();
 
         clientCompany2 = clientCompanyRepository.save(clientCompany2);
 
@@ -181,10 +184,10 @@ class AlertSettingsServiceImplIntegrationTests {
 
         //create another notification settings
         AlertSettings alertSettings2 = AlertSettings.builder()
-            .user(user2)
-            .notifyViaEmail(true)
-            .alertsActive(true)
-            .build();
+                .user(user2)
+                .notifyViaEmail(true)
+                .alertsActive(true)
+                .build();
 
         user2.setAlertSettings(alertSettings2);
 
@@ -192,11 +195,11 @@ class AlertSettingsServiceImplIntegrationTests {
 
         //create another alert rule
         AlertRule ar3 = AlertRule.builder()
-            .product(product)
-            .alertSettings(alertSettings2)
-            .priceComparisonType(PriceComparisonType.LOWER)
-            .price(500)
-            .build();
+                .product(product)
+                .alertSettings(alertSettings2)
+                .priceComparisonType(PriceComparisonType.LOWER)
+                .price(500)
+                .build();
 
 
     }
@@ -239,15 +242,15 @@ class AlertSettingsServiceImplIntegrationTests {
         User user = this.user;
 
         AlertSettingsDto alertSettingsDto = AlertSettingsDto
-            .builder()
-            .notifyViaEmail(false)
-            .alertsActive(false)
-            .build();
+                .builder()
+                .notifyViaEmail(false)
+                .alertsActive(false)
+                .build();
 
         alertSettingsService.updateNotificationSettings(user, alertSettingsDto);
 
         AlertSettingsDto notificationSettingsWithAlertRulesDto =
-            alertSettingsService.getNotificationSettings(user);
+                alertSettingsService.getNotificationSettings(user);
 
         assertFalse(notificationSettingsWithAlertRulesDto.isNotifyViaEmail());
         assertFalse(notificationSettingsWithAlertRulesDto.isAlertsActive());

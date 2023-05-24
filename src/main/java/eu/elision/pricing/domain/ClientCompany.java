@@ -19,6 +19,9 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ClientCompany extends RetailerCompany {
 
+    @Column(unique = true, nullable = true)
+    private String VATNumber;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
@@ -30,8 +33,4 @@ public class ClientCompany extends RetailerCompany {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientCompany")
     private List<User> users;
-
-
-
-
 }
