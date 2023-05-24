@@ -6,7 +6,7 @@ import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.RetailerCompanyDto;
-import eu.elision.pricing.dto.notifications.AlertRuleDto;
+import eu.elision.pricing.dto.AlertRuleDto;
 import eu.elision.pricing.mapper.AlertRuleMapper;
 import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.ProductRepository;

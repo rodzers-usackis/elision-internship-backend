@@ -1,7 +1,7 @@
 package eu.elision.pricing.mapper;
 
 import eu.elision.pricing.domain.AlertRule;
-import eu.elision.pricing.dto.notifications.AlertRuleDto;
+import eu.elision.pricing.dto.AlertRuleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
