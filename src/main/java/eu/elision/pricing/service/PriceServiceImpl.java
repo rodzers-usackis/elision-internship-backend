@@ -159,6 +159,10 @@ public class PriceServiceImpl implements PriceService {
                 }
             });
 
+            log.info("Prices for Product (name:{}; id:{}) scraped successfully",
+                product.getName(), product.getId());
+            log.info("Prices: {}", pricesForCurrentProduct.stream().map(Price::getAmount).collect(
+                Collectors.toList()));
             productPriceScrapedEventPublisher.publish(product, pricesForCurrentProduct);
 
         });
