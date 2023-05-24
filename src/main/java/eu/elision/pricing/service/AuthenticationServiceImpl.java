@@ -51,6 +51,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
+
+        Optional<User> existingUser = userRepository.findByEmail(registrationRequest.getEmailAddress());
+
+        if (existingUser.isPresent()) {
+            throw new EmailAlreadyRegistered("This email is already registered.");
+        }
+
         Address address = Address.builder()
                 .streetAddress(registrationRequest.getStreetAddress())
                 .streetNumber(registrationRequest.getStreetNumber())
@@ -69,12 +76,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
 
         clientCompanyRepository.save(clientCompany);
-
-        Optional<User> existingUser = userRepository.findByEmail(registrationRequest.getEmailAddress());
-
-        if (existingUser.isPresent()) {
-            throw new EmailAlreadyRegistered("This email is already registered.");
-        }
 
         User user = User.builder()
                 .firstName(registrationRequest.getFirstName())
