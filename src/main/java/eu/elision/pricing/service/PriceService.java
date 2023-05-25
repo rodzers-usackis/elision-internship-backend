@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * Interface for the price service.
@@ -19,6 +20,7 @@ public interface PriceService {
 
     void scrapeAndSavePricesV2();
 
+    @Async("threadPoolTaskExecutor")
     void scrapeProductsPrices(List<UUID> productIds);
 
     PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before, LocalDateTime after);
