@@ -52,7 +52,7 @@ class UserRestControllerTest {
             .firstName("Test")
             .lastName("User")
             .password(passwordEncoder.encode("password"))
-            .email("test@test.be")
+            .email("test2222@test.be")
             .role(Role.CLIENT)
             .build();
 

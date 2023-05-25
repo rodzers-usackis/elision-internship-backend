@@ -21,7 +21,7 @@ public class Address {
     private UUID id;
 
     @Column(nullable = false)
-    private String street;
+    private String streetAddress;
 
     @Column(nullable = false)
     private String streetNumber;
@@ -32,7 +32,7 @@ public class Address {
     private String city;
 
     @Column(nullable = false)
-    private String postalCode;
+    private String zipCode;
 
     @Column(nullable = false)
     private String country;
