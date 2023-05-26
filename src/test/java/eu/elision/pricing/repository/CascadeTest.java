@@ -87,7 +87,7 @@ class CascadeTest {
 
         Product product = Product.builder()
             .name("test")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .description("test")
             .manufacturerCode("test")
             .ean("test")
