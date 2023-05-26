@@ -7,6 +7,7 @@ import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertRuleDto;
 import eu.elision.pricing.dto.RetailerCompanyDto;
+import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.mapper.AlertRuleMapper;
 import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.ProductRepository;
@@ -32,16 +33,17 @@ public class AlertRuleServiceImpl implements AlertRuleService {
     private final AlertRuleRepository alertRuleRepository;
     private final AlertRuleMapper alertRuleMapper;
 
+    @Transactional
     @Override
     public void deleteAllByIdIn(List<UUID> id) {
-        //TODO: implement
+
     }
 
     @Transactional
     @Override
     public AlertRuleDto createAlertRule(User user, AlertRuleDto alertRuleDto) {
         Product product = productRepository.findById(alertRuleDto.getProduct().getId())
-            .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+            .orElseThrow(() -> new NotFoundException("Product not found"));
 
         List<RetailerCompany> retailerCompanies;
 
@@ -52,6 +54,11 @@ public class AlertRuleServiceImpl implements AlertRuleService {
                     .map(
                         RetailerCompanyDto::getId)
                     .toList());
+
+            if (retailerCompanies.size() != alertRuleDto.getRetailerCompanies().size()) {
+                throw new NotFoundException("At least 1 retailer company not found");
+            }
+
         } else {
             retailerCompanies = new ArrayList<>();
         }
