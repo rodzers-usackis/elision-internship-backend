@@ -131,6 +131,7 @@ public class PriceServiceImpl implements PriceService {
         List<PriceScrapingConfig> allPriceScrapingConfigs =
             priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds);
 
+
         if (allPriceScrapingConfigs.isEmpty()) {
             log.error("No active PriceScrapingConfigs for Product with id: {}", productIds);
             return;
@@ -141,13 +142,16 @@ public class PriceServiceImpl implements PriceService {
             allPriceScrapingConfigs.stream()
                 .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
 
-
         productToPriceScrapingConfigMap.forEach((product, pscs) -> {
 
             List<Price> pricesForCurrentProduct = new ArrayList<>();
 
             pscs.forEach(psc -> {
                 try {
+                    log.debug("Scraping price for Product (name:{}; id:{}). "
+                            + "PriceScrapingConfig id:{})",
+                        psc.getProduct().getName(), psc.getProduct().getId(), psc.getId());
+
                     Price scrapedPrice = scraperService.scrapePrice(psc);
                     scrapedPrice = priceRepository.save(scrapedPrice);
                     pricesForCurrentProduct.add(scrapedPrice);

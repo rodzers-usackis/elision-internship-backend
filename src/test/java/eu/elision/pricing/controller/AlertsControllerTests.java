@@ -62,9 +62,8 @@ class AlertsControllerTests {
         ClientCompany clientCompany = ClientCompany.builder()
             .name("Test Company")
             .id(UUID.randomUUID())
+            .VATNumber("BE1234567899")
             .build();
-                .VATNumber("BE1234567899")
-                .build();
 
         User user = User.builder()
             .firstName("John")
@@ -124,29 +123,29 @@ class AlertsControllerTests {
     void givenGetUnreadAlertCountForTheAuthenticatedUser() throws Exception {
 
         Product product = Product.builder()
-                .name("Apple iPhone 12 Pro")
-                .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
-                .ean("01901997313220")
-                .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 12 Pro")
+            .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
+            .ean("01901997313220")
+            .manufacturerCode("MGMH3LL/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         Address address = Address.builder()
-                .streetAddress("Main Street")
-                .streetNumber("123")
-                .apartmentNumber("1")
-                .city("New York")
-                .zipCode("10001")
-                .country("USA")
-                .build();
+            .streetAddress("Main Street")
+            .streetNumber("123")
+            .apartmentNumber("1")
+            .city("New York")
+            .zipCode("10001")
+            .country("USA")
+            .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .address(address)
-                .VATNumber("BE1234567819")
-                .name("Elision")
-                .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
-                .build();
+            .address(address)
+            .VATNumber("BE1234567819")
+            .name("Elision")
+            .website("https://elision.eu")
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
+            .build();
 
         User user = User.builder()
             .firstName("John")
@@ -161,7 +160,7 @@ class AlertsControllerTests {
         RetailerCompany retailerCompany = RetailerCompany.builder()
             .name("Amazon")
             .website("www.amazon.com")
-            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
             .build();
 
         Alert alert1 = Alert.builder()
@@ -215,28 +214,28 @@ class AlertsControllerTests {
             .build();
 
         Address address = Address.builder()
-                .streetAddress("Main Street")
-                .streetNumber("123")
-                .apartmentNumber("1")
-                .city("New York")
-                .zipCode("10001")
-                .country("USA")
-                .build();
+            .streetAddress("Main Street")
+            .streetNumber("123")
+            .apartmentNumber("1")
+            .city("New York")
+            .zipCode("10001")
+            .country("USA")
+            .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .address(address)
-                .VATNumber("BE01233456789")
-                .name("Elision")
-                .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
-                .build();
+            .address(address)
+            .VATNumber("BE01233456789")
+            .name("Elision")
+            .website("https://elision.eu")
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
+            .build();
 
         User user = User.builder()
-                .firstName("John")
-                .lastName("Doe")
-                .role(Role.CLIENT)
-                .email("joh1n.doe@gmail.com")
-                .build();
+            .firstName("John")
+            .lastName("Doe")
+            .role(Role.CLIENT)
+            .email("joh1n.doe@gmail.com")
+            .build();
 
         clientCompany.setUsers((List.of(user)));
         user.setClientCompany(clientCompany);

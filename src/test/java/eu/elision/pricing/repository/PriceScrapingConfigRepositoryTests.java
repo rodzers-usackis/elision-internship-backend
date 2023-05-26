@@ -38,7 +38,7 @@ class PriceScrapingConfigRepositoryTests {
             .description("Description 1")
             .ean("EAN1")
             .manufacturerCode("Manufacturer1")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
         product1 = productRepository.save(product1);
 
@@ -47,7 +47,7 @@ class PriceScrapingConfigRepositoryTests {
             .description("Description 2")
             .ean("EAN2")
             .manufacturerCode("Manufacturer2")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
         product2 = productRepository.save(product2);
 
@@ -56,14 +56,14 @@ class PriceScrapingConfigRepositoryTests {
             .description("Description 3")
             .ean("EAN3")
             .manufacturerCode("Manufacturer3")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
         product3 = productRepository.save(product3);
 
         RetailerCompany retailerCompany = retailerCompanyRepository.save(RetailerCompany.builder()
             .name("Retailer Company")
             .website("http://example.com")
-            .categoriesProductsSold(Set.of(ProductCategory.ELECTRONICS))
+            .categoriesProductsSold(Set.of(ProductCategory.CONSUMER_ELECTRONICS))
             .build());
 
         PriceScrapingConfig config1 = PriceScrapingConfig.builder()

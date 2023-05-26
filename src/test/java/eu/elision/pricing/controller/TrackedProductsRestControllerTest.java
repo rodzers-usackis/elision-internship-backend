@@ -203,7 +203,7 @@ class TrackedProductsRestControllerTest {
             .description("128GB, Spacezwart")
             .ean("1943253401179")
             .manufacturerCode("MPXV3ZD/A")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
 
         productRepository.save(product5);
@@ -212,7 +212,7 @@ class TrackedProductsRestControllerTest {
             .address(address2)
             .name("Elision")
             .website("https://elision.eu")
-            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
             .build();
 
         clientCompanyRepository.save(clientCompany2);
