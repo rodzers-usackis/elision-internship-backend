@@ -25,6 +25,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.util.*;
+
 /**
  * Implementation of {@link EmailService}.
  */
@@ -79,27 +82,32 @@ public class EmailServiceImpl implements EmailService {
             User user = entry.getKey();
             List<Product> subscribedProducts = entry.getValue();
 
+            // Prepare the email body
+            StringBuilder bodyBuilder = new StringBuilder();
+            bodyBuilder.append("Dear ").append(user.getFirstName()).append(" ").append(user.getLastName()).append(",<br><br>")
+                    .append("We want to bring your attention to an important update regarding the product you are tracking:<br><br>");
+
+            for (Product product : subscribedProducts) {
+                bodyBuilder.append("- Product: ").append(product.getName()).append("<br>");
+            }
+
+            bodyBuilder.append("<br>Please ensure that you stay informed about its prices and any related notifications.<br>If there are any significant changes, we will notify you promptly.<br><br>")
+                    .append("Thank you for using Price Spy.<br><br>")
+                    .append("Best regards,<br>")
+                    .append("Price Spy Team");
+
             // Send the email to the user with their subscribed products
             EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
-                .from(senderEmail)
-                .to(user.getEmail())
-                .subject("Products prices update")
-                .body("Dear " + user.getFirstName() + " " + user.getLastName() + ",\n\n"
-                    + "Please pay attention to the following items:\n\n"
-                    + subscribedProducts.toString() + "\n\n"
-                    + "These are the products you are currently tracking. "
-                    + "Ensure that you stay updated on their prices "
-                    + "and any related notifications.\n\n"
-                    + "Best regards,\n"
-                    + "Price Spy Team")
-                .attachment(
-                    "C:/Users/rodze/IdeaProjects/"
-                        + "elision-internship-backend/assets/images/price_spy_logo.svg")
-                .build();
-
+                    .from(senderEmail)
+                    .to(user.getEmail())
+                    .subject("Important update: Product tracking")
+                    .body(bodyBuilder.toString())
+                    .attachment("C:/Users/rodze/IdeaProjects/elision-internship-backend/assets/images/price_spy_logo.svg")
+                    .build();
 
             sendEmailToUser(emailDetailsDto);
         }
+
 
         // Return a success message or any relevant information
         return "Emails sent successfully.";

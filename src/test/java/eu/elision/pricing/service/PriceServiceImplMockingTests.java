@@ -55,7 +55,7 @@ class PriceServiceImplMockingTests {
         Product p1 = Product.builder()
             .name("iPhone 14 Pro Max")
             .id(UUID.randomUUID())
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
 
         RetailerCompany rc1 = RetailerCompany.builder()
@@ -104,7 +104,7 @@ class PriceServiceImplMockingTests {
         Product p1 = Product.builder()
             .name("iPhone 14 Pro Max")
             .id(UUID.randomUUID())
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
 
 

@@ -61,6 +61,7 @@ class AlertsControllerTests {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .name("Test Company")
+            .VATNumber("BE1234567899")
             .id(UUID.randomUUID())
             .build();
 
@@ -126,30 +127,31 @@ class AlertsControllerTests {
             .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
             .ean("01901997313220")
             .manufacturerCode("MGMH3LL/A")
-            .category(ProductCategory.ELECTRONICS)
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
             .build();
 
         Address address = Address.builder()
-            .street("Main Street")
+            .streetAddress("Main Street")
             .streetNumber("123")
             .apartmentNumber("1")
             .city("New York")
-            .postalCode("10001")
+            .zipCode("10001")
             .country("USA")
             .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
+            .VATNumber("BE1234567819")
             .name("Elision")
             .website("https://elision.eu")
-            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
             .build();
 
         User user = User.builder()
             .firstName("John")
             .lastName("Doe")
             .role(Role.CLIENT)
-            .email("john.doe@gmail.com")
+            .email("joh1n.doe@gmail.com")
             .build();
 
         clientCompany.setUsers((List.of(user)));
@@ -158,7 +160,7 @@ class AlertsControllerTests {
         RetailerCompany retailerCompany = RetailerCompany.builder()
             .name("Amazon")
             .website("www.amazon.com")
-            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
             .build();
 
         Alert alert1 = Alert.builder()
@@ -212,26 +214,27 @@ class AlertsControllerTests {
             .build();
 
         Address address = Address.builder()
-            .street("Main Street")
+            .streetAddress("Main Street")
             .streetNumber("123")
             .apartmentNumber("1")
             .city("New York")
-            .postalCode("10001")
+            .zipCode("10001")
             .country("USA")
             .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
+            .VATNumber("BE01233456789")
             .name("Elision")
             .website("https://elision.eu")
-            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.ELECTRONICS)))
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
             .build();
 
         User user = User.builder()
             .firstName("John")
             .lastName("Doe")
             .role(Role.CLIENT)
-            .email("john.doe@gmail.com")
+            .email("joh1n.doe@gmail.com")
             .build();
 
         clientCompany.setUsers((List.of(user)));

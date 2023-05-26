@@ -1,5 +1,6 @@
-package eu.elision.pricing.controller;
+package eu.elision.pricing.exceptions;
 
+import eu.elision.pricing.controller.AuthenticationController;
 import eu.elision.pricing.exceptions.EmailAlreadyRegistered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
