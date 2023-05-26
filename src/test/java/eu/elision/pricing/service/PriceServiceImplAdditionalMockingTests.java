@@ -17,10 +17,13 @@ import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,23 +34,23 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 class PriceServiceImplAdditionalMockingTests {
 
-    @MockBean
+    @Mock
     private ProductPriceScrapedEventPublisher productPriceScrapedEventPublisher;
 
-    @MockBean
+    @Mock
     private PriceScrapingConfigRepository priceScrapingConfigRepository;
 
-    @MockBean
+    @Mock
     private HttpRequestService httpRequestService;
 
-    @MockBean
+    @Mock
     private ScraperService scraperService;
 
-    @MockBean
+    @Mock
     private PriceRepository priceRepository;
 
-    @Autowired
-    private PriceService priceService;
+    @InjectMocks
+    private PriceServiceImpl priceService;
 
     @Captor
     private ArgumentCaptor<Product> productCaptor;
@@ -119,9 +122,9 @@ class PriceServiceImplAdditionalMockingTests {
             .build();
 
 
-        List<PriceScrapingConfig> priceScrapingConfigs = List.of(psc1, psc2, psc3);
+        Set<PriceScrapingConfig> priceScrapingConfigs = Set.of(psc1, psc2, psc3);
 
-        List<UUID> productIds = List.of(p1.getId(), p2.getId());
+        Set<UUID> productIds = Set.of(p1.getId(), p2.getId());
 
         when(
             priceScrapingConfigRepository

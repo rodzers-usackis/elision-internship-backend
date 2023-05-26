@@ -126,10 +126,11 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public void scrapeProductsPrices(List<UUID> productIds) {
+    public void scrapeProductsPrices(Collection<UUID> productIds) {
 
         List<PriceScrapingConfig> allPriceScrapingConfigs =
-            priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds);
+            priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds).stream()
+                .toList();
 
 
         if (allPriceScrapingConfigs.isEmpty()) {
@@ -153,6 +154,7 @@ public class PriceServiceImpl implements PriceService {
                         psc.getProduct().getName(), psc.getProduct().getId(), psc.getId());
 
                     Price scrapedPrice = scraperService.scrapePrice(psc);
+                    log.debug(">>>>>> Scraped price: {}", scrapedPrice.getAmount());
                     scrapedPrice = priceRepository.save(scrapedPrice);
                     pricesForCurrentProduct.add(scrapedPrice);
                 } catch (Exception e) {

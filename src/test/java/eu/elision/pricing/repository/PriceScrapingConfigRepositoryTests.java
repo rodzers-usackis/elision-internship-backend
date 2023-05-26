@@ -106,7 +106,7 @@ class PriceScrapingConfigRepositoryTests {
 
         // Test the repository method
         List<UUID> productIds = Arrays.asList(product1.getId(), product2.getId());
-        List<PriceScrapingConfig> result = priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds);
+        List<PriceScrapingConfig> result = priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds).stream().toList();
 
         // Assert the result
         assertEquals(4, priceScrapingConfigRepository.count());
