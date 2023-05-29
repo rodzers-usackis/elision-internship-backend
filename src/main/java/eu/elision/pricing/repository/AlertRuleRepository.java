@@ -12,8 +12,11 @@ import org.springframework.data.jpa.repository.Query;
 public interface AlertRuleRepository extends JpaRepository<AlertRule, UUID> {
 
 
-
     void deleteAllByIdIn(List<UUID> id);
+
+    long countAllByAlertSettings_IdAndIdIn(UUID alertSettingsId, List<UUID> id);
+
+    List<AlertRule> findAllByAlertSettings_Id(UUID userId);
 
 
 }

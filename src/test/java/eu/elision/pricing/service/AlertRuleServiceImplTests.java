@@ -1,6 +1,8 @@
 package eu.elision.pricing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,7 +15,7 @@ import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.AlertRuleDto;
+import eu.elision.pricing.dto.AlertRuleToCreateDto;
 import eu.elision.pricing.dto.ProductDto;
 import eu.elision.pricing.dto.RetailerCompanyDto;
 import eu.elision.pricing.exceptions.NotFoundException;
@@ -85,7 +87,7 @@ class AlertRuleServiceImplTests {
             .description("test description")
             .build();
 
-        AlertRuleDto alertRuleDto = AlertRuleDto.builder()
+        AlertRuleToCreateDto alertRuleDto = AlertRuleToCreateDto.builder()
             .priceComparisonType(PriceComparisonType.LOWER)
             .priceThreshold(1000.0)
             .product(productDto)
@@ -171,7 +173,7 @@ class AlertRuleServiceImplTests {
             .website("website2")
             .build();
 
-        AlertRuleDto alertRuleDto = AlertRuleDto.builder()
+        AlertRuleToCreateDto alertRuleDto = AlertRuleToCreateDto.builder()
             .priceComparisonType(PriceComparisonType.LOWER)
             .priceThreshold(1000.0)
             .product(productDto)
@@ -278,7 +280,7 @@ class AlertRuleServiceImplTests {
             .website("website2")
             .build();
 
-        AlertRuleDto alertRuleDto = AlertRuleDto.builder()
+        AlertRuleToCreateDto alertRuleDto = AlertRuleToCreateDto.builder()
             .priceComparisonType(PriceComparisonType.LOWER)
             .priceThreshold(1000.0)
             .product(productDto)
@@ -317,7 +319,6 @@ class AlertRuleServiceImplTests {
 
     @Test
     void creatingAlertRuleThrowsWhenProductNotFound() {
-
 
 
         AlertSettings alertSettings = AlertSettings.builder()
@@ -367,7 +368,7 @@ class AlertRuleServiceImplTests {
             .website("website2")
             .build();
 
-        AlertRuleDto alertRuleDto = AlertRuleDto.builder()
+        AlertRuleToCreateDto alertRuleDto = AlertRuleToCreateDto.builder()
             .priceComparisonType(PriceComparisonType.LOWER)
             .priceThreshold(1000.0)
             .product(productDto)
