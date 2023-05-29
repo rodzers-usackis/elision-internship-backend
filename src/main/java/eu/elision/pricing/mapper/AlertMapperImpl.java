@@ -20,11 +20,11 @@ public class AlertMapperImpl implements AlertMapper {
     public AlertDto domainToDto(Alert alert) {
         return AlertDto.builder()
             .id(alert.getId())
-            .price(alert.getPrice().getAmount())
+            .price(alert.getPrice())
             .priceComparisonType(alert.getPriceComparisonType())
             .read(alert.isRead())
             .retailerCompany(retailerCompanyMapper.domainToDto(alert.getRetailerCompany()))
-            .product(productMapper.domainToDto(alert.getPrice().getProduct()))
+            .product(productMapper.domainToDto(alert.getProduct()))
             .timestamp(alert.getTimestamp())
             .build();
     }

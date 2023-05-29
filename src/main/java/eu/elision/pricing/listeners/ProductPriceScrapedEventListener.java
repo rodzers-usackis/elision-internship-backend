@@ -4,20 +4,19 @@ import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.emailService.EmailDetailsDto;
+import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
 import eu.elision.pricing.events.ProductPriceScrapedEvent;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import eu.elision.pricing.service.AlertService;
 import eu.elision.pricing.service.EmailService;
 import eu.elision.pricing.service.PriceService;
 import eu.elision.pricing.service.ProductService;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Event listener for {@link ProductPriceScrapedEvent}.
@@ -34,7 +33,7 @@ public class ProductPriceScrapedEventListener {
 
     /**
      * Handles the {@link ProductPriceScrapedEvent} event
-     * by creating {@link Alert}s
+     * by creating {@link Alert}s.
      *
      * @param event the event containing the product and the new prices
      */

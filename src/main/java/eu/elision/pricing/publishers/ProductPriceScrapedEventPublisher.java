@@ -3,11 +3,10 @@ package eu.elision.pricing.publishers;
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.events.ProductPriceScrapedEvent;
+import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -35,6 +34,11 @@ public class ProductPriceScrapedEventPublisher {
         applicationEventPublisher.publishEvent(event);
     }
 
+    /**
+     * Publishes a {@link ProductsPricesScrapedEvent}.
+     *
+     * @param productToPricesMap the map of products to their new prices
+     */
     public void publish(Map<UUID, List<UUID>> productToPricesMap) {
         ProductsPricesScrapedEvent event = ProductsPricesScrapedEvent.builder()
             .productToPricesMap(productToPricesMap)

@@ -1,11 +1,9 @@
 package eu.elision.pricing.dto;
 
-import eu.elision.pricing.domain.AlertStorageDuration;
 import eu.elision.pricing.domain.AlertSettings;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.UUID;
 
 /**
  * DTO for {@link AlertSettings}.

@@ -7,11 +7,14 @@ import eu.elision.pricing.service.AlertService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Rest controller for {@link Alert}s.
@@ -26,7 +29,8 @@ public class AlertsController {
     private final AlertService alertService;
 
     /**
-     * Returns all alerts for the authenticated user's {@link eu.elision.pricing.domain.ClientCompany}.
+     * Returns all alerts for
+     * the authenticated user's {@link eu.elision.pricing.domain.ClientCompany}.
      *
      * @param user the authenticated user
      * @return a list of {@link AlertDto}s
@@ -39,6 +43,12 @@ public class AlertsController {
         return ResponseEntity.ok(alerts);
     }
 
+    /**
+     * Returns the number of unread alerts for the authenticated user.
+     *
+     * @param user the authenticated user
+     * @return the number of unread alerts
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/unread/count")
     public ResponseEntity<Integer> getUnreadAlertCount(@AuthenticationPrincipal User user) {
@@ -47,6 +57,12 @@ public class AlertsController {
         return ResponseEntity.ok(unreadAlertCount);
     }
 
+    /**
+     * Marks the given alerts as read.
+     *
+     * @param alertDto the alerts to mark as read
+     * @return the updated alerts
+     */
     @CrossOrigin(origins = "http://localhost:3000")
     @PatchMapping()
     public ResponseEntity<List<AlertDto>> markAlertsAsRead(@RequestBody List<AlertDto> alertDto) {

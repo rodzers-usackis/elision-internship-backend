@@ -1,10 +1,20 @@
 package eu.elision.pricing.service;
 
-import eu.elision.pricing.domain.*;
-import eu.elision.pricing.dto.emailService.EmailDetailsDto;
+import eu.elision.pricing.domain.ClientCompany;
+import eu.elision.pricing.domain.Product;
+import eu.elision.pricing.domain.TrackedProduct;
+import eu.elision.pricing.domain.User;
+import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -36,14 +46,16 @@ public class EmailServiceImpl implements EmailService {
     // So ugly...
     @Override
     public String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent) {
-        Map<UUID, List<UUID>> productsToPricesMap = productsPricesScrapedEvent.getProductToPricesMap();
+        Map<UUID, List<UUID>> productsToPricesMap =
+            productsPricesScrapedEvent.getProductToPricesMap();
 
         // Map to store the products a user is tracking for each user
         Map<User, List<Product>> subscribedProductsMap = new HashMap<>();
 
         // Iterate over productsToPricesMap
         for (UUID productId : productsToPricesMap.keySet()) {
-            List<TrackedProduct> trackedProducts = trackedProductService.getTrackedProductsByProductId(productId);
+            List<TrackedProduct> trackedProducts =
+                trackedProductService.getTrackedProductsByProductId(productId);
 
             // Iterate over trackedProducts
             for (TrackedProduct trackedProduct : trackedProducts) {
@@ -53,7 +65,8 @@ public class EmailServiceImpl implements EmailService {
                 // Iterate over users
                 for (User user : users) {
                     // Get the user's existing list of subscribed products from the map
-                    List<Product> subscribedProducts = subscribedProductsMap.getOrDefault(user, new ArrayList<>());
+                    List<Product> subscribedProducts =
+                        subscribedProductsMap.getOrDefault(user, new ArrayList<>());
 
                     // Add the product to the user's list of subscribed products
                     subscribedProducts.add(trackedProduct.getProduct());
@@ -119,10 +132,12 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setText(emailDetailsDto.getBody(), true);
 
             // Get file from the file system
-            FileSystemResource fileSystemResource = new FileSystemResource(new File(emailDetailsDto.getAttachment()));
+            FileSystemResource fileSystemResource =
+                new FileSystemResource(new File(emailDetailsDto.getAttachment()));
 
             // Add the attachment
-            mimeMessageHelper.addAttachment(Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
+            mimeMessageHelper.addAttachment(
+                Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
 
             // Send the email
             javaMailSender.send(mimeMessage);

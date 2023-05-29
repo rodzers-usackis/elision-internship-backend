@@ -1,6 +1,5 @@
 package eu.elision.pricing.domain;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,28 +33,35 @@ public class Alert {
 
     private LocalDateTime timestamp;
 
-    @ManyToOne
-    private Price price;
+    private double price;
 
+    /**
+     * The price threshold that was set for the alert rule
+     * that triggered the alert creation.
+     */
+    private double alertRulePriceThreshold;
+
+    /**
+     * The price comparison type that was set for the alert rule.
+     */
     private PriceComparisonType priceComparisonType;
 
     /**
      * The user that owns this alert.
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
-    //TODO: DELETE retailerCompany and product - it's already in the price
     /**
      * The retailer company whose price change triggered the alert creation.
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     private RetailerCompany retailerCompany;
 
     /**
      * The product whose price change triggered the alert creation.
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
 }

@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PriceScrapingConfigRepository extends JpaRepository<PriceScrapingConfig, UUID> {
     List<PriceScrapingConfig> findAllByActiveTrue();
+
+    List<PriceScrapingConfig> findAllByActiveTrueAndProduct_IdIn(List<UUID> productIds);
+
 }

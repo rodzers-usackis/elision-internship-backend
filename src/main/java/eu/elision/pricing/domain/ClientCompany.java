@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OnDelete;
 
 /**
  * Represents a client company that will track prices of chosen {@link Product}s.
@@ -33,4 +34,6 @@ public class ClientCompany extends RetailerCompany {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "clientCompany")
     private List<User> users;
+
+
 }

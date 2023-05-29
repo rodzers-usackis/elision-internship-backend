@@ -28,6 +28,8 @@ public interface PriceRepository extends JpaRepository<Price, UUID> {
 
     List<Price> getPricesByProduct_Id(UUID productId);
 
-    Optional<Price> findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(UUID productId, UUID retailerCompanyId);
+    Optional<Price> findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(
+        UUID productId,
+        UUID retailerCompanyId);
 
 }

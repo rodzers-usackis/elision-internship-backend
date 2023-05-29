@@ -536,7 +536,7 @@ public class DataSeeder implements CommandLineRunner {
 
         //Alerts
         Alert alert = Alert.builder()
-            .price(price)
+            .price(price.getAmount())
             .priceComparisonType(PriceComparisonType.HIGHER)
             .retailerCompany(retailerCompany)
             .product(product1)
@@ -547,7 +547,7 @@ public class DataSeeder implements CommandLineRunner {
         alertRepository.save(alert);
 
         Alert alert2 = Alert.builder()
-            .price(price2)
+            .price(price2.getAmount())
             .priceComparisonType(PriceComparisonType.LOWER)
             .retailerCompany(retailerCompany)
             .product(product2)

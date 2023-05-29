@@ -5,6 +5,9 @@ import eu.elision.pricing.dto.AlertRuleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link AlertRuleMapper}.
+ */
 @RequiredArgsConstructor
 @Component
 public class AlertRuleMapperImpl implements AlertRuleMapper {

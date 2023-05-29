@@ -8,8 +8,8 @@ import static org.mockito.Mockito.when;
 
 import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.AlertRule;
-import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.AlertSettings;
+import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.PriceComparisonType;
 import eu.elision.pricing.domain.Product;
@@ -18,7 +18,6 @@ import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.AlertRepository;
 import eu.elision.pricing.repository.PriceRepository;
-import eu.elision.pricing.repository.RetailerCompanyRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -153,8 +152,8 @@ class AlertServiceImplTests {
         assertEquals(user, capturedAlerts.get(1).getUser());
         assertEquals(product, capturedAlerts.get(0).getProduct());
         assertEquals(product, capturedAlerts.get(1).getProduct());
-        assertEquals(price1, capturedAlerts.get(0).getPrice());
-        assertEquals(price2, capturedAlerts.get(1).getPrice());
+        assertEquals(price1.getAmount(), capturedAlerts.get(0).getPrice());
+        assertEquals(price2.getAmount(), capturedAlerts.get(1).getPrice());
 
 
     }

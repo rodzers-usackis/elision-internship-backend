@@ -6,7 +6,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -27,6 +26,8 @@ public class AlertDto {
     private LocalDateTime timestamp;
 
     private double price;
+
+    private double alertRulePriceThreshold;
 
     @Enumerated(EnumType.STRING)
     private PriceComparisonType priceComparisonType;

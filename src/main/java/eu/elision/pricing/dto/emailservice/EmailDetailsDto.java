@@ -1,4 +1,4 @@
-package eu.elision.pricing.dto.emailService;
+package eu.elision.pricing.dto.emailservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

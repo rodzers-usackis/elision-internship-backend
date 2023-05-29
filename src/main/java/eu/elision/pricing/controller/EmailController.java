@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Rest controller for {@link EmailService}.
  * This controller is used to send out emails to users
  * whenever the price of a product changes.
- *
  * Execution depends on:
+ *
  * @see EmailService
  */
 @RestController
@@ -25,7 +25,8 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/sendOutEmails")
-    public ResponseEntity<String> sendOutEmails(@RequestBody ProductsPricesScrapedEvent productsPricesScrapedEvent) {
+    public ResponseEntity<String> sendOutEmails(
+        @RequestBody ProductsPricesScrapedEvent productsPricesScrapedEvent) {
         String status = emailService.sendOutEmails(productsPricesScrapedEvent);
 
         return ResponseEntity.ok(status);
