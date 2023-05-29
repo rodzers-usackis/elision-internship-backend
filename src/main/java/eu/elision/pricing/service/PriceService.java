@@ -5,8 +5,10 @@ import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.repository.PriceRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * Interface for the price service.
@@ -19,7 +21,8 @@ public interface PriceService {
 
     void scrapeAndSavePricesV2();
 
-    void scrapeProductsPrices(List<UUID> productIds);
+    @Async("threadPoolTaskExecutor")
+    void scrapeProductsPrices(Collection<UUID> productIds);
 
     PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before, LocalDateTime after);
 

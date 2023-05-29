@@ -63,6 +63,7 @@ class AlertsControllerTests {
             .name("Test Company")
             .VATNumber("BE1234567899")
             .id(UUID.randomUUID())
+            .VATNumber("BE1234567899")
             .build();
 
         User user = User.builder()
