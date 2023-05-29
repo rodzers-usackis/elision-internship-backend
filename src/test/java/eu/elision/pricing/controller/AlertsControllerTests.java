@@ -61,6 +61,7 @@ class AlertsControllerTests {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .name("Test Company")
+            .VATNumber("BE1234567899")
             .id(UUID.randomUUID())
             .VATNumber("BE1234567899")
             .build();
@@ -151,7 +152,7 @@ class AlertsControllerTests {
             .firstName("John")
             .lastName("Doe")
             .role(Role.CLIENT)
-            .email("john.doe@gmail.com")
+            .email("joh1n.doe@gmail.com")
             .build();
 
         clientCompany.setUsers((List.of(user)));

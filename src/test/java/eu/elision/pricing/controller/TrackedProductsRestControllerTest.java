@@ -62,73 +62,72 @@ class TrackedProductsRestControllerTest {
     void setup() {
         // First user
         final Address address = Address.builder()
-                .streetAddress("Main Street")
-                .streetNumber("123")
-                .apartmentNumber("1")
-                .city("New York")
-                .zipCode("10001")
-                .country("USA")
-                .build();
+            .streetAddress("Main Street")
+            .streetNumber("123")
+            .apartmentNumber("1")
+            .city("New York")
+            .zipCode("10001")
+            .country("USA")
+            .build();
 
 
         this.product1 = Product.builder()
-                .name("Apple iPhone 12 Pro")
-                .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
-                .ean("01901997313220")
-                .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 12 Pro")
+            .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
+            .ean("01901997313220")
+            .manufacturerCode("MGMH3LL/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         productRepository.save(product1);
 
         this.product2 = Product.builder()
-                .name("Apple iPhone 14 Pro")
-                .description("128GB, Spacezwart")
-                .ean("1942534011719")
-                .manufacturerCode("MPXV3ZD/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 14 Pro")
+            .description("128GB, Spacezwart")
+            .ean("1942534011719")
+            .manufacturerCode("MPXV3ZD/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         productRepository.save(product2);
 
         this.product3 = Product.builder()
-                .name("Apple iPhone 14")
-                .description("128GB, Middernacht")
-                .ean("1942534082530")
-                .manufacturerCode("MPUF3ZD/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 14")
+            .description("128GB, Middernacht")
+            .ean("1942534082530")
+            .manufacturerCode("MPUF3ZD/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         productRepository.save(product3);
 
         this.product6 = Product.builder()
-                .name("Apple iPhone 14")
-                .description("128GB, Middernacht")
-                .ean("1943253408254")
-                .manufacturerCode("MPUF3ZD/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 14")
+            .description("128GB, Middernacht")
+            .ean("1943253408254")
+            .manufacturerCode("MPUF3ZD/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         productRepository.save(product6);
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .address(address)
-                .VATNumber("NL123456789B01")
-                .name("Elision")
-                .website("https://elision.eu")
-                .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
-                .build();
+            .address(address)
+            .name("Elision")
+            .website("https://elision.eu")
+            .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
+            .build();
 
         clientCompanyRepository.save(clientCompany);
 
         this.user = User.builder()
-                .email("test@trackedtest1.com")
-                .password("somepassword")
-                .role(Role.CLIENT)
-                .firstName("Test")
-                .lastName("Test")
-                .clientCompany(clientCompany)
-                .build();
+            .email("test@trackedtest1.com")
+            .password("somepassword")
+            .role(Role.CLIENT)
+            .firstName("Test")
+            .lastName("Test")
+            .clientCompany(clientCompany)
+            .build();
 
         clientCompany.setUsers((List.of(user)));
 
@@ -137,39 +136,39 @@ class TrackedProductsRestControllerTest {
 
         // Tracked Products
         this.trackedProduct1 = TrackedProduct.builder()
-                .productPurchaseCost(699.00)
-                .productSellPrice(1099.00)
-                .isTracked(true)
-                .product(product1)
-                .clientCompany(clientCompany)
-                .build();
+            .productPurchaseCost(699.00)
+            .productSellPrice(1099.00)
+            .isTracked(true)
+            .product(product1)
+            .clientCompany(clientCompany)
+            .build();
 
         trackedProductRepository.save(trackedProduct1);
 
         this.trackedProduct2 = TrackedProduct.builder()
-                .productPurchaseCost(699.00)
-                .productSellPrice(1099.00)
-                .isTracked(true)
-                .product(product2)
-                .clientCompany(clientCompany)
-                .build();
+            .productPurchaseCost(699.00)
+            .productSellPrice(1099.00)
+            .isTracked(true)
+            .product(product2)
+            .clientCompany(clientCompany)
+            .build();
 
         trackedProductRepository.save(trackedProduct2);
 
         this.trackedProduct3 = TrackedProduct.builder()
-                .productPurchaseCost(699.00)
-                .productSellPrice(1099.00)
-                .isTracked(true)
-                .product(product3)
-                .clientCompany(clientCompany)
-                .build();
+            .productPurchaseCost(699.00)
+            .productSellPrice(1099.00)
+            .isTracked(true)
+            .product(product3)
+            .clientCompany(clientCompany)
+            .build();
 
         trackedProductRepository.save(trackedProduct3);
 
         clientCompany.setTrackedProducts(new ArrayList<>(List.of(
-                trackedProduct1,
-                trackedProduct2,
-                trackedProduct3
+            trackedProduct1,
+            trackedProduct2,
+            trackedProduct3
         )));
 
         clientCompanyRepository.save(clientCompany);
@@ -180,21 +179,21 @@ class TrackedProductsRestControllerTest {
 
         // Second user
         final Address address2 = Address.builder()
-                .streetAddress("Main Street")
-                .streetNumber("123")
-                .apartmentNumber("1")
-                .city("New York")
-                .zipCode("10001")
-                .country("USA")
-                .build();
+            .streetAddress("Main Street")
+            .streetNumber("123")
+            .apartmentNumber("1")
+            .city("New York")
+            .zipCode("10001")
+            .country("USA")
+            .build();
 
         this.product4 = Product.builder()
-                .name("Apple iPhone 12 Pro")
-                .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
-                .ean("01901997331320")
-                .manufacturerCode("MGMH3LL/A")
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .build();
+            .name("Apple iPhone 12 Pro")
+            .description("Apple iPhone 12 Pro 128GB, Graphite - Fully Unlocked (Renewed)")
+            .ean("01901997331320")
+            .manufacturerCode("MGMH3LL/A")
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .build();
 
         productRepository.save(product4);
 
@@ -329,29 +328,29 @@ class TrackedProductsRestControllerTest {
                 .andExpect(jsonPath("$[0].tracked", is(trackedProduct1.isTracked())))
                 .andExpect(jsonPath("$[0].product.id",
                         is(String.valueOf(trackedProduct1.getProduct().getId()))))
-            //.andExpect(jsonPath("$[0].clientCompany.id",
-            //    is(String.valueOf(trackedProduct1.getClientCompany().getId()))))
+//            .andExpect(jsonPath("$[0].clientCompany.id",
+//                is(String.valueOf(trackedProduct1.getClientCompany().getId()))))
                 .andExpect(
                         jsonPath("$[1].productPurchaseCost", is(trackedProduct2.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[1].productSellPrice", is(trackedProduct2.getProductSellPrice())))
                 .andExpect(jsonPath("$[1].tracked", is(trackedProduct2.isTracked())))
                 .andExpect(jsonPath("$[1].product.id",
                         is(String.valueOf(trackedProduct2.getProduct().getId()))))
-            //.andExpect(jsonPath("$[1].clientCompany.id",
-            //    is(String.valueOf(trackedProduct2.getClientCompany().getId()))))
+//            .andExpect(jsonPath("$[1].clientCompany.id",
+//                is(String.valueOf(trackedProduct2.getClientCompany().getId()))))
                 .andExpect(
                         jsonPath("$[2].productPurchaseCost", is(trackedProduct3.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[2].productSellPrice", is(trackedProduct3.getProductSellPrice())))
                 .andExpect(jsonPath("$[2].tracked", is(trackedProduct3.isTracked())))
                 .andExpect(jsonPath("$[2].product.id",
                         is(String.valueOf(trackedProduct3.getProduct().getId()))));
-        //.andExpect(jsonPath("$[2].clientCompany.id",
-        //    is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
+//            .andExpect(jsonPath("$[2].clientCompany.id",
+//                is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
     }
 
     @Test
     void givenTrackedProductsWhenGetTrackedProductsWithoutAuthenticationThenStatus403()
-            throws Exception {
+        throws Exception {
         mockMvc.perform(get("/api/client-company/tracked-products")
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isForbidden());
