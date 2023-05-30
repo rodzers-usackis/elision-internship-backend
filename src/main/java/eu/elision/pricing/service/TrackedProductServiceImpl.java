@@ -59,7 +59,6 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         //        .fromString(trackedProductDto.getClientCompanyId())).orElse(null);
 
         ClientCompany clientCompany = user.getClientCompany();
-        Hibernate.initialize(clientCompany);
         log.debug(">>> Creating TP for client company: {}", user.getClientCompany().getId());
 
         TrackedProduct trackedProduct = TrackedProduct.builder()
