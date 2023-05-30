@@ -139,6 +139,7 @@ class TrackedProductsRestControllerTest {
             .productPurchaseCost(699.00)
             .productSellPrice(1099.00)
             .isTracked(true)
+            .minPrice(1000.00)
             .product(product1)
             .clientCompany(clientCompany)
             .build();
@@ -149,6 +150,7 @@ class TrackedProductsRestControllerTest {
             .productPurchaseCost(699.00)
             .productSellPrice(1099.00)
             .isTracked(true)
+            .minPrice(1000.00)
             .product(product2)
             .clientCompany(clientCompany)
             .build();
@@ -159,6 +161,7 @@ class TrackedProductsRestControllerTest {
             .productPurchaseCost(699.00)
             .productSellPrice(1099.00)
             .isTracked(true)
+            .minPrice(2000.00)
             .product(product3)
             .clientCompany(clientCompany)
             .build();
@@ -231,6 +234,7 @@ class TrackedProductsRestControllerTest {
         this.trackedProduct4 = TrackedProduct.builder()
             .productPurchaseCost(699.00)
             .productSellPrice(1099.00)
+            .minPrice(1001.0)
             .isTracked(true)
             .product(product4)
             .clientCompany(clientCompany2)
@@ -334,6 +338,7 @@ class TrackedProductsRestControllerTest {
                         jsonPath("$[1].productPurchaseCost", is(trackedProduct2.getProductPurchaseCost())))
                 .andExpect(jsonPath("$[1].productSellPrice", is(trackedProduct2.getProductSellPrice())))
                 .andExpect(jsonPath("$[1].tracked", is(trackedProduct2.isTracked())))
+            .andExpect(jsonPath("$[1].minPrice", is(trackedProduct2.getMinPrice())))
                 .andExpect(jsonPath("$[1].product.id",
                         is(String.valueOf(trackedProduct2.getProduct().getId()))))
 //            .andExpect(jsonPath("$[1].clientCompany.id",
@@ -385,6 +390,7 @@ class TrackedProductsRestControllerTest {
             .id(String.valueOf(trackedProduct4.getId()))
             .productPurchaseCost(155.00)
             .productSellPrice(1555.00)
+            .minPrice(999.0)
             .isTracked(true)
             .ean(product4.getEan())
             .build();
@@ -403,6 +409,7 @@ class TrackedProductsRestControllerTest {
             .andExpect(jsonPath("$.id", is(notNullValue())))
             .andExpect(jsonPath("$.productPurchaseCost", is(155.00)))
             .andExpect(jsonPath("$.productSellPrice", is(1555.00)))
+            .andExpect(jsonPath("$.minPrice", is(999.0)))
             .andExpect(jsonPath("$.tracked", is(true)));
     }
 
