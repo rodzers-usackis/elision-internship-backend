@@ -4,6 +4,7 @@ package eu.elision.pricing.service;
 import eu.elision.pricing.domain.Address;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AuthenticationRequest;
 import eu.elision.pricing.dto.AuthenticationResponse;
@@ -52,38 +53,40 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
 
-        Optional<User> existingUser = userRepository.findByEmail(registrationRequest.getEmailAddress());
+        Optional<User> existingUser =
+            userRepository.findByEmail(registrationRequest.getEmailAddress());
 
         if (existingUser.isPresent()) {
             throw new EmailAlreadyRegistered("This email is already registered.");
         }
 
         Address address = Address.builder()
-                .streetAddress(registrationRequest.getStreetAddress())
-                .streetNumber(registrationRequest.getStreetNumber())
-                .apartmentNumber("apartmentNumber")
-                .city(registrationRequest.getCity())
-                .country(registrationRequest.getCountry())
-                .zipCode(registrationRequest.getZipCode())
-                .build();
+            .streetAddress(registrationRequest.getStreetAddress())
+            .streetNumber(registrationRequest.getStreetNumber())
+            .apartmentNumber("apartmentNumber")
+            .city(registrationRequest.getCity())
+            .country(registrationRequest.getCountry())
+            .zipCode(registrationRequest.getZipCode())
+            .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .name(registrationRequest.getCompanyName())
-                .VATNumber(registrationRequest.getVatNumber())
-                .address(address)
-                .website(registrationRequest.getCompanyWebsite())
-                .categoriesProductsSold(registrationRequest.getProductCategory())
-                .build();
+            .name(registrationRequest.getCompanyName())
+            .VATNumber(registrationRequest.getVatNumber())
+            .address(address)
+            .website(registrationRequest.getCompanyWebsite())
+            .categoriesProductsSold(registrationRequest.getProductCategory())
+            .build();
 
         clientCompanyRepository.save(clientCompany);
 
         User user = User.builder()
-                .firstName(registrationRequest.getFirstName())
-                .lastName(registrationRequest.getLastName())
-                .email(registrationRequest.getEmailAddress())
-                .password(passwordEncoder.encode(registrationRequest.getPassword()))
-                .clientCompany(clientCompany)
-                .build();
+            .firstName(registrationRequest.getFirstName())
+            .lastName(registrationRequest.getLastName())
+            .email(registrationRequest.getEmailAddress())
+            .password(passwordEncoder.encode(registrationRequest.getPassword()))
+            .clientCompany(clientCompany)
+            .role(Role.CLIENT)
+            .build();
 
         clientCompany.setUsers(List.of(user));
 
@@ -104,11 +107,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()));
+            new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+                authenticationRequest.getPassword()));
 
         User user = userRepository.findByEmail(authenticationRequest.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("User not found."));
+            .orElseThrow(() -> new IllegalArgumentException("User not found."));
 
         var jwt = jwtService.generateToken(user);
         return new AuthenticationResponse(jwt);
