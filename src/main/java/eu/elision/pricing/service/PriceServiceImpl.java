@@ -4,6 +4,7 @@ import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.PriceScrapingConfig;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.dto.PriceHistoryDto;
+import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.mapper.PriceHistoryMapper;
 import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
 import eu.elision.pricing.repository.PriceRepository;
@@ -106,6 +107,12 @@ public class PriceServiceImpl implements PriceService {
         List<Price> prices =
             priceRepository.findAllByProduct_IdAndTimestampBeforeAndTimestampAfter(productId,
                 before, after);
+
+        if (prices.isEmpty()) {
+            throw new NotFoundException(
+                "No prices found for product with id: " + productId + " between " + before
+                    + " and " + after);
+        }
 
         return priceHistoryMapper.domainToDto(prices);
     }
