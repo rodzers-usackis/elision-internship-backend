@@ -14,5 +14,6 @@ public class TrackedProductPriceUpdateDto {
     private String id;
     private double productPurchaseCost;
     private double productSellPrice;
+    private Double minPrice;
     private boolean isTracked;
 }

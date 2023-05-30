@@ -14,6 +14,7 @@ public class TrackedProductWithDetailsDto {
     private String id;
     private double productPurchaseCost;
     private double productSellPrice;
+    private Double minPrice;
     private boolean isTracked;
     private String ean;
     private String manufacturerCode;

@@ -31,6 +31,8 @@ public class TrackedProduct {
     @Column(nullable = false)
     private double productSellPrice;
 
+    private Double minPrice;
+
     /**
      * Whether the {@link Product} is tracked by the {@link ClientCompany}.
      */

@@ -23,6 +23,7 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
             .id(String.valueOf(trackedProduct.getId()))
             .productPurchaseCost(trackedProduct.getProductPurchaseCost())
             .productSellPrice(trackedProduct.getProductSellPrice())
+            .minPrice(trackedProduct.getMinPrice())
             .isTracked(trackedProduct.isTracked())
             .build();
     }
@@ -40,6 +41,7 @@ public class TrackedProductMapperImpl implements TrackedProductMapper {
             .isTracked(trackedProduct.isTracked())
             .productSellPrice(trackedProduct.getProductSellPrice())
             .productPurchaseCost(trackedProduct.getProductPurchaseCost())
+            .minPrice(trackedProduct.getMinPrice())
             .ean(trackedProduct.getProduct().getEan())
             .manufacturerCode(trackedProduct.getProduct().getManufacturerCode())
             .build();

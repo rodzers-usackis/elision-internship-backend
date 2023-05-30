@@ -59,12 +59,12 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         //        .fromString(trackedProductDto.getClientCompanyId())).orElse(null);
 
         ClientCompany clientCompany = user.getClientCompany();
-        Hibernate.initialize(clientCompany);
         log.debug(">>> Creating TP for client company: {}", user.getClientCompany().getId());
 
         TrackedProduct trackedProduct = TrackedProduct.builder()
             .productPurchaseCost(trackedProductDto.getProductPurchaseCost())
             .productSellPrice(trackedProductDto.getProductSellPrice())
+            .minPrice(trackedProductDto.getMinPrice())
             .isTracked(true)
             .product(product)
             .clientCompany(clientCompany)
@@ -109,6 +109,7 @@ public class TrackedProductServiceImpl implements TrackedProductService {
         trackedProduct.setProductPurchaseCost(
             trackedProductPriceUpdateDto.getProductPurchaseCost());
         trackedProduct.setTracked(trackedProductPriceUpdateDto.isTracked());
+        trackedProduct.setMinPrice(trackedProductPriceUpdateDto.getMinPrice());
         trackedProduct = trackedProductRepository.save(trackedProduct);
 
         return trackedProduct;
