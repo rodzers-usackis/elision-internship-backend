@@ -33,6 +33,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public void scrapeAndSavePrices() {
+        LocalDateTime startTime = LocalDateTime.now();
 
         List<PriceScrapingConfig> priceScrapingConfigs =
             priceScrapingConfigRepository.findAllByActiveTrue();
@@ -60,7 +61,7 @@ public class PriceServiceImpl implements PriceService {
                 }
             });
 
-            productPriceScrapedEventPublisher.publish(product, pricesForCurrentProduct);
+            productPriceScrapedEventPublisher.publish(startTime);
 
         });
     }
