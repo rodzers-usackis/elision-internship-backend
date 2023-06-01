@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The suggested price for a product.
@@ -28,12 +29,13 @@ public class SuggestedPrice {
 
     private double suggestedPrice;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
     private LocalDateTime timestamp;
 
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne(optional = false)
     private ClientCompany clientCompany;
 
 

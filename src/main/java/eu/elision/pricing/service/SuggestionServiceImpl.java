@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,18 @@ public class SuggestionServiceImpl implements SuggestionService {
             return null;
         }
 
+        Optional<SuggestedPrice> existingSuggestedPrice =
+            suggestedPriceRepository.findFirstByProduct_IdOrderByTimestampDesc(
+                suggestedPrice.getProduct().getId());
+
+        if (existingSuggestedPrice.isPresent()) {
+            if (existingSuggestedPrice.get().getSuggestedPrice() ==
+                suggestedPrice.getSuggestedPrice()) {
+                // No need to suggest a price if it's the same as the previous suggested price
+                return null;
+            }
+        }
+
 
         suggestedPrice = suggestedPriceRepository.save(suggestedPrice);
 
@@ -105,8 +118,6 @@ public class SuggestionServiceImpl implements SuggestionService {
 
             }
         );
-
-
 
 
     }

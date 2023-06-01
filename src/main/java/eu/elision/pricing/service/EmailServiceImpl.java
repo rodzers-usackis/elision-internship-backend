@@ -15,19 +15,14 @@ import eu.elision.pricing.repository.TrackedProductRepository;
 import eu.elision.pricing.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.io.File;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -69,12 +64,12 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setText(emailDetailsDto.getBody(), true);
 
             // Get file from the file system
-            FileSystemResource fileSystemResource =
-                new FileSystemResource(new File(emailDetailsDto.getAttachment()));
+            //FileSystemResource fileSystemResource =
+            //    new FileSystemResource(new File(emailDetailsDto.getAttachment()));
 
             // Add the attachment
-            mimeMessageHelper.addAttachment(
-                Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
+            //mimeMessageHelper.addAttachment(
+            //    Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
 
             // Send the email
             javaMailSender.send(mimeMessage);
@@ -88,14 +83,11 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Transactional
     @Override
     public String sendEventAfterPriceScraping(LocalDateTime pricesScrapedAfter) {
 
         List<Price> newPrices = priceRepository.findAllByTimestampAfter(pricesScrapedAfter);
-
-        //group by product
-        Map<Product, List<Price>> productToPricesMap = newPrices.stream()
-            .collect(Collectors.groupingBy(Price::getProduct));
 
         List<User> users = userRepository.findAllByAlertSettings_NotifyViaEmailTrue();
 
@@ -145,7 +137,7 @@ public class EmailServiceImpl implements EmailService {
                     .append(
                         "We want to bring your attention to an important "
                             + "update regarding the product you are tracking:<br><br>")
-                    .append("You have ").append(usersAlerts.size()).append(" new alerts and ")
+                    .append("You have ").append(usersAlerts == null ? 0 : usersAlerts.size()).append(" new alerts and ")
                     .append(relevantSuggestedPrices.size()).append(" new suggested prices.<br><br>")
                     .append(
                         "Please ensure that you stay informed about its prices "

@@ -90,7 +90,7 @@ public class AlertServiceImpl implements AlertService {
                     product.getId(), price.getRetailerCompany().getId());
 
             if (previousPrice.isPresent()) {
-                if (isPriceMatched(alertRule, previousPrice.get().getAmount())) {
+                if (price.getAmount() == previousPrice.get().getAmount()) {
                     continue;
                 }
             }
