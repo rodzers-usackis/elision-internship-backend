@@ -3,16 +3,15 @@ package eu.elision.pricing.service;
 import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Price;
-import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.SuggestedPrice;
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
 import eu.elision.pricing.repository.AlertRepository;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.SuggestedPriceRepository;
 import eu.elision.pricing.repository.TrackedProductRepository;
 import eu.elision.pricing.repository.UserRepository;
+import eu.elision.pricing.util.EmailTemplate;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -47,9 +46,9 @@ public class EmailServiceImpl implements EmailService {
     private String senderEmail;
 
     @Override
-    public String sendEmailToUser(EmailDetailsDto emailDetailsDto) {
-        log.debug("Sending email to: {}", emailDetailsDto.getTo());
-        log.debug("Sender email: {}", emailDetailsDto.getFrom());
+    public String sendEmailToUser(String subject, String userEmail, String emailText) {
+        log.debug("Sending email to: {}", userEmail);
+        log.debug("Sender email: {}", senderEmail);
 
         // Create a mail message
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -58,10 +57,10 @@ public class EmailServiceImpl implements EmailService {
         try {
             // Prepare the email
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setSubject(emailDetailsDto.getSubject());
+            mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setFrom(senderEmail);
-            mimeMessageHelper.setTo(emailDetailsDto.getTo());
-            mimeMessageHelper.setText(emailDetailsDto.getBody(), true);
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setText(emailText, true);
 
             // Get file from the file system
             //FileSystemResource fileSystemResource =
@@ -127,39 +126,17 @@ public class EmailServiceImpl implements EmailService {
 
                 List<Alert> usersAlerts = userToAlertsMap.get(user);
 
-                //TODO: use usersAlerts and relevantSuggestedPrices to generate the email's body
+
+                EmailTemplate emailTemplate =
+                    EmailTemplate.builder()
+                        .suggestedPrices(relevantSuggestedPrices)
+                        .alerts(usersAlerts)
+                        .user(user)
+                        .build();
 
 
-                StringBuilder bodyBuilder = new StringBuilder();
-
-                bodyBuilder.append("Dear ").append(user.getFirstName()).append(" ")
-                    .append(user.getLastName()).append(",<br><br>")
-                    .append(
-                        "We want to bring your attention to an important "
-                            + "update regarding the product you are tracking:<br><br>")
-                    .append("You have ").append(usersAlerts == null ? 0 : usersAlerts.size()).append(" new alerts and ")
-                    .append(relevantSuggestedPrices.size()).append(" new suggested prices.<br><br>")
-                    .append(
-                        "Please ensure that you stay informed about its prices "
-                            + "and any related notifications.<br>"
-                            + "If there are any significant changes, "
-                            + "we will notify you promptly.<br><br>")
-                    .append("Thank you for using Price Spy.<br><br>")
-                    .append("Best regards,<br>")
-                    .append("Price Spy Team");
-
-                // Send the email to the user with their subscribed products
-                EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
-                    .from(senderEmail)
-                    .to(user.getEmail())
-                    .subject("New price alerts and suggestions")
-                    .body(bodyBuilder.toString())
-                    /*.attachment(
-                        "C:/Users/rodze/IdeaProjects/
-                        elision-internship-backend/assets/images/price_spy_logo.svg")*/
-                    .build();
-
-                sendEmailToUser(emailDetailsDto);
+                sendEmailToUser("New price alerts and suggestions", user.getEmail(),
+                    emailTemplate.generateEmail());
 
 
             });

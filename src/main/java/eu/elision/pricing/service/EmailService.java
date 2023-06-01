@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public interface EmailService {
     //String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent);
 
-    String sendEmailToUser(EmailDetailsDto emailDetailsDto);
+    String sendEmailToUser(String subject, String userEmail, String emailText);
 
     String sendEventAfterPriceScraping(LocalDateTime pricesScrapedAfter);
 }
