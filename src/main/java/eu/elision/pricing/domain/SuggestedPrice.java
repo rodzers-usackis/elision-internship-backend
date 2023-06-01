@@ -30,5 +30,8 @@ public class SuggestedPrice {
 
     private LocalDateTime timestamp;
 
+    @ManyToOne
+    private ClientCompany clientCompany;
+
 
 }

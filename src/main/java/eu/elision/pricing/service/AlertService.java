@@ -5,6 +5,7 @@ import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertDto;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public interface AlertService {
     List<AlertDto> getUsersAlerts(User user);
 
     void createAlerts(Product product, List<Price> prices);
+
+    void createNewAlerts(LocalDateTime after);
 
     int getUnreadAlertCount(User user);
 

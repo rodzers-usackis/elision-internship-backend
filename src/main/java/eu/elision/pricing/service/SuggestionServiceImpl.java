@@ -1,11 +1,17 @@
 package eu.elision.pricing.service;
 
 import eu.elision.pricing.domain.Price;
+import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.SuggestedPrice;
 import eu.elision.pricing.domain.TrackedProduct;
+import eu.elision.pricing.publishers.SuggestionsCreatedEventPublisher;
+import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.SuggestedPriceRepository;
+import eu.elision.pricing.repository.TrackedProductRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalDouble;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,9 @@ import org.springframework.stereotype.Service;
 public class SuggestionServiceImpl implements SuggestionService {
 
     private final SuggestedPriceRepository suggestedPriceRepository;
+    private final TrackedProductRepository trackedProductRepository;
+    private final PriceRepository priceRepository;
+    private final SuggestionsCreatedEventPublisher suggestionsCreatedEventPublisher;
 
     @Override
     public SuggestedPrice calculateSuggestedPrice(TrackedProduct clientsTrackedProduct,
@@ -67,6 +76,54 @@ public class SuggestionServiceImpl implements SuggestionService {
 
         return suggestedPrice;
 
+
+    }
+
+    @Override
+    public void suggestPrices(Map<Product, List<Price>> productToPricesMap) {
+
+
+        List<SuggestedPrice> suggestedPrices = new ArrayList<>();
+
+        productToPricesMap.keySet().forEach(
+            product -> {
+
+                List<TrackedProduct> trackedProducts =
+                    trackedProductRepository.findTrackedProductsByProduct_Id(product.getId());
+
+                List<Price> competitorsCurrentPrices = productToPricesMap.get(product);
+
+                trackedProducts.forEach(
+                    trackedProduct -> {
+                        SuggestedPrice suggestedPrice = calculateSuggestedPrice(
+                            trackedProduct, competitorsCurrentPrices);
+                        if (suggestedPrice != null) {
+                            suggestedPrices.add(suggestedPrice);
+                        }
+                    }
+                );
+
+            }
+        );
+
+
+
+
+    }
+
+
+    @Override
+    public void suggestNewPrices(LocalDateTime pricesCreatedAfter) {
+
+        List<Price> newPrices = priceRepository.findAllByTimestampAfter(pricesCreatedAfter);
+
+        Map<Product, List<Price>> productToPricesMap = newPrices.stream()
+            .collect(java.util.stream.Collectors.groupingBy(Price::getProduct));
+
+        suggestPrices(productToPricesMap);
+
+
+        suggestionsCreatedEventPublisher.publish(pricesCreatedAfter);
 
     }
 }

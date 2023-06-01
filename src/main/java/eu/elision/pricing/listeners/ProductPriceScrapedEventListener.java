@@ -5,8 +5,10 @@ import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
+import eu.elision.pricing.events.PricesScrapedEvent;
 import eu.elision.pricing.events.ProductPriceScrapedEvent;
 import eu.elision.pricing.events.ProductsPricesScrapedEvent;
+import eu.elision.pricing.events.ScrapingFinishedEvent;
 import eu.elision.pricing.service.AlertService;
 import eu.elision.pricing.service.EmailService;
 import eu.elision.pricing.service.PriceService;
@@ -63,4 +65,15 @@ public class ProductPriceScrapedEventListener {
 
         emailService.sendOutEmails(event);
     }
+
+   @EventListener
+    public void handle(ScrapingFinishedEvent event) {
+
+        log.debug("Handling ScrapingFinishedEvent event {}", event);
+        alertService.createNewAlerts(event.getEventChainStartTime());
+    }
+
+
+
+
 }
