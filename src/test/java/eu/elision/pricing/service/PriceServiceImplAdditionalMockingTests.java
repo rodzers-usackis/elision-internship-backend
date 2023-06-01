@@ -192,11 +192,10 @@ class PriceServiceImplAdditionalMockingTests {
 
         List<Price> capturedPrices = priceCaptor.getAllValues();
 
-        assertThat(capturedPrices.stream().map(Price::getAmount).collect(Collectors.toList()), containsInAnyOrder(pr1.getAmount(), pr2.getAmount(), pr3.getAmount()));
+        assertThat(capturedPrices.stream().map(Price::getAmount).collect(Collectors.toList()),
+            containsInAnyOrder(pr1.getAmount(), pr2.getAmount(), pr3.getAmount()));
 
         verify(productPriceScrapedEventPublisher, times(1)).publish(any(LocalDateTime.class));
-
-
 
 
     }

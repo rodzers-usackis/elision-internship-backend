@@ -1,22 +1,27 @@
 package eu.elision.pricing.service;
 
-import eu.elision.pricing.domain.*;
-import eu.elision.pricing.events.ScrapingFinishedEvent;
+import eu.elision.pricing.domain.AlertRule;
+import eu.elision.pricing.domain.AlertSettings;
+import eu.elision.pricing.domain.ClientCompany;
+import eu.elision.pricing.domain.Price;
+import eu.elision.pricing.domain.PriceComparisonType;
+import eu.elision.pricing.domain.Product;
+import eu.elision.pricing.domain.ProductCategory;
+import eu.elision.pricing.domain.User;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 @ActiveProfiles("test")
 @SpringBootTest
 @Slf4j
-public class EmailServiceImplTests {
+class EmailServiceImplTests {
 
     @Autowired
     private EmailService emailService;
@@ -33,7 +38,7 @@ public class EmailServiceImplTests {
             .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-            .VATNumber("BE12134567899")
+            .vatNumber("BE12134567899")
             .id(UUID.randomUUID())
             .name("Test company")
             .build();

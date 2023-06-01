@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service for generating price suggestions.
+ */
 public interface SuggestionService {
 
     SuggestedPrice calculateSuggestedPrice(TrackedProduct clientsTrackedProduct,

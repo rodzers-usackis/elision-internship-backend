@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * Service for sending emails.
  */
 public interface EmailService {
-//    String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent);
+    //String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent);
 
     String sendEmailToUser(EmailDetailsDto emailDetailsDto);
 

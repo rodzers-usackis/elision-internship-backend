@@ -143,11 +143,15 @@ public class EmailServiceImpl implements EmailService {
                 bodyBuilder.append("Dear ").append(user.getFirstName()).append(" ")
                     .append(user.getLastName()).append(",<br><br>")
                     .append(
-                        "We want to bring your attention to an important update regarding the product you are tracking:<br><br>")
+                        "We want to bring your attention to an important "
+                            + "update regarding the product you are tracking:<br><br>")
                     .append("You have ").append(usersAlerts.size()).append(" new alerts and ")
                     .append(relevantSuggestedPrices.size()).append(" new suggested prices.<br><br>")
                     .append(
-                        "Please ensure that you stay informed about its prices and any related notifications.<br>If there are any significant changes, we will notify you promptly.<br><br>")
+                        "Please ensure that you stay informed about its prices "
+                            + "and any related notifications.<br>"
+                            + "If there are any significant changes, "
+                            + "we will notify you promptly.<br><br>")
                     .append("Thank you for using Price Spy.<br><br>")
                     .append("Best regards,<br>")
                     .append("Price Spy Team");
@@ -159,7 +163,8 @@ public class EmailServiceImpl implements EmailService {
                     .subject("New price alerts and suggestions")
                     .body(bodyBuilder.toString())
                     /*.attachment(
-                        "C:/Users/rodze/IdeaProjects/elision-internship-backend/assets/images/price_spy_logo.svg")*/
+                        "C:/Users/rodze/IdeaProjects/
+                        elision-internship-backend/assets/images/price_spy_logo.svg")*/
                     .build();
 
                 sendEmailToUser(emailDetailsDto);

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Event that is published when the price suggestions are created.
+ */
 @Data
 @Builder
 @AllArgsConstructor

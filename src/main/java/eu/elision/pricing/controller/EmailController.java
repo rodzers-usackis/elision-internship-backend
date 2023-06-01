@@ -24,6 +24,14 @@ public class EmailController {
 
     private final EmailService emailService;
 
+    /**
+     * Sends out emails with price alerts to users.
+     *
+     * @return a response entity with the status of the email service
+     * @deprecated this method was only used for testing purposes
+     *     emails should not be sent out after a post request,
+     *     but rather after a price scraping event
+     */
     @PostMapping("/sendOutEmails")
     public ResponseEntity<String> sendOutEmails() {
         LocalDateTime startTime = LocalDateTime.now();

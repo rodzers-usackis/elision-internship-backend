@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * The suggested price for a product.
+ */
 @Data
 @Builder
 @NoArgsConstructor
