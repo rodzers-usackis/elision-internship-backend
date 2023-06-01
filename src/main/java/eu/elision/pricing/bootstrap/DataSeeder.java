@@ -570,5 +570,25 @@ public class DataSeeder implements CommandLineRunner {
             .build();
 
         priceScrapingConfigRepository.save(priceScrapingConfig);
+
+        AlertRule alertRule = AlertRule.builder()
+            .alertSettings(user.getAlertSettings())
+            .product(product1)
+            .price(1999.00)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .retailerCompanies(List.of(retailerCompany))
+            .build();
+
+        AlertRule alertRule2 = AlertRule.builder()
+            .alertSettings(user.getAlertSettings())
+            .product(product2)
+            .price(500.01)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .retailerCompanies(List.of(retailerCompany))
+            .build();
+
+        alertSettings = user.getAlertSettings();
+        alertSettings.setAlertRules(List.of(alertRule, alertRule2));
+        alertSettingsRepository.save(alertSettings);
     }
 }

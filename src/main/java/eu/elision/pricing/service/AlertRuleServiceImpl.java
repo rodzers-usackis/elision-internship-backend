@@ -131,4 +131,25 @@ public class AlertRuleServiceImpl implements AlertRuleService {
 
     }
 
+    @Transactional
+    @Override
+    public void updateAlertRule(User user, AlertRuleDto alertRuleDto) {
+
+        AlertRule alertRule = alertRuleRepository.findById(alertRuleDto.getId())
+            .orElseThrow(() -> new NotFoundException("Alert rule not found (id: "
+                + alertRuleDto.getId() + ")"));
+
+        if (!alertRule.getAlertSettings().getId().equals(user.getAlertSettings().getId())) {
+            throw new NotFoundException("Alert rule not found (id: "
+                + alertRuleDto.getId() + ")");
+        }
+
+        alertRule.setPrice(alertRuleDto.getPriceThreshold());
+        alertRule.setPriceComparisonType(alertRuleDto.getPriceComparisonType());
+
+
+        alertRuleRepository.save(alertRule);
+
+    }
+
 }
