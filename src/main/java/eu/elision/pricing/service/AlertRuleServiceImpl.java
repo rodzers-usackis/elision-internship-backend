@@ -62,7 +62,6 @@ public class AlertRuleServiceImpl implements AlertRuleService {
 
     }
 
-    @Transactional
     @Override
     public AlertRuleDto createAlertRule(User user, AlertRuleToCreateDto alertRuleDto) {
 
@@ -134,6 +133,8 @@ public class AlertRuleServiceImpl implements AlertRuleService {
     @Transactional
     @Override
     public void updateAlertRule(User user, AlertRuleDto alertRuleDto) {
+        log.debug(">>> Updating alert rule " + alertRuleDto.getRetailerCompanies());
+        log.debug(">>> Updating alert rule (id: " + alertRuleDto.getId() + ")");
 
         AlertRule alertRule = alertRuleRepository.findById(alertRuleDto.getId())
             .orElseThrow(() -> new NotFoundException("Alert rule not found (id: "
@@ -147,9 +148,26 @@ public class AlertRuleServiceImpl implements AlertRuleService {
         alertRule.setPrice(alertRuleDto.getPriceThreshold());
         alertRule.setPriceComparisonType(alertRuleDto.getPriceComparisonType());
 
+        List<RetailerCompany> retailerCompanies;
+        if (alertRuleDto.getRetailerCompanies() != null) {
+            retailerCompanies = retailerCompanyRepository.findAllById(
+                alertRuleDto.getRetailerCompanies()
+                    .stream()
+                    .map(RetailerCompanyDto::getId)
+                    .toList()
+            );
+
+            if (retailerCompanies.size() != alertRuleDto.getRetailerCompanies().size()) {
+                throw new NotFoundException("At least 1 retailer company not found");
+            }
+        } else {
+            retailerCompanies = new ArrayList<>();
+        }
+
+        log.debug(">>> Retailer companies: " + retailerCompanies);
+
+        alertRule.setRetailerCompanies(retailerCompanies);
 
         alertRuleRepository.save(alertRule);
-
     }
-
 }

@@ -18,5 +18,5 @@ public interface AlertRuleRepository extends JpaRepository<AlertRule, UUID> {
 
     List<AlertRule> findAllByAlertSettings_Id(UUID userId);
 
-
+    AlertRule findByProductAndAlertSettings_Id(UUID productId, UUID alertSettingsId);
 }
