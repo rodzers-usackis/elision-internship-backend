@@ -188,8 +188,8 @@ public class EmailTemplate {
         if (alerts != null && !alerts.isEmpty()) {
             StringBuilder alertRows = new StringBuilder();
             for (Alert alert : alerts) {
-                alertRows.append("<tr><td>").append(alert.getProduct().getName()).append("€")
-                    .append("</td><td>").append(alert.getPrice()).append("</td></tr>");
+                alertRows.append("<tr><td>").append(alert.getProduct().getName())
+                    .append("</td><td>").append(alert.getPrice()).append("€").append("</td></tr>");
             }
             template = template.replace("{{alert-rows}}", alertRows.toString());
         } else {

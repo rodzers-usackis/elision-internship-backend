@@ -139,8 +139,23 @@ public class EmailServiceImpl implements EmailService {
                     emailTemplate.generateEmail());
 
 
+                userToAlertsMap.remove(user);
+
+
             });
 
+
+        });
+
+        userToAlertsMap.forEach((user, alerts) -> {
+
+            EmailTemplate emailTemplate =
+                EmailTemplate.builder()
+                    .alerts(alerts)
+                    .user(user)
+                    .build();
+
+            sendEmailToUser("New price alerts", user.getEmail(), emailTemplate.generateEmail());
 
         });
 

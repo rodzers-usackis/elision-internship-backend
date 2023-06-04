@@ -34,7 +34,7 @@ public class EmailController {
      */
     @PostMapping("/sendOutEmails")
     public ResponseEntity<String> sendOutEmails() {
-        LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime startTime = LocalDateTime.now().minusDays(5);
         String status = emailService.sendEventAfterPriceScraping(startTime);
 
         return ResponseEntity.ok(status);
