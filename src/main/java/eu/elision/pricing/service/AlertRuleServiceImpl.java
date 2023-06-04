@@ -40,8 +40,6 @@ public class AlertRuleServiceImpl implements AlertRuleService {
     @Override
     public void deleteAllByIdIn(User user, List<UUID> ids) {
 
-        long count = alertRuleRepository.countAllByAlertSettings_IdAndIdIn(user.getId(), ids);
-
         List<AlertRule> alertRules = alertRuleRepository.findAllById(ids);
 
         alertRules.forEach(alertRule -> {
@@ -49,14 +47,6 @@ public class AlertRuleServiceImpl implements AlertRuleService {
             product.getAlertRules().remove(alertRule);
             productRepository.save(product);
         });
-
-        if (count != ids.size()) {
-            log.error(">>> At least 1 alert rule not found for the user. Alert rule count: "
-                + count + ", number of IDs to delete: " + ids.size() + ", user id: "
-                + user.getId() + ", ids: "
-                + ids.toString() + ".");
-            throw new NotFoundException("At least 1 alert rule not found for the user");
-        }
 
         alertRuleRepository.deleteAllByIdIn(ids);
 
