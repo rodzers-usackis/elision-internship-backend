@@ -21,7 +21,6 @@ import eu.elision.pricing.repository.PriceRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -60,7 +59,7 @@ class AlertServiceImplTests {
                 .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .VATNumber("BE121345678992")
+                .vatNumber("BE121345678992")
                 .id(UUID.randomUUID())
                 .name("Test company")
                 .build();
@@ -171,7 +170,7 @@ class AlertServiceImplTests {
                 .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .VATNumber("BE123456789")
+                .vatNumber("BE123456789")
 
                 .id(UUID.randomUUID())
                 .name("Test company")

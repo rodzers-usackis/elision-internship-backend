@@ -1,18 +1,13 @@
 package eu.elision.pricing.publishers;
 
-import eu.elision.pricing.domain.Price;
-import eu.elision.pricing.domain.Product;
-import eu.elision.pricing.events.ProductPriceScrapedEvent;
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import eu.elision.pricing.events.ScrapingFinishedEvent;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
- * Publisher for {@link ProductPriceScrapedEvent}.
+ * Publisher for {@link ScrapingFinishedEvent}.
  */
 @RequiredArgsConstructor
 @Component
@@ -21,27 +16,13 @@ public class ProductPriceScrapedEventPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
-     * Publishes a {@link ProductPriceScrapedEvent}.
+     * Publishes a {@link ScrapingFinishedEvent}.
      *
-     * @param product   the product whose price has been scraped
-     * @param newPrices the new prices of the given product
+     * @param startTime the start time of the event chain
      */
-    public void publish(Product product, List<Price> newPrices) {
-        ProductPriceScrapedEvent event = ProductPriceScrapedEvent.builder()
-            .product(product)
-            .newPrices(newPrices)
-            .build();
-        applicationEventPublisher.publishEvent(event);
-    }
-
-    /**
-     * Publishes a {@link ProductsPricesScrapedEvent}.
-     *
-     * @param productToPricesMap the map of products to their new prices
-     */
-    public void publish(Map<UUID, List<UUID>> productToPricesMap) {
-        ProductsPricesScrapedEvent event = ProductsPricesScrapedEvent.builder()
-            .productToPricesMap(productToPricesMap)
+    public void publish(LocalDateTime startTime) {
+        ScrapingFinishedEvent event = ScrapingFinishedEvent.builder()
+            .eventChainStartTime(startTime)
             .build();
 
         applicationEventPublisher.publishEvent(event);

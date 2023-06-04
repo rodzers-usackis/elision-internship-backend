@@ -33,6 +33,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public void scrapeAndSavePrices() {
+        LocalDateTime startTime = LocalDateTime.now();
 
         List<PriceScrapingConfig> priceScrapingConfigs =
             priceScrapingConfigRepository.findAllByActiveTrue();
@@ -60,12 +61,12 @@ public class PriceServiceImpl implements PriceService {
                 }
             });
 
-            productPriceScrapedEventPublisher.publish(product, pricesForCurrentProduct);
+            productPriceScrapedEventPublisher.publish(startTime);
 
         });
     }
 
-    @Override
+    /*@Override
     public void scrapeAndSavePricesV2() {
         List<PriceScrapingConfig> priceScrapingConfigs =
             priceScrapingConfigRepository.findAllByActiveTrue();
@@ -99,7 +100,7 @@ public class PriceServiceImpl implements PriceService {
             productPriceScrapedEventPublisher.publish(productToPricesMap);
 
         });
-    }
+    }*/
 
     @Override
     public PriceHistoryDto getPriceHistory(UUID productId, LocalDateTime before,
@@ -135,6 +136,8 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public void scrapeProductsPrices(Collection<UUID> productIds) {
 
+        final LocalDateTime startTime = LocalDateTime.now();
+
         List<PriceScrapingConfig> allPriceScrapingConfigs =
             priceScrapingConfigRepository.findAllByActiveTrueAndProduct_IdIn(productIds).stream()
                 .toList();
@@ -150,9 +153,9 @@ public class PriceServiceImpl implements PriceService {
             allPriceScrapingConfigs.stream()
                 .collect(Collectors.groupingBy(PriceScrapingConfig::getProduct));
 
+
         productToPriceScrapingConfigMap.forEach((product, pscs) -> {
 
-            List<Price> pricesForCurrentProduct = new ArrayList<>();
 
             pscs.forEach(psc -> {
                 try {
@@ -163,7 +166,7 @@ public class PriceServiceImpl implements PriceService {
                     Price scrapedPrice = scraperService.scrapePrice(psc);
                     log.debug(">>>>>> Scraped price: {}", scrapedPrice.getAmount());
                     scrapedPrice = priceRepository.save(scrapedPrice);
-                    pricesForCurrentProduct.add(scrapedPrice);
+
                 } catch (Exception e) {
                     log.error(
                         "Error while scraping price for Product (name:{}; id:{}). "
@@ -172,13 +175,14 @@ public class PriceServiceImpl implements PriceService {
                 }
             });
 
-            log.info("Prices for Product (name:{}; id:{}) scraped successfully",
+            log.info("Prices for Product (name:{}; id:{}) scraped",
                 product.getName(), product.getId());
-            log.info("Prices: {}", pricesForCurrentProduct.stream().map(Price::getAmount).collect(
-                Collectors.toList()));
-            productPriceScrapedEventPublisher.publish(product, pricesForCurrentProduct);
 
         });
+
+
+
+        productPriceScrapedEventPublisher.publish(startTime);
 
     }
 

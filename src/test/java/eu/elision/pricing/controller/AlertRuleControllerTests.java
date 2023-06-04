@@ -43,7 +43,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +53,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @ActiveProfiles("test")
@@ -336,7 +334,7 @@ class AlertRuleControllerTests {
         // Client Company
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
-            .VATNumber("BE0123456789")
+            .vatNumber("BE0123456789")
             .name("Elision")
             .website("https://elision.eu")
             .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
@@ -581,7 +579,7 @@ class AlertRuleControllerTests {
             .priceComparisonType(PriceComparisonType.LOWER)
             .build();
 
-//        alertRule = alertRuleRepository.save(alertRule);
+        //alertRule = alertRuleRepository.save(alertRule);
 
         AlertRule alertRule2 = AlertRule.builder()
             .alertSettings(user.getAlertSettings())
@@ -590,7 +588,7 @@ class AlertRuleControllerTests {
             .priceComparisonType(PriceComparisonType.HIGHER)
             .build();
 
-//        alertRule2 = alertRuleRepository.save(alertRule2);
+        //alertRule2 = alertRuleRepository.save(alertRule2);
 
         alertSettings = user.getAlertSettings();
         alertSettings.setAlertRules(List.of(alertRule, alertRule2));

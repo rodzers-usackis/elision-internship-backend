@@ -322,35 +322,33 @@ class TrackedProductsRestControllerTest {
     @Test
     void givenTrackedProductsWhenGetTrackedProductsThenStatus200() throws Exception {
         mockMvc.perform(get("/api/client-company/tracked-products")
-                        .with(user(user))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(
-                        jsonPath("$[0].productPurchaseCost", is(trackedProduct1.getProductPurchaseCost())))
-                .andExpect(jsonPath("$[0].productSellPrice", is(trackedProduct1.getProductSellPrice())))
-                .andExpect(jsonPath("$[0].tracked", is(trackedProduct1.isTracked())))
-                .andExpect(jsonPath("$[0].product.id",
-                        is(String.valueOf(trackedProduct1.getProduct().getId()))))
-//            .andExpect(jsonPath("$[0].clientCompany.id",
-//                is(String.valueOf(trackedProduct1.getClientCompany().getId()))))
-                .andExpect(
-                        jsonPath("$[1].productPurchaseCost", is(trackedProduct2.getProductPurchaseCost())))
-                .andExpect(jsonPath("$[1].productSellPrice", is(trackedProduct2.getProductSellPrice())))
-                .andExpect(jsonPath("$[1].tracked", is(trackedProduct2.isTracked())))
+                .with(user(user))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(3)))
+            .andExpect(
+                jsonPath("$[0].productPurchaseCost", is(trackedProduct1.getProductPurchaseCost())))
+            .andExpect(jsonPath("$[0].productSellPrice", is(trackedProduct1.getProductSellPrice())))
+            .andExpect(jsonPath("$[0].tracked", is(trackedProduct1.isTracked())))
+            .andExpect(jsonPath("$[0].product.id",
+                is(String.valueOf(trackedProduct1.getProduct().getId()))))
+            //.andExpect(jsonPath("$[0].clientCompany.id",
+            //    is(String.valueOf(trackedProduct1.getClientCompany().getId()))))
+            .andExpect(
+                jsonPath("$[1].productPurchaseCost", is(trackedProduct2.getProductPurchaseCost())))
+            .andExpect(jsonPath("$[1].productSellPrice", is(trackedProduct2.getProductSellPrice())))
+            .andExpect(jsonPath("$[1].tracked", is(trackedProduct2.isTracked())))
             .andExpect(jsonPath("$[1].minPrice", is(trackedProduct2.getMinPrice())))
-                .andExpect(jsonPath("$[1].product.id",
-                        is(String.valueOf(trackedProduct2.getProduct().getId()))))
-//            .andExpect(jsonPath("$[1].clientCompany.id",
-//                is(String.valueOf(trackedProduct2.getClientCompany().getId()))))
-                .andExpect(
-                        jsonPath("$[2].productPurchaseCost", is(trackedProduct3.getProductPurchaseCost())))
-                .andExpect(jsonPath("$[2].productSellPrice", is(trackedProduct3.getProductSellPrice())))
-                .andExpect(jsonPath("$[2].tracked", is(trackedProduct3.isTracked())))
-                .andExpect(jsonPath("$[2].product.id",
-                        is(String.valueOf(trackedProduct3.getProduct().getId()))));
-//            .andExpect(jsonPath("$[2].clientCompany.id",
-//                is(String.valueOf(trackedProduct3.getClientCompany().getId()))));
+            .andExpect(jsonPath("$[1].product.id",
+                is(String.valueOf(trackedProduct2.getProduct().getId()))))
+            //.andExpect(jsonPath("$[1].clientCompany.id",
+            //    is(String.valueOf(trackedProduct2.getClientCompany().getId()))))
+            .andExpect(
+                jsonPath("$[2].productPurchaseCost", is(trackedProduct3.getProductPurchaseCost())))
+            .andExpect(jsonPath("$[2].productSellPrice", is(trackedProduct3.getProductSellPrice())))
+            .andExpect(jsonPath("$[2].tracked", is(trackedProduct3.isTracked())))
+            .andExpect(jsonPath("$[2].product.id",
+                is(String.valueOf(trackedProduct3.getProduct().getId()))));
     }
 
     @Test

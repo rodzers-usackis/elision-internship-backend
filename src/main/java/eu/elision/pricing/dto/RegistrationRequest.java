@@ -4,12 +4,12 @@ import eu.elision.pricing.domain.ProductCategory;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import java.util.Set;
 
 /**
  * The registration request containing all the information displayed during the registration.

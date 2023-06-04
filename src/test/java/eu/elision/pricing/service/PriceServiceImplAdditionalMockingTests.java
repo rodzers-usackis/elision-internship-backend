@@ -16,9 +16,11 @@ import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -57,6 +59,9 @@ class PriceServiceImplAdditionalMockingTests {
 
     @Captor
     private ArgumentCaptor<List<Price>> priceListCaptor;
+
+    @Captor
+    private ArgumentCaptor<Price> priceCaptor;
 
     @Captor
     private ArgumentCaptor<PriceScrapingConfig> priceScrapingConfigCaptor;
@@ -183,17 +188,14 @@ class PriceServiceImplAdditionalMockingTests {
         List<PriceScrapingConfig> capturedPscs = priceScrapingConfigCaptor.getAllValues();
         assertThat(capturedPscs, containsInAnyOrder(psc1, psc2, psc3));
 
-        verify(productPriceScrapedEventPublisher, times(2)).publish(productCaptor.capture(),
-            priceListCaptor.capture());
+        verify(priceRepository, times(3)).save(priceCaptor.capture());
 
+        List<Price> capturedPrices = priceCaptor.getAllValues();
 
-        List<Product> capturedProducts = productCaptor.getAllValues();
-        List<List<Price>> capturedPriceLists = priceListCaptor.getAllValues();
+        assertThat(capturedPrices.stream().map(Price::getAmount).collect(Collectors.toList()),
+            containsInAnyOrder(pr1.getAmount(), pr2.getAmount(), pr3.getAmount()));
 
-        assertThat(capturedProducts, containsInAnyOrder(p1, p2));
-        assertThat(capturedPriceLists.stream().map(List::size).toList(), containsInAnyOrder(2, 1));
-        assertThat(capturedPriceLists.stream().flatMap(List::stream).map(Price::getAmount).toList(),
-            containsInAnyOrder(1739.0, 2100.99, 1000.99));
+        verify(productPriceScrapedEventPublisher, times(1)).publish(any(LocalDateTime.class));
 
 
     }

@@ -20,9 +20,7 @@ import eu.elision.pricing.repository.RetailerCompanyRepository;
 import eu.elision.pricing.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
 import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +78,7 @@ class AlertSettingsServiceImplIntegrationTests {
 
         // Create a ClientCompany object
         ClientCompany clientCompany = ClientCompany.builder()
-                .VATNumber("BE12345678902")
+                .vatNumber("BE12345678902")
                 .name("Client Company")
                 .website("https://www.clientcompany.test")
                 .build();
@@ -172,7 +170,7 @@ class AlertSettingsServiceImplIntegrationTests {
 
         //create another client company
         ClientCompany clientCompany2 = ClientCompany.builder()
-                .VATNumber("BE1234567891")
+                .vatNumber("BE1234567891")
                 .name("Client Company 2")
                 .website("https://www.clientcompany2.test")
                 .build();

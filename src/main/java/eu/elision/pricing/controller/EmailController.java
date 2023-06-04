@@ -1,7 +1,7 @@
 package eu.elision.pricing.controller;
 
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
 import eu.elision.pricing.service.EmailService;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +24,18 @@ public class EmailController {
 
     private final EmailService emailService;
 
+    /**
+     * Sends out emails with price alerts to users.
+     *
+     * @return a response entity with the status of the email service
+     * @deprecated this method was only used for testing purposes
+     *     emails should not be sent out after a post request,
+     *     but rather after a price scraping event
+     */
     @PostMapping("/sendOutEmails")
-    public ResponseEntity<String> sendOutEmails(
-        @RequestBody ProductsPricesScrapedEvent productsPricesScrapedEvent) {
-        String status = emailService.sendOutEmails(productsPricesScrapedEvent);
+    public ResponseEntity<String> sendOutEmails() {
+        LocalDateTime startTime = LocalDateTime.now();
+        String status = emailService.sendEventAfterPriceScraping(startTime);
 
         return ResponseEntity.ok(status);
     }

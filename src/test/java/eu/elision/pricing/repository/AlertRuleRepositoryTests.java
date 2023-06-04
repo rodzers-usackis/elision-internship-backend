@@ -25,7 +25,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -305,7 +304,7 @@ class AlertRuleRepositoryTests {
         // Client Company
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
-            .VATNumber("BE0123456789")
+            .vatNumber("BE0123456789")
             .name("Elision")
             .website("https://elision.eu")
             .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
@@ -550,7 +549,7 @@ class AlertRuleRepositoryTests {
             .priceComparisonType(PriceComparisonType.LOWER)
             .build();
 
-//        alertRule = alertRuleRepository.save(alertRule);
+        //alertRule = alertRuleRepository.save(alertRule);
 
         AlertRule alertRule2 = AlertRule.builder()
             .alertSettings(user.getAlertSettings())
@@ -559,7 +558,7 @@ class AlertRuleRepositoryTests {
             .priceComparisonType(PriceComparisonType.HIGHER)
             .build();
 
-//        alertRule2 = alertRuleRepository.save(alertRule2);
+        //alertRule2 = alertRuleRepository.save(alertRule2);
 
         alertSettings = user.getAlertSettings();
         alertSettings.setAlertRules(List.of(alertRule, alertRule2));

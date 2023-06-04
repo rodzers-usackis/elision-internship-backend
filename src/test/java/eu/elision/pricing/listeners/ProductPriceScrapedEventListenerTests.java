@@ -5,8 +5,8 @@ import static org.mockito.Mockito.verify;
 
 import eu.elision.pricing.domain.Price;
 import eu.elision.pricing.domain.Product;
-import eu.elision.pricing.events.ProductPriceScrapedEvent;
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
+import eu.elision.pricing.events.ScrapingFinishedEvent;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,10 +31,7 @@ class ProductPriceScrapedEventListenerTests {
     private ProductPriceScrapedEventListener productPriceScrapedEventListener;
 
     @Captor
-    private ArgumentCaptor<ProductPriceScrapedEvent> eventCaptor;
-
-    @Captor
-    private ArgumentCaptor<ProductsPricesScrapedEvent> eventCaptorV2;
+    private ArgumentCaptor<ScrapingFinishedEvent> eventCaptor;
 
 
     @Test
@@ -56,17 +53,17 @@ class ProductPriceScrapedEventListenerTests {
             .product(product)
             .build();
 
-        ProductPriceScrapedEvent
-            event = new ProductPriceScrapedEvent(product, List.of(price, price2));
+        ScrapingFinishedEvent event = ScrapingFinishedEvent.builder().eventChainStartTime(
+            LocalDateTime.now()).build();
 
         applicationEventPublisher.publishEvent(event);
 
-        verify(productPriceScrapedEventListener).handleEvent(eventCaptor.capture());
+        verify(productPriceScrapedEventListener).handle(eventCaptor.capture());
 
-        ProductPriceScrapedEvent capturedEvent = eventCaptor.getValue();
+        ScrapingFinishedEvent capturedEvent = eventCaptor.getValue();
 
-        assertEquals(event.getProduct().getId(), capturedEvent.getProduct().getId());
-        assertEquals(event.getNewPrices().size(), capturedEvent.getNewPrices().size());
+        assertEquals(event.getEventChainStartTime(), capturedEvent.getEventChainStartTime());
+
     }
 
 
@@ -91,14 +88,17 @@ class ProductPriceScrapedEventListenerTests {
 
         Map<UUID, List<UUID>> productToPricesMap =
             Map.of(product.getId(), List.of(price.getId(), price2.getId()));
-        ProductsPricesScrapedEvent event = new ProductsPricesScrapedEvent(productToPricesMap);
+
+        ScrapingFinishedEvent event = ScrapingFinishedEvent
+            .builder()
+            .eventChainStartTime(LocalDateTime.now())
+            .build();
 
         applicationEventPublisher.publishEvent(event);
 
-        verify(productPriceScrapedEventListener).handleEventV2(eventCaptorV2.capture());
-        ProductsPricesScrapedEvent capturedEvent = eventCaptorV2.getValue();
+        verify(productPriceScrapedEventListener).handle(eventCaptor.capture());
+        ScrapingFinishedEvent capturedEvent = eventCaptor.getValue();
 
-        assertEquals(event.getProductToPricesMap().size(),
-            capturedEvent.getProductToPricesMap().size());
+        assertEquals(event.getEventChainStartTime(), capturedEvent.getEventChainStartTime());
     }
 }

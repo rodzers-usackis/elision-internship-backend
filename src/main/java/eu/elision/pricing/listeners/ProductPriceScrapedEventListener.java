@@ -1,25 +1,18 @@
 package eu.elision.pricing.listeners;
 
 import eu.elision.pricing.domain.Alert;
-import eu.elision.pricing.domain.Price;
-import eu.elision.pricing.domain.Product;
-import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
-import eu.elision.pricing.events.ProductPriceScrapedEvent;
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
+import eu.elision.pricing.events.ScrapingFinishedEvent;
 import eu.elision.pricing.service.AlertService;
 import eu.elision.pricing.service.EmailService;
 import eu.elision.pricing.service.PriceService;
 import eu.elision.pricing.service.ProductService;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Event listener for {@link ProductPriceScrapedEvent}.
+ * Event listener for {@link ScrapingFinishedEvent}.
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -32,35 +25,17 @@ public class ProductPriceScrapedEventListener {
     private final EmailService emailService;
 
     /**
-     * Handles the {@link ProductPriceScrapedEvent} event
+     * Handles the {@link ScrapingFinishedEvent} event
      * by creating {@link Alert}s.
      *
-     * @param event the event containing the product and the new prices
+     * @param event the event containing the start time of the event chain
      */
     @EventListener
-    public void handleEvent(ProductPriceScrapedEvent event) {
+    public void handle(ScrapingFinishedEvent event) {
 
-        log.debug("Handling ProductPriceScrapedEvent event {}", event);
-        alertService.createAlerts(event.getProduct(), event.getNewPrices());
+        log.debug("Handling ScrapingFinishedEvent event {}", event);
+        alertService.createNewAlerts(event.getEventChainStartTime());
     }
 
-    /**
-     * Handles the {@link ProductsPricesScrapedEvent} event
-     * by creating {@link Alert}s
-     * and sending an {@link EmailDetailsDto} to the affected {@link User}s.
-     *
-     * @param event the event containing the product and the new prices
-     */
-    @EventListener
-    public void handleEventV2(ProductsPricesScrapedEvent event) {
 
-        for (UUID productId : event.getProductToPricesMap().keySet()) {
-            log.debug("Handling ProductPriceScrapedEvent event {}", event);
-            Product product = productService.getProduct(productId);
-            List<Price> productPrices = priceService.getPricesByProductId(productId);
-            alertService.createAlerts(product, productPrices);
-        }
-
-        emailService.sendOutEmails(event);
-    }
 }
