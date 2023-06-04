@@ -49,7 +49,6 @@ public class AlertRuleController {
         @RequestBody List<UUID> ids
     ) {
 
-
         log.debug(">>> Deleting alert rules with ids: " + ids.toString() + ".");
 
         alertRuleService.deleteAllByIdIn(user, ids);
