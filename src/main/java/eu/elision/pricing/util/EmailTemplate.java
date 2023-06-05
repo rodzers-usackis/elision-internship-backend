@@ -159,7 +159,7 @@ public class EmailTemplate {
                     
                         <p>If you don't want to receive emails, you can change it
                             <a
-                                    href="http://localhost:3000/dashboard/alerts-settings">here.</a></p>
+                                    href="http://localhost:3000/dashboard/alert-settings">here.</a></p>
                     </div>
                 
                 {{alerts-table}}
