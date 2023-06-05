@@ -14,9 +14,9 @@ public interface AlertRuleRepository extends JpaRepository<AlertRule, UUID> {
 
     void deleteAllByIdIn(List<UUID> id);
 
-    long countAllByAlertSettings_IdAndIdIn(UUID alertSettingsId, List<UUID> id);
+    long countAllByAlertSettings_IdAndIdIn(UUID userId, List<UUID> id);
 
     List<AlertRule> findAllByAlertSettings_Id(UUID userId);
 
-
+    AlertRule findByProductAndAlertSettings_Id(UUID productId, UUID alertSettingsId);
 }
