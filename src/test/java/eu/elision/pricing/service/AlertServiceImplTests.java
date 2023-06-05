@@ -17,6 +17,7 @@ import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.AlertRepository;
+import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.PriceRepository;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,9 @@ class AlertServiceImplTests {
 
     @MockBean
     private PriceRepository priceRepository;
+
+    @MockBean
+    private AlertRuleRepository alertRuleRepository;
 
     @Test
     void createAlertsSuccessfully() {
@@ -135,6 +139,10 @@ class AlertServiceImplTests {
         when(priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(any(),
             any())).thenReturn(
             Optional.empty());
+
+        when(alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(product.getId())).thenReturn(List.of(alertRule1, alertRule2, alertRule3));
+
+        when(alertRepository.save(any())).thenReturn(Alert.builder().build());
 
         alertSettings.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
 

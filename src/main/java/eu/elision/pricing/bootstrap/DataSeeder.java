@@ -529,6 +529,21 @@ public class DataSeeder implements CommandLineRunner {
 
         retailerCompanyRepository.save(retailerCompany3);
 
+        RetailerCompany retailerCompany4 = RetailerCompany.builder()
+            .name("bol.com")
+            .website("https://bol.com")
+            .build();
+
+        retailerCompany4 = retailerCompanyRepository.save(retailerCompany4);
+
+        RetailerCompany retailerCompany5 = RetailerCompany.builder()
+            .website("https://alternate.be")
+            .name("Alternate")
+            .categoriesProductsSold(Set.of(ProductCategory.CONSUMER_ELECTRONICS))
+            .build();
+
+        retailerCompany5 = retailerCompanyRepository.save(retailerCompany5);
+
         // Price objects for Product 1
         Price price3 = Price.builder()
             .amount(699.00)
@@ -641,6 +656,29 @@ public class DataSeeder implements CommandLineRunner {
             .build();
 
         priceScrapingConfigRepository.save(priceScrapingConfig);
+
+        PriceScrapingConfig priceScrapingConfig1 = PriceScrapingConfig.builder()
+            .cssSelector("div.price-block__price span.promo-price")
+            .active(true)
+            .product(product13)
+            .url("https://www.bol.com/be/nl/p/oneplus-nord-ce2-lite-5g-128gb-black-dusk/9300000105440778/")
+            .retailerCompany(retailerCompany4)
+            .commaSeparatedDecimal(true)
+            .build();
+
+        priceScrapingConfigRepository.save(priceScrapingConfig1);
+
+
+        PriceScrapingConfig priceScrapingConfig2 = PriceScrapingConfig.builder()
+            .cssSelector("span.price")
+            .active(true)
+            .product(product13)
+            .url("https://www.alternate.be/OnePlus/Nord-CE-2-Lite-smartphone/html/product/1849743")
+            .retailerCompany(retailerCompany5)
+            .commaSeparatedDecimal(true)
+            .build();
+
+        priceScrapingConfigRepository.save(priceScrapingConfig2);
 
         AlertRule alertRule = AlertRule.builder()
             .alertSettings(user.getAlertSettings())

@@ -84,17 +84,23 @@ public class EmailServiceImpl implements EmailService {
 
     @Transactional
     @Override
-    public String sendEventAfterPriceScraping(LocalDateTime pricesScrapedAfter) {
+    public String sendEmailsAfterPriceScraping(LocalDateTime pricesScrapedAfter) {
 
+        log.debug("Sending emails after price scraping");
         List<Price> newPrices = priceRepository.findAllByTimestampAfter(pricesScrapedAfter);
 
+        log.debug("Found {} new prices", newPrices.size());
+
         List<User> users = userRepository.findAllByAlertSettings_NotifyViaEmailTrue();
+        log.debug("Found {} users to notify", users.size());
 
         List<Alert> newAlerts =
             alertRepository.findAllByTimestampAfterAndReadFalse(pricesScrapedAfter);
+        log.debug("Found {} new alerts", newAlerts.size());
 
         List<SuggestedPrice> newSuggestedPrices = suggestedPriceRepository.findAllByTimestampAfter(
             pricesScrapedAfter);
+        log.debug("Found {} new suggested prices", newSuggestedPrices.size());
 
         //group by company
         Map<ClientCompany, List<SuggestedPrice>> companyToSuggestedPricesMap =

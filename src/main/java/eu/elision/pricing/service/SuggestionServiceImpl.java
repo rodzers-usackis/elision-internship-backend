@@ -45,6 +45,7 @@ public class SuggestionServiceImpl implements SuggestionService {
         double lowestPrice = lowestPriceOptional.getAsDouble();
 
         SuggestedPrice suggestedPrice = SuggestedPrice.builder()
+            .clientCompany(clientsTrackedProduct.getClientCompany())
             .product(clientsTrackedProduct.getProduct())
             .timestamp(LocalDateTime.now())
             .build();

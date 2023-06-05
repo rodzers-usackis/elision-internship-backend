@@ -3,14 +3,12 @@ package eu.elision.pricing.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import eu.elision.pricing.domain.Address;
 import eu.elision.pricing.domain.Alert;
-import eu.elision.pricing.domain.AlertRule;
 import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Price;
@@ -40,8 +38,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -707,7 +703,7 @@ class EmailServiceImplTests {
 
         when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
 
-        emailService.sendEventAfterPriceScraping(this.startTime);
+        emailService.sendEmailsAfterPriceScraping(this.startTime);
 
         verify(javaMailSender, times(1)).send(any(MimeMessage.class));
 
