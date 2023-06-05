@@ -1,7 +1,9 @@
 package eu.elision.pricing.service;
 
 
+
 import eu.elision.pricing.domain.Address;
+import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
@@ -71,6 +73,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         clientCompanyRepository.save(clientCompany);
 
+        AlertSettings alertSettings = AlertSettings.builder()
+            .alertsActive(true)
+            .notifyViaEmail(true)
+            .alertStorageDuration(30)
+            .emailAddress(registrationRequest.getEmailAddress())
+            .build();
+
         User user = User.builder()
             .firstName(registrationRequest.getFirstName())
             .lastName(registrationRequest.getLastName())
@@ -78,7 +87,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             .password(passwordEncoder.encode(registrationRequest.getPassword()))
             .clientCompany(clientCompany)
             .role(Role.CLIENT)
+            .alertSettings(alertSettings)
             .build();
+
+        alertSettings.setUser(user);
 
         clientCompany.setUsers(List.of(user));
 

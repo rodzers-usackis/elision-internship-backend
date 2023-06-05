@@ -1,10 +1,8 @@
 package eu.elision.pricing.events;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import eu.elision.pricing.publishers.AlertsCreatedEventPublisher;
 import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
@@ -17,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -75,7 +72,7 @@ class EventsTest {
 
         verify(alertService).createNewAlerts(startDateTime);
         verify(suggestionService).suggestNewPrices(startDateTime);
-        verify(emailService).sendEventAfterPriceScraping(startDateTime);
+        verify(emailService).sendEmailsAfterPriceScraping(startDateTime);
 
 
     }

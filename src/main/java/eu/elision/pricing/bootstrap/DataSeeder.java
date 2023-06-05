@@ -515,28 +515,114 @@ public class DataSeeder implements CommandLineRunner {
 
         retailerCompanyRepository.save(retailerCompany);
 
-        //Price
-        Price price = Price.builder()
+        RetailerCompany retailerCompany2 = RetailerCompany.builder()
+            .name("Ebay")
+            .website("https://ebay.com")
+            .build();
+
+        retailerCompanyRepository.save(retailerCompany2);
+
+        RetailerCompany retailerCompany3 = RetailerCompany.builder()
+            .name("Random Website")
+            .website("https://randomwebsite.com")
+            .build();
+
+        retailerCompanyRepository.save(retailerCompany3);
+
+        RetailerCompany retailerCompany4 = RetailerCompany.builder()
+            .name("bol.com")
+            .website("https://bol.com")
+            .build();
+
+        retailerCompany4 = retailerCompanyRepository.save(retailerCompany4);
+
+        RetailerCompany retailerCompany5 = RetailerCompany.builder()
+            .website("https://alternate.be")
+            .name("Alternate")
+            .categoriesProductsSold(Set.of(ProductCategory.CONSUMER_ELECTRONICS))
+            .build();
+
+        retailerCompany5 = retailerCompanyRepository.save(retailerCompany5);
+
+        // Price objects for Product 1
+        Price price3 = Price.builder()
             .amount(699.00)
             .product(product1)
             .retailerCompany(retailerCompany)
-            .timestamp(LocalDateTime.now().minusDays(1))
+            .timestamp(LocalDateTime.now().minusDays(3))
             .build();
 
-        priceRepository.save(price);
+        priceRepository.save(price3);
 
-        Price price2 = Price.builder()
-            .amount(699.00)
+        Price price4 = Price.builder()
+            .amount(649.00)
+            .product(product1)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(4))
+            .build();
+
+        priceRepository.save(price4);
+
+        Price price5 = Price.builder()
+            .amount(659.00)
+            .product(product1)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(5))
+            .build();
+
+        priceRepository.save(price5);
+
+// Price objects for Product 2
+        Price price6 = Price.builder()
+            .amount(629.00)
             .product(product2)
             .retailerCompany(retailerCompany)
-            .timestamp(LocalDateTime.now().minusDays(2))
+            .timestamp(LocalDateTime.now().minusDays(6))
             .build();
 
-        priceRepository.save(price2);
+        priceRepository.save(price6);
+
+        Price price7 = Price.builder()
+            .amount(679.00)
+            .product(product2)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(7))
+            .build();
+
+        priceRepository.save(price7);
+
+// Price objects for Product 3
+        Price price8 = Price.builder()
+            .amount(599.00)
+            .product(product3)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(8))
+            .build();
+
+        priceRepository.save(price8);
+
+        Price price9 = Price.builder()
+            .amount(619.00)
+            .product(product3)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(9))
+            .build();
+
+        priceRepository.save(price9);
+
+        Price price10 = Price.builder()
+            .amount(669.00)
+            .product(product3)
+            .retailerCompany(retailerCompany)
+            .timestamp(LocalDateTime.now().minusDays(10))
+            .build();
+
+        priceRepository.save(price10);
+
 
         //Alerts
         Alert alert = Alert.builder()
-            .price(price.getAmount())
+            .price(price5.getAmount())
             .priceComparisonType(PriceComparisonType.HIGHER)
             .retailerCompany(retailerCompany)
             .product(product1)
@@ -547,7 +633,7 @@ public class DataSeeder implements CommandLineRunner {
         alertRepository.save(alert);
 
         Alert alert2 = Alert.builder()
-            .price(price2.getAmount())
+            .price(price6.getAmount())
             .priceComparisonType(PriceComparisonType.LOWER)
             .retailerCompany(retailerCompany)
             .product(product2)
@@ -570,5 +656,48 @@ public class DataSeeder implements CommandLineRunner {
             .build();
 
         priceScrapingConfigRepository.save(priceScrapingConfig);
+
+        PriceScrapingConfig priceScrapingConfig1 = PriceScrapingConfig.builder()
+            .cssSelector("div.price-block__price span.promo-price")
+            .active(true)
+            .product(product13)
+            .url("https://www.bol.com/be/nl/p/oneplus-nord-ce2-lite-5g-128gb-black-dusk/9300000105440778/")
+            .retailerCompany(retailerCompany4)
+            .commaSeparatedDecimal(true)
+            .build();
+
+        priceScrapingConfigRepository.save(priceScrapingConfig1);
+
+
+        PriceScrapingConfig priceScrapingConfig2 = PriceScrapingConfig.builder()
+            .cssSelector("span.price")
+            .active(true)
+            .product(product13)
+            .url("https://www.alternate.be/OnePlus/Nord-CE-2-Lite-smartphone/html/product/1849743")
+            .retailerCompany(retailerCompany5)
+            .commaSeparatedDecimal(true)
+            .build();
+
+        priceScrapingConfigRepository.save(priceScrapingConfig2);
+
+        AlertRule alertRule = AlertRule.builder()
+            .alertSettings(user.getAlertSettings())
+            .product(product1)
+            .price(1999.00)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .retailerCompanies(List.of(retailerCompany, retailerCompany2))
+            .build();
+
+        AlertRule alertRule2 = AlertRule.builder()
+            .alertSettings(user.getAlertSettings())
+            .product(product2)
+            .price(500.01)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .retailerCompanies(List.of(retailerCompany))
+            .build();
+
+        alertSettings = user.getAlertSettings();
+        alertSettings.setAlertRules(List.of(alertRule, alertRule2));
+        alertSettingsRepository.save(alertSettings);
     }
 }

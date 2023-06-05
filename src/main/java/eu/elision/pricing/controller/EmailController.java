@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,8 +33,8 @@ public class EmailController {
      */
     @PostMapping("/sendOutEmails")
     public ResponseEntity<String> sendOutEmails() {
-        LocalDateTime startTime = LocalDateTime.now().minusDays(5);
-        String status = emailService.sendEventAfterPriceScraping(startTime);
+        LocalDateTime startTime = LocalDateTime.now();
+        String status = emailService.sendEmailsAfterPriceScraping(startTime);
 
         return ResponseEntity.ok(status);
     }

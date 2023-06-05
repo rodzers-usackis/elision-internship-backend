@@ -11,5 +11,5 @@ public interface EmailService {
 
     String sendEmailToUser(String subject, String userEmail, String emailText);
 
-    String sendEventAfterPriceScraping(LocalDateTime pricesScrapedAfter);
+    String sendEmailsAfterPriceScraping(LocalDateTime pricesScrapedAfter);
 }

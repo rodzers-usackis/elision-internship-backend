@@ -17,4 +17,6 @@ public interface AlertRuleService {
 
     List<AlertRuleDto> getAllAlertRulesByUser(User user);
 
+    void updateAlertRule(User user, AlertRuleDto alertRuleDto);
+
 }

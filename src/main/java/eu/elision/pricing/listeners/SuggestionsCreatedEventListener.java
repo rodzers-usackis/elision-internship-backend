@@ -25,12 +25,8 @@ public class SuggestionsCreatedEventListener {
      */
     @EventListener
     public void handleEvent(SuggestionsCreatedEvent event) {
-
-        log.info("SuggestionsCreatedEvent received: {}", event);
-
-        emailService.sendEventAfterPriceScraping(event.getEventChainStartTime());
-
-
+        log.info("Handling SuggestionsCreatedEvent: {}", event);
+        emailService.sendEmailsAfterPriceScraping(event.getEventChainStartTime());
     }
 
 }

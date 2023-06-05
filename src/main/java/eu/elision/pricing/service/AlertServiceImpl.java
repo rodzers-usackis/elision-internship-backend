@@ -11,6 +11,7 @@ import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.mapper.AlertMapper;
 import eu.elision.pricing.publishers.AlertsCreatedEventPublisher;
 import eu.elision.pricing.repository.AlertRepository;
+import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.PriceRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class AlertServiceImpl implements AlertService {
     private final AlertMapper alertMapper;
     private final PriceRepository priceRepository;
     private final AlertsCreatedEventPublisher alertsCreatedEventPublisher;
+    private final AlertRuleRepository alertRuleRepository;
 
     @Transactional
     @Override
@@ -70,7 +72,11 @@ public class AlertServiceImpl implements AlertService {
             return;
         }
 
-        for (AlertRule alertRule : product.getAlertRules()) {
+        List<AlertRule> alertRules =
+            alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(
+                product.getId());
+
+        for (AlertRule alertRule : alertRules) {
             List<Price> pricesToCompare =
                 filterPricesByRetailerCompanies(prices, alertRule.getRetailerCompanies());
 

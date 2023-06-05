@@ -40,8 +40,6 @@ public class AlertRuleServiceImpl implements AlertRuleService {
     @Override
     public void deleteAllByIdIn(User user, List<UUID> ids) {
 
-        long count = alertRuleRepository.countAllByAlertSettings_IdAndIdIn(user.getId(), ids);
-
         List<AlertRule> alertRules = alertRuleRepository.findAllById(ids);
 
         alertRules.forEach(alertRule -> {
@@ -50,19 +48,10 @@ public class AlertRuleServiceImpl implements AlertRuleService {
             productRepository.save(product);
         });
 
-        if (count != ids.size()) {
-            log.error(">>> At least 1 alert rule not found for the user. Alert rule count: "
-                + count + ", number of IDs to delete: " + ids.size() + ", user id: "
-                + user.getId() + ", ids: "
-                + ids.toString() + ".");
-            throw new NotFoundException("At least 1 alert rule not found for the user");
-        }
-
         alertRuleRepository.deleteAllByIdIn(ids);
 
     }
 
-    @Transactional
     @Override
     public AlertRuleDto createAlertRule(User user, AlertRuleToCreateDto alertRuleDto) {
 
@@ -131,4 +120,44 @@ public class AlertRuleServiceImpl implements AlertRuleService {
 
     }
 
+    @Transactional
+    @Override
+    public void updateAlertRule(User user, AlertRuleDto alertRuleDto) {
+        log.debug(">>> Updating alert rule " + alertRuleDto.getRetailerCompanies());
+        log.debug(">>> Updating alert rule (id: " + alertRuleDto.getId() + ")");
+
+        AlertRule alertRule = alertRuleRepository.findById(alertRuleDto.getId())
+            .orElseThrow(() -> new NotFoundException("Alert rule not found (id: "
+                + alertRuleDto.getId() + ")"));
+
+        if (!alertRule.getAlertSettings().getId().equals(user.getAlertSettings().getId())) {
+            throw new NotFoundException("Alert rule not found (id: "
+                + alertRuleDto.getId() + ")");
+        }
+
+        alertRule.setPrice(alertRuleDto.getPriceThreshold());
+        alertRule.setPriceComparisonType(alertRuleDto.getPriceComparisonType());
+
+        List<RetailerCompany> retailerCompanies;
+        if (alertRuleDto.getRetailerCompanies() != null) {
+            retailerCompanies = retailerCompanyRepository.findAllById(
+                alertRuleDto.getRetailerCompanies()
+                    .stream()
+                    .map(RetailerCompanyDto::getId)
+                    .toList()
+            );
+
+            if (retailerCompanies.size() != alertRuleDto.getRetailerCompanies().size()) {
+                throw new NotFoundException("At least 1 retailer company not found");
+            }
+        } else {
+            retailerCompanies = new ArrayList<>();
+        }
+
+        log.debug(">>> Retailer companies: " + retailerCompanies);
+
+        alertRule.setRetailerCompanies(retailerCompanies);
+
+        alertRuleRepository.save(alertRule);
+    }
 }

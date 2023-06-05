@@ -12,12 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller class for handling requests
@@ -27,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alert-rules")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AlertRuleController {
 
     private final AlertRuleService alertRuleService;
@@ -84,7 +80,6 @@ public class AlertRuleController {
         @RequestBody List<UUID> ids
     ) {
 
-
         log.debug(">>> Deleting alert rules with ids: " + ids.toString() + ".");
 
         alertRuleService.deleteAllByIdIn(user, ids);
@@ -95,5 +90,17 @@ public class AlertRuleController {
 
     }
 
+
+    @PatchMapping
+    public ResponseEntity<Void> updateAlertRule(
+        @AuthenticationPrincipal User user,
+        @RequestBody AlertRuleDto alertRuleDto
+    ) {
+
+        alertRuleService.updateAlertRule(user, alertRuleDto);
+
+        return ResponseEntity.ok().build();
+
+    }
 
 }
