@@ -21,7 +21,7 @@ import org.hibernate.annotations.OnDelete;
 public class ClientCompany extends RetailerCompany {
 
     @Column(unique = true, nullable = true)
-    private String VATNumber;
+    private String vatNumber;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

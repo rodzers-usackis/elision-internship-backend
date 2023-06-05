@@ -1,32 +1,30 @@
 package eu.elision.pricing.service;
 
+import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.domain.ClientCompany;
-import eu.elision.pricing.domain.Product;
+import eu.elision.pricing.domain.Price;
+import eu.elision.pricing.domain.SuggestedPrice;
 import eu.elision.pricing.domain.TrackedProduct;
 import eu.elision.pricing.domain.User;
-import eu.elision.pricing.dto.emailservice.EmailDetailsDto;
-import eu.elision.pricing.events.ProductsPricesScrapedEvent;
+import eu.elision.pricing.repository.AlertRepository;
+import eu.elision.pricing.repository.PriceRepository;
+import eu.elision.pricing.repository.SuggestedPriceRepository;
+import eu.elision.pricing.repository.TrackedProductRepository;
+import eu.elision.pricing.repository.UserRepository;
+import eu.elision.pricing.util.EmailTemplate;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * Implementation of {@link EmailService}.
@@ -35,89 +33,22 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class EmailServiceImpl implements EmailService {
+    private final UserRepository userRepository;
     private final TrackedProductService trackedProductService;
-    private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+    private final TrackedProductRepository trackedProductRepository;
+    private final PriceRepository priceRepository;
+    private final SuggestedPriceRepository suggestedPriceRepository;
+    private final AlertRepository alertRepository;
 
     private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String senderEmail;
 
-    // So ugly...
     @Override
-    public String sendOutEmails(ProductsPricesScrapedEvent productsPricesScrapedEvent) {
-        Map<UUID, List<UUID>> productsToPricesMap =
-            productsPricesScrapedEvent.getProductToPricesMap();
-
-        // Map to store the products a user is tracking for each user
-        Map<User, List<Product>> subscribedProductsMap = new HashMap<>();
-
-        // Iterate over productsToPricesMap
-        for (UUID productId : productsToPricesMap.keySet()) {
-            List<TrackedProduct> trackedProducts =
-                trackedProductService.getTrackedProductsByProductId(productId);
-
-            // Iterate over trackedProducts
-            for (TrackedProduct trackedProduct : trackedProducts) {
-                ClientCompany clientCompany = trackedProduct.getClientCompany();
-                List<User> users = clientCompany.getUsers();
-
-                // Iterate over users
-                for (User user : users) {
-                    // Get the user's existing list of subscribed products from the map
-                    List<Product> subscribedProducts =
-                        subscribedProductsMap.getOrDefault(user, new ArrayList<>());
-
-                    // Add the product to the user's list of subscribed products
-                    subscribedProducts.add(trackedProduct.getProduct());
-
-                    // Update the map
-                    subscribedProductsMap.put(user, subscribedProducts);
-                }
-            }
-        }
-
-        // Send emails to the users with their subscribed products
-        for (Map.Entry<User, List<Product>> entry : subscribedProductsMap.entrySet()) {
-            User user = entry.getKey();
-            List<Product> subscribedProducts = entry.getValue();
-
-            // Prepare the email body
-            StringBuilder bodyBuilder = new StringBuilder();
-            bodyBuilder.append("Dear ").append(user.getFirstName()).append(" ").append(user.getLastName()).append(",<br><br>")
-                    .append("We want to bring your attention to an important update regarding the product you are tracking:<br><br>");
-
-            for (Product product : subscribedProducts) {
-                bodyBuilder.append("- Product: ").append(product.getName()).append("<br>");
-            }
-
-            bodyBuilder.append("<br>Please ensure that you stay informed about its prices and any related notifications.<br>If there are any significant changes, we will notify you promptly.<br><br>")
-                    .append("Thank you for using Price Spy.<br><br>")
-                    .append("Best regards,<br>")
-                    .append("Price Spy Team");
-
-            // Send the email to the user with their subscribed products
-            EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
-                    .from(senderEmail)
-                    .to(user.getEmail())
-                    .subject("Important update: Product tracking")
-                    .body(bodyBuilder.toString())
-                    .attachment("C:/Users/rodze/IdeaProjects/elision-internship-backend/assets/images/price_spy_logo.svg")
-                    .build();
-
-            sendEmailToUser(emailDetailsDto);
-        }
-
-
-        // Return a success message or any relevant information
-        return "Emails sent successfully.";
-    }
-
-
-    @Override
-    public String sendEmailToUser(EmailDetailsDto emailDetailsDto) {
-        logger.debug("Sending email to: {}", emailDetailsDto.getTo());
-        logger.debug("Sender email: {}", emailDetailsDto.getFrom());
+    public String sendEmailToUser(String subject, String userEmail, String emailText) {
+        log.debug("Sending email to: {}", userEmail);
+        log.debug("Sender email: {}", senderEmail);
 
         // Create a mail message
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -126,18 +57,18 @@ public class EmailServiceImpl implements EmailService {
         try {
             // Prepare the email
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setSubject(emailDetailsDto.getSubject());
+            mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setFrom(senderEmail);
-            mimeMessageHelper.setTo(emailDetailsDto.getTo());
-            mimeMessageHelper.setText(emailDetailsDto.getBody(), true);
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setText(emailText, true);
 
             // Get file from the file system
-            FileSystemResource fileSystemResource =
-                new FileSystemResource(new File(emailDetailsDto.getAttachment()));
+            //FileSystemResource fileSystemResource =
+            //    new FileSystemResource(new File(emailDetailsDto.getAttachment()));
 
             // Add the attachment
-            mimeMessageHelper.addAttachment(
-                Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
+            //mimeMessageHelper.addAttachment(
+            //    Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
 
             // Send the email
             javaMailSender.send(mimeMessage);
@@ -149,6 +80,72 @@ public class EmailServiceImpl implements EmailService {
             e.printStackTrace();
             return "Error while sending mail ..";
         }
+    }
+
+    @Transactional
+    @Override
+    public String sendEventAfterPriceScraping(LocalDateTime pricesScrapedAfter) {
+
+        List<Price> newPrices = priceRepository.findAllByTimestampAfter(pricesScrapedAfter);
+
+        List<User> users = userRepository.findAllByAlertSettings_NotifyViaEmailTrue();
+
+        List<Alert> newAlerts =
+            alertRepository.findAllByTimestampAfterAndReadFalse(pricesScrapedAfter);
+
+        List<SuggestedPrice> newSuggestedPrices = suggestedPriceRepository.findAllByTimestampAfter(
+            pricesScrapedAfter);
+
+        //group by company
+        Map<ClientCompany, List<SuggestedPrice>> companyToSuggestedPricesMap =
+            newSuggestedPrices.stream()
+                .collect(Collectors.groupingBy(SuggestedPrice::getClientCompany));
+
+        //group alerts by user
+        Map<User, List<Alert>> userToAlertsMap = newAlerts.stream()
+            .collect(Collectors.groupingBy(Alert::getUser));
+
+        companyToSuggestedPricesMap.forEach((clientCompany, suggestedPrices) -> {
+
+            List<TrackedProduct> companysTrackedProducts =
+                trackedProductRepository.findTrackedProductByClientCompanyId(clientCompany.getId());
+
+            List<User> usersToNotify = users.stream()
+                .filter(user -> user.getClientCompany().equals(clientCompany))
+                .collect(Collectors.toList());
+
+
+            List<SuggestedPrice> relevantSuggestedPrices = suggestedPrices.stream()
+                .filter(suggestedPrice -> companysTrackedProducts.stream()
+                    .anyMatch(trackedProduct -> trackedProduct.getProduct()
+                        .equals(suggestedPrice.getProduct())))
+                .collect(Collectors.toList());
+
+
+            usersToNotify.forEach(user -> {
+
+                List<Alert> usersAlerts = userToAlertsMap.get(user);
+
+
+                EmailTemplate emailTemplate =
+                    EmailTemplate.builder()
+                        .suggestedPrices(relevantSuggestedPrices)
+                        .alerts(usersAlerts)
+                        .user(user)
+                        .build();
+
+
+                sendEmailToUser("New price alerts and suggestions", user.getEmail(),
+                    emailTemplate.generateEmail());
+
+
+            });
+
+
+        });
+
+
+        return null;
     }
 }
 

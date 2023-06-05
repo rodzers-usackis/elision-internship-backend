@@ -90,7 +90,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
-        verify(productPriceScrapedEventListener, times(1)).handleEvent(any());
+        verify(productPriceScrapedEventListener, times(1)).handle(any());
 
         assertEquals(price1, priceCaptor.getValue());
 
@@ -156,7 +156,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
-        verify(productPriceScrapedEventListener, times(1)).handleEvent(any());
+        verify(productPriceScrapedEventListener, times(1)).handle(any());
         assertEquals(price2, priceCaptor.getValue());
 
 

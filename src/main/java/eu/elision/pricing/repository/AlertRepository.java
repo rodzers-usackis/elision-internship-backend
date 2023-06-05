@@ -1,6 +1,7 @@
 package eu.elision.pricing.repository;
 
 import eu.elision.pricing.domain.Alert;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ public interface AlertRepository extends JpaRepository<Alert, UUID> {
 
 
     long countAlertByUser_IdAndReadIsFalse(UUID userId);
+
+    List<Alert> findAllByTimestampAfterAndReadFalse(LocalDateTime after);
 
 }

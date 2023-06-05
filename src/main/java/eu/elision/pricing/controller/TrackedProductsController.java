@@ -26,6 +26,14 @@ public class TrackedProductsController {
     private final TrackedProductService trackedProductService;
     private final TrackedProductMapper trackedProductMapper;
 
+    /**
+     * Creates a new {@link TrackedProduct} from the given {@link TrackedProductDto}.
+     *
+     * @param user              the authenticated user
+     * @param trackedProductDto the {@link TrackedProductDto} to create the {@link TrackedProduct}
+     * @return {@link ResponseEntity} with the {@link TrackedProductWithDetailsDto}
+     *     of the created {@link TrackedProduct}
+     */
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProductWithDetailsDto> createTrackedProduct(
@@ -44,7 +52,8 @@ public class TrackedProductsController {
     public ResponseEntity<List<TrackedProductWithDetailsDto>> getTrackedProducts(
         @AuthenticationPrincipal User user) {
 
-        List<TrackedProductWithDetailsDto> trackedProducts = trackedProductService.getTrackedProducts(user);
+        List<TrackedProductWithDetailsDto> trackedProducts =
+            trackedProductService.getTrackedProducts(user);
 
         return new ResponseEntity<>(trackedProducts, HttpStatus.OK);
     }

@@ -17,6 +17,10 @@ public interface PriceRepository extends JpaRepository<Price, UUID> {
                                                                        LocalDateTime before,
                                                                        LocalDateTime after);
 
+    List<Price> findAllByTimestampBetween(LocalDateTime before, LocalDateTime after);
+
+    List<Price> findAllByTimestampAfter(LocalDateTime after);
+
     List<Price> findAllByProduct_IdAndTimestampBeforeAndTimestampAfterAndRetailerCompany_Id(
         UUID productId,
         LocalDateTime before,

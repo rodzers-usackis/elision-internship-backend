@@ -41,10 +41,10 @@ public class DataSeeder implements CommandLineRunner {
 
         // Users
         User user = User.builder()
-            .email("usackro@cronos.be")
+            .email("mikadom@cronos.be")
             .password(passwordEncoder.encode("secure_password"))
-            .firstName("Rodzers")
-            .lastName("Usackis")
+            .firstName("Dominik")
+            .lastName("Mika")
             .role(Role.ADMIN)
             .alertSettings(alertSettings)
             .build();
@@ -268,7 +268,7 @@ public class DataSeeder implements CommandLineRunner {
         // Client Company
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
-            .VATNumber("BE0123456789")
+            .vatNumber("BE0123456789")
             .name("Elision")
             .website("https://elision.eu")
             .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))

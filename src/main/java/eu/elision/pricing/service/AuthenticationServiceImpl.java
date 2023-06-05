@@ -1,23 +1,21 @@
 package eu.elision.pricing.service;
 
 
-import eu.elision.pricing.domain.*;
+
+import eu.elision.pricing.domain.Address;
+import eu.elision.pricing.domain.ClientCompany;
+import eu.elision.pricing.domain.Role;
+import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AuthenticationRequest;
 import eu.elision.pricing.dto.AuthenticationResponse;
 import eu.elision.pricing.dto.RegistrationRequest;
 import eu.elision.pricing.exceptions.EmailAlreadyRegistered;
 import eu.elision.pricing.repository.ClientCompanyRepository;
 import eu.elision.pricing.repository.UserRepository;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +33,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ClientCompanyRepository clientCompanyRepository;
-    private Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     /**
      * Saves the user in the {@link UserRepository} and returns a {@link AuthenticationResponse}
@@ -67,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .name(registrationRequest.getCompanyName())
-            .VATNumber(registrationRequest.getVatNumber())
+            .vatNumber(registrationRequest.getVatNumber())
             .address(address)
             .website(registrationRequest.getCompanyWebsite())
             .categoriesProductsSold(registrationRequest.getProductCategory())

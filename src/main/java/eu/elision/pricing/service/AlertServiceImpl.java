@@ -9,6 +9,7 @@ import eu.elision.pricing.domain.RetailerCompany;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertDto;
 import eu.elision.pricing.mapper.AlertMapper;
+import eu.elision.pricing.publishers.AlertsCreatedEventPublisher;
 import eu.elision.pricing.repository.AlertRepository;
 import eu.elision.pricing.repository.PriceRepository;
 import jakarta.transaction.Transactional;
@@ -33,6 +34,7 @@ public class AlertServiceImpl implements AlertService {
     private final AlertRepository alertRepository;
     private final AlertMapper alertMapper;
     private final PriceRepository priceRepository;
+    private final AlertsCreatedEventPublisher alertsCreatedEventPublisher;
 
     @Transactional
     @Override
@@ -44,6 +46,21 @@ public class AlertServiceImpl implements AlertService {
 
     }
 
+    @Override
+    public void createNewAlerts(LocalDateTime after) {
+
+        List<Price> newPrices =
+            priceRepository.findAllByTimestampAfter(after);
+
+        // group by product and create alerts
+        newPrices.stream()
+            .collect(Collectors.groupingBy(Price::getProduct))
+            .forEach(this::createAlerts);
+
+        alertsCreatedEventPublisher.publish(after);
+
+
+    }
 
     @Transactional
     @Override
@@ -73,7 +90,7 @@ public class AlertServiceImpl implements AlertService {
                     product.getId(), price.getRetailerCompany().getId());
 
             if (previousPrice.isPresent()) {
-                if (isPriceMatched(alertRule, previousPrice.get().getAmount())) {
+                if (price.getAmount() == previousPrice.get().getAmount()) {
                     continue;
                 }
             }

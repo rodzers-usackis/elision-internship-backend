@@ -19,7 +19,7 @@ public interface PriceService {
 
     void scrapeAndSavePrices();
 
-    void scrapeAndSavePricesV2();
+    //void scrapeAndSavePricesV2();
 
     @Async("threadPoolTaskExecutor")
     void scrapeProductsPrices(Collection<UUID> productIds);

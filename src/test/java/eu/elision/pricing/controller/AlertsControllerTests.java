@@ -61,9 +61,8 @@ class AlertsControllerTests {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .name("Test Company")
-            .VATNumber("BE1234567899")
+            .vatNumber("BE1234567899")
             .id(UUID.randomUUID())
-            .VATNumber("BE1234567899")
             .build();
 
         User user = User.builder()
@@ -142,7 +141,7 @@ class AlertsControllerTests {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
-            .VATNumber("BE1234567819")
+            .vatNumber("BE1234567819")
             .name("Elision")
             .website("https://elision.eu")
             .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))
@@ -225,7 +224,7 @@ class AlertsControllerTests {
 
         ClientCompany clientCompany = ClientCompany.builder()
             .address(address)
-            .VATNumber("BE01233456789")
+            .vatNumber("BE01233456789")
             .name("Elision")
             .website("https://elision.eu")
             .categoriesProductsSold(new HashSet<>(List.of(ProductCategory.CONSUMER_ELECTRONICS)))

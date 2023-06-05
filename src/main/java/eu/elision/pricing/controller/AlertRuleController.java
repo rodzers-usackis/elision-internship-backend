@@ -1,5 +1,6 @@
 package eu.elision.pricing.controller;
 
+import eu.elision.pricing.domain.AlertRule;
 import eu.elision.pricing.domain.User;
 import eu.elision.pricing.dto.AlertRuleDto;
 import eu.elision.pricing.dto.AlertRuleToCreateDto;
@@ -13,6 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for handling requests
+ * related to {@link AlertRule}s.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -23,6 +28,13 @@ public class AlertRuleController {
     private final AlertRuleService alertRuleService;
 
 
+    /**
+     * Returns all {@link AlertRule}s for the
+     * currently logged in {@link User}.
+     *
+     * @param user currently logged in {@link User}
+     * @return a {@link ResponseEntity} containing a list of {@link AlertRuleDto}s
+     */
     @GetMapping
     public ResponseEntity<List<AlertRuleDto>> getAllAlertRules(
         @AuthenticationPrincipal User user
@@ -32,6 +44,16 @@ public class AlertRuleController {
 
     }
 
+    /**
+     * Creates a new {@link AlertRule} for the
+     * currently logged in {@link User}.
+     *
+     * @param user         currently logged in {@link User}
+     * @param alertRuleDto {@link AlertRuleToCreateDto} containing the data
+     *                     for the new {@link AlertRule}
+     * @return a {@link ResponseEntity} containing
+     *     the {@link AlertRuleDto} of the newly created {@link AlertRule}
+     */
     @PostMapping
     public ResponseEntity<AlertRuleDto> createAlertRule(
         @AuthenticationPrincipal User user,
@@ -43,6 +65,15 @@ public class AlertRuleController {
 
     }
 
+    /**
+     * Deletes all {@link AlertRule}s with the given ids.
+     * Only {@link AlertRule}s belonging to the currently
+     * logged in {@link User} will be deleted.
+     *
+     * @param user currently logged in {@link User}
+     * @param ids  list of ids of the {@link AlertRule}s to delete
+     * @return a {@link ResponseEntity} with no content
+     */
     @DeleteMapping
     public ResponseEntity<Void> deleteAlertRules(
         @AuthenticationPrincipal User user,

@@ -37,9 +37,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 class ScrapingTaskControllerTests {
 
-//    @MockBean
-//    private PriceService priceService;
+    //@MockBean
+    //private PriceService priceService;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
 
