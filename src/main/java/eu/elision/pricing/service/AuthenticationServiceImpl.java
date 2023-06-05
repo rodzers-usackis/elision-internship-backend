@@ -3,6 +3,7 @@ package eu.elision.pricing.service;
 
 
 import eu.elision.pricing.domain.Address;
+import eu.elision.pricing.domain.AlertSettings;
 import eu.elision.pricing.domain.ClientCompany;
 import eu.elision.pricing.domain.Role;
 import eu.elision.pricing.domain.User;
