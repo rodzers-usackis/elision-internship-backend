@@ -10,6 +10,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Template for the email that is sent out to users.
+ * Takes in a list of alerts and a list of suggested prices
+ * and generates the email content.
+ */
 @Data
 @NoArgsConstructor
 public class EmailTemplate {
@@ -18,6 +23,14 @@ public class EmailTemplate {
     private List<SuggestedPrice> suggestedPrices;
     private User user;
 
+    /**
+     * Constructor for {@link EmailTemplate}.
+     * Contains only the parameters that should be passed by the caller.
+     *
+     * @param alerts          list of alerts
+     * @param suggestedPrices list of suggested prices
+     * @param user            the user to whom the email should be sent
+     */
     @Builder
     public EmailTemplate(List<Alert> alerts,
                          List<SuggestedPrice> suggestedPrices, User user) {
@@ -173,6 +186,12 @@ public class EmailTemplate {
                     
             """;
 
+    /**
+     * Generates the email content based on the template
+     * and the parameters passed to the constructor.
+     *
+     * @return the email body
+     */
     public String generateEmail() {
 
         String template = "";

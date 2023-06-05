@@ -301,13 +301,14 @@ class SuggestionServiceImplTests {
             .build();
 
 
-        when(suggestedPriceRepository.findFirstByProduct_IdOrderByTimestampDesc(product.getId())).thenReturn(
+        when(suggestedPriceRepository.findFirstByProduct_IdOrderByTimestampDesc(
+            product.getId())).thenReturn(
             Optional.of(
-            SuggestedPrice.builder()
-            .product(product)
-            .suggestedPrice(151.0)
-            .timestamp(LocalDateTime.now())
-            .build()));
+                SuggestedPrice.builder()
+                    .product(product)
+                    .suggestedPrice(151.0)
+                    .timestamp(LocalDateTime.now())
+                    .build()));
 
         when(suggestedPriceRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
@@ -316,7 +317,6 @@ class SuggestionServiceImplTests {
 
         assertNotNull(suggestionServiceImpl.calculateSuggestedPrice(trackedProduct1, prices1));
         verify(suggestedPriceRepository, times(1)).save(any());
-
 
 
     }
@@ -387,7 +387,8 @@ class SuggestionServiceImplTests {
             .build();
 
 
-        when(suggestedPriceRepository.findFirstByProduct_IdOrderByTimestampDesc(product.getId())).thenReturn(
+        when(suggestedPriceRepository.findFirstByProduct_IdOrderByTimestampDesc(
+            product.getId())).thenReturn(
             Optional.of(
                 SuggestedPrice.builder()
                     .product(product)
@@ -402,7 +403,6 @@ class SuggestionServiceImplTests {
 
         assertNull(suggestionServiceImpl.calculateSuggestedPrice(trackedProduct1, prices1));
         verify(suggestedPriceRepository, times(0)).save(any());
-
 
 
     }

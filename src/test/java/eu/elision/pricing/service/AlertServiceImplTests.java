@@ -54,59 +54,59 @@ class AlertServiceImplTests {
     void createAlertsSuccessfully() {
 
         Product product = Product.builder()
-                .name("Test product")
-                .id(UUID.randomUUID())
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .manufacturerCode("123A")
-                .ean("1234567890123")
-                .description("Test description")
-                .build();
+            .name("Test product")
+            .id(UUID.randomUUID())
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .manufacturerCode("123A")
+            .ean("1234567890123")
+            .description("Test description")
+            .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .vatNumber("BE121345678992")
-                .id(UUID.randomUUID())
-                .name("Test company")
-                .build();
+            .vatNumber("BE121345678992")
+            .id(UUID.randomUUID())
+            .name("Test company")
+            .build();
 
         User user = User.builder()
-                .id(UUID.randomUUID())
-                .firstName("John")
-                .lastName("Doe")
-                .email("test@testuser.be")
-                .clientCompany(clientCompany)
-                .build();
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser.be")
+            .clientCompany(clientCompany)
+            .build();
 
         clientCompany.setUsers(List.of(user));
 
         AlertSettings alertSettings = AlertSettings.builder()
-                .id(UUID.randomUUID())
-                .notifyViaEmail(true)
-                .user(user)
-                .build();
+            .id(UUID.randomUUID())
+            .notifyViaEmail(true)
+            .user(user)
+            .build();
 
         AlertRule alertRule1 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.LOWER)
-                .price(100.0)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .price(100.0)
+            .alertSettings(alertSettings)
+            .build();
 
         AlertRule alertRule2 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.HIGHER)
-                .price(5000.0)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .price(5000.0)
+            .alertSettings(alertSettings)
+            .build();
 
         AlertRule alertRule3 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.HIGHER)
-                .price(200.0)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .price(200.0)
+            .alertSettings(alertSettings)
+            .build();
 
         product.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
 
@@ -120,7 +120,7 @@ class AlertServiceImplTests {
             .name("Test retailer 2")
             .build();
 
-        Price price1 = Price.builder()
+        final Price price1 = Price.builder()
 
             .id(UUID.randomUUID())
             .product(product)
@@ -128,7 +128,7 @@ class AlertServiceImplTests {
             .amount(50.0)
             .build();
 
-        Price price2 = Price.builder()
+        final Price price2 = Price.builder()
             .id(UUID.randomUUID())
             .product(product)
             .retailerCompany(retailerCompany2)
@@ -140,7 +140,8 @@ class AlertServiceImplTests {
             any())).thenReturn(
             Optional.empty());
 
-        when(alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(product.getId())).thenReturn(List.of(alertRule1, alertRule2, alertRule3));
+        when(alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(
+            product.getId())).thenReturn(List.of(alertRule1, alertRule2, alertRule3));
 
         when(alertRepository.save(any())).thenReturn(Alert.builder().build());
 
@@ -169,61 +170,61 @@ class AlertServiceImplTests {
     void noAlertsCreatedWhenAlertRulesDontMatchNewPrices() {
 
         Product product = Product.builder()
-                .name("Test product")
-                .id(UUID.randomUUID())
-                .category(ProductCategory.CONSUMER_ELECTRONICS)
-                .manufacturerCode("123A")
-                .ean("1234567890123")
-                .description("Test description")
-                .build();
+            .name("Test product")
+            .id(UUID.randomUUID())
+            .category(ProductCategory.CONSUMER_ELECTRONICS)
+            .manufacturerCode("123A")
+            .ean("1234567890123")
+            .description("Test description")
+            .build();
 
         ClientCompany clientCompany = ClientCompany.builder()
-                .vatNumber("BE123456789")
+            .vatNumber("BE123456789")
 
-                .id(UUID.randomUUID())
-                .name("Test company")
-                .build();
+            .id(UUID.randomUUID())
+            .name("Test company")
+            .build();
 
         User user = User.builder()
-                .id(UUID.randomUUID())
-                .firstName("John")
-                .lastName("Doe")
-                .email("test@testuser2.be")
-                .clientCompany(clientCompany)
-                .build();
+            .id(UUID.randomUUID())
+            .firstName("John")
+            .lastName("Doe")
+            .email("test@testuser2.be")
+            .clientCompany(clientCompany)
+            .build();
 
         clientCompany.setUsers(List.of(user));
 
 
         AlertSettings alertSettings = AlertSettings.builder()
-                .id(UUID.randomUUID())
-                .notifyViaEmail(true)
-                .user(user)
-                .build();
+            .id(UUID.randomUUID())
+            .notifyViaEmail(true)
+            .user(user)
+            .build();
 
         AlertRule alertRule1 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.LOWER)
-                .price(500)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .price(500)
+            .alertSettings(alertSettings)
+            .build();
 
         AlertRule alertRule2 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.HIGHER)
-                .price(5000.0)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.HIGHER)
+            .price(5000.0)
+            .alertSettings(alertSettings)
+            .build();
 
         AlertRule alertRule3 = AlertRule.builder()
-                .id(UUID.randomUUID())
-                .product(product)
-                .priceComparisonType(PriceComparisonType.LOWER)
-                .price(200.0)
-                .alertSettings(alertSettings)
-                .build();
+            .id(UUID.randomUUID())
+            .product(product)
+            .priceComparisonType(PriceComparisonType.LOWER)
+            .price(200.0)
+            .alertSettings(alertSettings)
+            .build();
 
         product.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
 
@@ -251,7 +252,6 @@ class AlertServiceImplTests {
             .retailerCompany(retailerCompany2)
             .amount(1000.0)
             .build();
-
 
 
         alertService.createAlerts(product, List.of(price1, price2));

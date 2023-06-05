@@ -91,6 +91,13 @@ public class AlertRuleController {
     }
 
 
+    /**
+     * Updates an existing {@link AlertRule}.
+     *
+     * @param user         currently logged in {@link User}
+     * @param alertRuleDto {@link AlertRuleDto} containing the updated data
+     * @return a {@link ResponseEntity} with no content
+     */
     @PatchMapping
     public ResponseEntity<Void> updateAlertRule(
         @AuthenticationPrincipal User user,

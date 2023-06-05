@@ -23,7 +23,8 @@ public class RetailerCompanyController {
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping("/retailer-companies")
-    ResponseEntity<List<RetailerCompanyDto>> getRetailerCompanies(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<RetailerCompanyDto>> getRetailerCompanies(
+        @AuthenticationPrincipal User user) {
         return new ResponseEntity<>(retailerCompanyService.getRetailerCompanies(), HttpStatus.OK);
     }
 }
