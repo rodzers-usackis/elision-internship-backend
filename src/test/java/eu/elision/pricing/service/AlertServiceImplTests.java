@@ -19,6 +19,7 @@ import eu.elision.pricing.domain.User;
 import eu.elision.pricing.repository.AlertRepository;
 import eu.elision.pricing.repository.AlertRuleRepository;
 import eu.elision.pricing.repository.PriceRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -136,8 +137,10 @@ class AlertServiceImplTests {
             .build();
 
 
-        when(priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(any(),
-            any())).thenReturn(
+        when(
+            priceRepository.findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
+                any(),
+                any(), any())).thenReturn(
             Optional.empty());
 
         when(alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(
@@ -148,7 +151,8 @@ class AlertServiceImplTests {
         alertSettings.setAlertRules(List.of(alertRule1, alertRule2, alertRule3));
 
 
-        alertService.createAlerts(product, List.of(price1, price2));
+        alertService.createAlerts(product, List.of(price1, price2),
+            LocalDateTime.now().minusMinutes(2));
 
 
         verify(alertRepository, times(2)).save(alertCaptor.capture());
@@ -244,6 +248,7 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany)
             .amount(2000.0)
+            .timestamp(LocalDateTime.now())
             .build();
 
         Price price2 = Price.builder()
@@ -251,10 +256,12 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany2)
             .amount(1000.0)
+            .timestamp(LocalDateTime.now())
             .build();
 
 
-        alertService.createAlerts(product, List.of(price1, price2));
+        alertService.createAlerts(product, List.of(price1, price2),
+            LocalDateTime.now().minusMinutes(2));
 
         verify(alertRepository, times(0)).save(alertCaptor.capture());
 
@@ -337,6 +344,7 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany)
             .amount(3000)
+            .timestamp(LocalDateTime.now())
             .build();
 
         Price oldPrice1 = Price.builder()
@@ -344,6 +352,7 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany)
             .amount(3000)
+            .timestamp(LocalDateTime.now())
             .build();
 
         Price price2 = Price.builder()
@@ -351,6 +360,7 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany2)
             .amount(100)
+            .timestamp(LocalDateTime.now())
             .build();
 
         Price oldPrice2 = Price.builder()
@@ -358,14 +368,21 @@ class AlertServiceImplTests {
             .product(product)
             .retailerCompany(retailerCompany2)
             .amount(100)
+            .timestamp(LocalDateTime.now())
             .build();
 
 
-        when(priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(
-            price1.getProduct().getId(), price1.getRetailerCompany().getId())).thenReturn(
+        when(
+            priceRepository
+                .findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
+                    price1.getProduct().getId(), price1.getRetailerCompany().getId(),
+                    LocalDateTime.now().minusMinutes(2))).thenReturn(
             Optional.of(oldPrice1));
-        when(priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(
-            price2.getProduct().getId(), price2.getRetailerCompany().getId())).thenReturn(
+        when(
+            priceRepository
+                .findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
+                    price2.getProduct().getId(), price2.getRetailerCompany().getId(),
+                    LocalDateTime.now().minusMinutes(2))).thenReturn(
             Optional.of(oldPrice2));
 
         verify(alertRepository, times(0)).save(alertCaptor.capture());
