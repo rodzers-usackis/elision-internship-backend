@@ -34,7 +34,7 @@ public class TrackedProductsController {
      * @return {@link ResponseEntity} with the {@link TrackedProductWithDetailsDto}
      *     of the created {@link TrackedProduct}
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PostMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProductWithDetailsDto> createTrackedProduct(
         @AuthenticationPrincipal User user, @RequestBody TrackedProductDto trackedProductDto) {
@@ -47,7 +47,7 @@ public class TrackedProductsController {
         return new ResponseEntity<>(trackedProductWithDetailsDto, HttpStatus.CREATED);
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping("/client-company/tracked-products")
     public ResponseEntity<List<TrackedProductWithDetailsDto>> getTrackedProducts(
         @AuthenticationPrincipal User user) {
@@ -58,7 +58,7 @@ public class TrackedProductsController {
         return new ResponseEntity<>(trackedProducts, HttpStatus.OK);
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @DeleteMapping("/client-company/tracked-products")
     public ResponseEntity<Void> deleteProducts(@AuthenticationPrincipal User user,
                                                @RequestBody List<UUID> trackedProductIds) {
@@ -68,7 +68,7 @@ public class TrackedProductsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PatchMapping("/client-company/tracked-products")
     public ResponseEntity<TrackedProduct> updateTrackedProduct(
         @AuthenticationPrincipal User user,

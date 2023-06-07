@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Rest controller for {@link AlertSettings}s.
  */
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alert-settings")
@@ -31,8 +31,7 @@ public class AlertSettingsController {
      * @param user the authenticated user
      * @return the updated alert settings
      */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})    @GetMapping
     public ResponseEntity<AlertSettingsDto> getAlertSettings(@AuthenticationPrincipal User user) {
         AlertSettingsDto alertSettingsDto = alertSettingsService.getAlertSettings(user);
 
@@ -46,7 +45,7 @@ public class AlertSettingsController {
      * @param alertSettingsDto AlertSettingsDto with updated values
      * @return no content
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PatchMapping
     public ResponseEntity<Void> updateNotificationSettings(
         @AuthenticationPrincipal User user,
