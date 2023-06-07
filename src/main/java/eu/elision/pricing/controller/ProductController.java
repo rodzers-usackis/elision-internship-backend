@@ -29,7 +29,7 @@ public class ProductController {
      * @param productDto the product to create
      * @return the created product
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PostMapping("/products")
     public ResponseEntity<ProductDto> createProduct(@AuthenticationPrincipal User user,
                                                     @RequestBody ProductDto productDto) {
@@ -44,7 +44,7 @@ public class ProductController {
      *
      * @return all products
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts() {
 
@@ -59,7 +59,7 @@ public class ProductController {
      * @param uuid the UUID of the product
      * @return the product
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping("/products/{uuid}")
     public ResponseEntity<Product> getProduct(@PathVariable String uuid) {
 
@@ -74,7 +74,7 @@ public class ProductController {
      * @param uuid the UUID of the product to delete
      * @return response with no content
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @DeleteMapping("/products/{uuid}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String uuid) {
 
@@ -89,7 +89,7 @@ public class ProductController {
      * @param productDto the product to update
      * @return the updated product
      */
-    @CrossOrigin("http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PatchMapping("/products")
     public ResponseEntity<Product> updateProduct(@RequestBody ProductDto productDto) {
 

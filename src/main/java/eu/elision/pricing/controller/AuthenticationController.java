@@ -35,8 +35,7 @@ public class AuthenticationController {
      *     and containing the {@link AuthenticationRequest}
      *     with the JWT token
      */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/login")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
         @RequestBody AuthenticationRequest authenticationRequest) {
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
@@ -49,8 +48,7 @@ public class AuthenticationController {
      * @return the {@link ResponseEntity} with HTTP status code 201,
      *     and containing the {@link AuthenticationResponse}  with the JWT token
      */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/register")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
         @RequestBody RegistrationRequest registrationRequest
     ) {
