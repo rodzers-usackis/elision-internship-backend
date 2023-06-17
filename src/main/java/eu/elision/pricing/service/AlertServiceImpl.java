@@ -158,6 +158,7 @@ public class AlertServiceImpl implements AlertService {
             .retailerCompany(price.getRetailerCompany())
             .read(false)
             .timestamp(LocalDateTime.now())
+            .alertRulePriceThreshold(alertRule.getPrice())
             .build();
 
         alertRepository.save(alert);
