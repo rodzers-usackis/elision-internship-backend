@@ -11,7 +11,7 @@ import eu.elision.pricing.domain.PriceScrapingConfig;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.domain.RetailerCompany;
-import eu.elision.pricing.listeners.ProductPriceScrapedEventListener;
+import eu.elision.pricing.listeners.ScrapingFinishedEventListener;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
@@ -39,7 +39,7 @@ class PriceServiceImplMockingTests {
     private PriceScrapingConfigRepository priceScrapingConfigRepository;
 
     @MockBean
-    private ProductPriceScrapedEventListener productPriceScrapedEventListener;
+    private ScrapingFinishedEventListener scrapingFinishedEventListener;
 
     @Autowired
     private PriceService priceService;
@@ -90,7 +90,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
-        verify(productPriceScrapedEventListener, times(1)).handle(any());
+        verify(scrapingFinishedEventListener, times(1)).handle(any());
 
         assertEquals(price1, priceCaptor.getValue());
 
@@ -156,7 +156,7 @@ class PriceServiceImplMockingTests {
 
 
         verify(priceRepository, times(1)).save(priceCaptor.capture());
-        verify(productPriceScrapedEventListener, times(1)).handle(any());
+        verify(scrapingFinishedEventListener, times(1)).handle(any());
         assertEquals(price2, priceCaptor.getValue());
 
 

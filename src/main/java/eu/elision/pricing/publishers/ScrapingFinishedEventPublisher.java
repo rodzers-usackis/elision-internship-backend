@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @RequiredArgsConstructor
 @Component
-public class ProductPriceScrapedEventPublisher {
+public class ScrapingFinishedEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 

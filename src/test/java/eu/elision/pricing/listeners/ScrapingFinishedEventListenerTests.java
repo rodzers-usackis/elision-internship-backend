@@ -22,13 +22,13 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class ProductPriceScrapedEventListenerTests {
+class ScrapingFinishedEventListenerTests {
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     @MockBean
-    private ProductPriceScrapedEventListener productPriceScrapedEventListener;
+    private ScrapingFinishedEventListener scrapingFinishedEventListener;
 
     @Captor
     private ArgumentCaptor<ScrapingFinishedEvent> eventCaptor;
@@ -58,7 +58,7 @@ class ProductPriceScrapedEventListenerTests {
 
         applicationEventPublisher.publishEvent(event);
 
-        verify(productPriceScrapedEventListener).handle(eventCaptor.capture());
+        verify(scrapingFinishedEventListener).handle(eventCaptor.capture());
 
         ScrapingFinishedEvent capturedEvent = eventCaptor.getValue();
 
@@ -96,7 +96,7 @@ class ProductPriceScrapedEventListenerTests {
 
         applicationEventPublisher.publishEvent(event);
 
-        verify(productPriceScrapedEventListener).handle(eventCaptor.capture());
+        verify(scrapingFinishedEventListener).handle(eventCaptor.capture());
         ScrapingFinishedEvent capturedEvent = eventCaptor.getValue();
 
         assertEquals(event.getEventChainStartTime(), capturedEvent.getEventChainStartTime());

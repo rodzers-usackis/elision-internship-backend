@@ -138,9 +138,10 @@ class AlertServiceImplTests {
 
 
         when(
-            priceRepository.findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
-                any(),
-                any(), any())).thenReturn(
+            priceRepository
+                .findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
+                    any(),
+                    any(), any())).thenReturn(
             Optional.empty());
 
         when(alertRuleRepository.findAllByProduct_IdAndAlertSettings_AlertsActiveTrue(

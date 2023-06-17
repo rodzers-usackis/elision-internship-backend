@@ -92,6 +92,7 @@ public class AlertServiceImpl implements AlertService {
                 continue;
             }
 
+            @SuppressWarnings("checkstyle:LineLength")
             Optional<Price> previousPrice =
                 priceRepository.findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
                     product.getId(), price.getRetailerCompany().getId(), scrapingStartTime);

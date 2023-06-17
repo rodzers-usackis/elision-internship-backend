@@ -3,9 +3,6 @@ package eu.elision.pricing.listeners;
 import eu.elision.pricing.domain.Alert;
 import eu.elision.pricing.events.ScrapingFinishedEvent;
 import eu.elision.pricing.service.AlertService;
-import eu.elision.pricing.service.EmailService;
-import eu.elision.pricing.service.PriceService;
-import eu.elision.pricing.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -17,12 +14,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ProductPriceScrapedEventListener {
+public class ScrapingFinishedEventListener {
 
     private final AlertService alertService;
-    private final ProductService productService;
-    private final PriceService priceService;
-    private final EmailService emailService;
+
 
     /**
      * Handles the {@link ScrapingFinishedEvent} event

@@ -12,7 +12,7 @@ import eu.elision.pricing.domain.PriceScrapingConfig;
 import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.domain.ProductCategory;
 import eu.elision.pricing.domain.RetailerCompany;
-import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
+import eu.elision.pricing.publishers.ScrapingFinishedEventPublisher;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.io.IOException;
@@ -27,9 +27,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
@@ -37,7 +35,7 @@ import org.springframework.test.context.ActiveProfiles;
 class PriceServiceImplAdditionalMockingTests {
 
     @Mock
-    private ProductPriceScrapedEventPublisher productPriceScrapedEventPublisher;
+    private ScrapingFinishedEventPublisher scrapingFinishedEventPublisher;
 
     @Mock
     private PriceScrapingConfigRepository priceScrapingConfigRepository;
@@ -195,7 +193,7 @@ class PriceServiceImplAdditionalMockingTests {
         assertThat(capturedPrices.stream().map(Price::getAmount).collect(Collectors.toList()),
             containsInAnyOrder(pr1.getAmount(), pr2.getAmount(), pr3.getAmount()));
 
-        verify(productPriceScrapedEventPublisher, times(1)).publish(any(LocalDateTime.class));
+        verify(scrapingFinishedEventPublisher, times(1)).publish(any(LocalDateTime.class));
 
 
     }

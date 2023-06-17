@@ -5,7 +5,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 
 import eu.elision.pricing.publishers.AlertsCreatedEventPublisher;
-import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
+import eu.elision.pricing.publishers.ScrapingFinishedEventPublisher;
 import eu.elision.pricing.publishers.SuggestionsCreatedEventPublisher;
 import eu.elision.pricing.service.AlertService;
 import eu.elision.pricing.service.EmailService;
@@ -37,7 +37,7 @@ class EventsTest {
     private EmailService emailService;
 
     @Autowired
-    private ProductPriceScrapedEventPublisher productPriceScrapedEventPublisher;
+    private ScrapingFinishedEventPublisher scrapingFinishedEventPublisher;
 
     @Autowired
     private AlertsCreatedEventPublisher alertsCreatedEventPublisher;
@@ -52,7 +52,7 @@ class EventsTest {
 
         doAnswer(invocation -> {
             Thread.sleep(1000);
-            productPriceScrapedEventPublisher.publish(startDateTime);
+            scrapingFinishedEventPublisher.publish(startDateTime);
             return null;
         }).when(priceService).scrapeProductsPrices(any());
 
