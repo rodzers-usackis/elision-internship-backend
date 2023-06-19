@@ -18,7 +18,7 @@ public class PriceRestController {
 
     private final PriceService priceService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com", "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping("/products/{id}")
     public ResponseEntity<PriceHistoryDto> getPriceHistoryForProduct(@PathVariable("id")
                                                                          UUID productId,

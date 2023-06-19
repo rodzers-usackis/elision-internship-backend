@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Rest controller for {@link Alert}s.
  */
 @Slf4j
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com",
+    "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/alerts")
@@ -35,7 +36,8 @@ public class AlertsController {
      * @param user the authenticated user
      * @return a list of {@link AlertDto}s
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com",
+        "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping
     public ResponseEntity<List<AlertDto>> getAlerts(@AuthenticationPrincipal User user) {
 
@@ -49,7 +51,8 @@ public class AlertsController {
      * @param user the authenticated user
      * @return the number of unread alerts
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com",
+        "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @GetMapping("/unread/count")
     public ResponseEntity<Integer> getUnreadAlertCount(@AuthenticationPrincipal User user) {
 
@@ -63,7 +66,8 @@ public class AlertsController {
      * @param alertDto the alerts to mark as read
      * @return the updated alerts
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {"https://next-js-frontend-dot-pricing-as-a-service.ew.r.appspot.com",
+        "http://81.240.96.43:3000", "http://81.240.96.43", "http://localhost:3000"})
     @PatchMapping()
     public ResponseEntity<List<AlertDto>> markAlertsAsRead(@RequestBody List<AlertDto> alertDto) {
         log.debug(">>> Marking alerts as read controller called");

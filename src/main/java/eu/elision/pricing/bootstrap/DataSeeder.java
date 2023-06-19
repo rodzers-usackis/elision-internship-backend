@@ -572,7 +572,7 @@ public class DataSeeder implements CommandLineRunner {
 
         priceRepository.save(price5);
 
-// Price objects for Product 2
+        //Price objects for Product 2
         Price price6 = Price.builder()
             .amount(629.00)
             .product(product2)
@@ -591,7 +591,7 @@ public class DataSeeder implements CommandLineRunner {
 
         priceRepository.save(price7);
 
-// Price objects for Product 3
+        //Price objects for Product 3
         Price price8 = Price.builder()
             .amount(599.00)
             .product(product3)

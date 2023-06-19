@@ -48,6 +48,7 @@ public class AlertServiceImpl implements AlertService {
 
     }
 
+    @Transactional
     @Override
     public void createNewAlerts(LocalDateTime after) {
 
@@ -57,7 +58,7 @@ public class AlertServiceImpl implements AlertService {
         // group by product and create alerts
         newPrices.stream()
             .collect(Collectors.groupingBy(Price::getProduct))
-            .forEach(this::createAlerts);
+            .forEach((product, prices) -> createAlerts(product, prices, after));
 
         alertsCreatedEventPublisher.publish(after);
 
@@ -66,7 +67,7 @@ public class AlertServiceImpl implements AlertService {
 
     @Transactional
     @Override
-    public void createAlerts(Product product, List<Price> prices) {
+    public void createAlerts(Product product, List<Price> prices, LocalDateTime scrapingStartTime) {
         if (prices.isEmpty()) {
             log.warn("No prices found for product {}", product.getId());
             return;
@@ -91,11 +92,21 @@ public class AlertServiceImpl implements AlertService {
                 continue;
             }
 
+            @SuppressWarnings("checkstyle:LineLength")
             Optional<Price> previousPrice =
-                priceRepository.findFirstByProduct_IdAndRetailerCompany_IdOrderByTimestampDesc(
-                    product.getId(), price.getRetailerCompany().getId());
+                priceRepository.findFirstByProduct_IdAndRetailerCompany_IdAndTimestampBeforeOrderByTimestampDesc(
+                    product.getId(), price.getRetailerCompany().getId(), scrapingStartTime);
+
 
             if (previousPrice.isPresent()) {
+                log.debug("Previous price ){}) for product {} and retailer company {} is {}",
+                    previousPrice.get().getTimestamp(),
+                    product.getName(), price.getRetailerCompany().getName(),
+                    previousPrice.get().getAmount());
+                log.debug("Current price ({}) for product {} and retailer company {} is {}",
+                    price.getTimestamp(),
+                    product.getName(), price.getRetailerCompany().getName(),
+                    price.getAmount());
                 if (price.getAmount() == previousPrice.get().getAmount()) {
                     continue;
                 }
@@ -108,6 +119,7 @@ public class AlertServiceImpl implements AlertService {
         }
     }
 
+    @Transactional
     private List<Price> filterPricesByRetailerCompanies(List<Price> prices,
                                                         List<RetailerCompany> retailerCompanies) {
         if (retailerCompanies == null || retailerCompanies.isEmpty()) {
@@ -146,6 +158,7 @@ public class AlertServiceImpl implements AlertService {
             .retailerCompany(price.getRetailerCompany())
             .read(false)
             .timestamp(LocalDateTime.now())
+            .alertRulePriceThreshold(alertRule.getPrice())
             .build();
 
         alertRepository.save(alert);

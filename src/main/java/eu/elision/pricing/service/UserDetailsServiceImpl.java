@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * The user is loaded from the {@link UserRepository}.
      *
      * @param username the user's e-mail address
-     * @return the {@link UserDetails}
+     * @return the {@link UserDetails} of the user with the given email
      * @throws UsernameNotFoundException if the user is not found in the database
      */
     @Override

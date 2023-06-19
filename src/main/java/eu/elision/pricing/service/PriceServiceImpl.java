@@ -6,7 +6,7 @@ import eu.elision.pricing.domain.Product;
 import eu.elision.pricing.dto.PriceHistoryDto;
 import eu.elision.pricing.exceptions.NotFoundException;
 import eu.elision.pricing.mapper.PriceHistoryMapper;
-import eu.elision.pricing.publishers.ProductPriceScrapedEventPublisher;
+import eu.elision.pricing.publishers.ScrapingFinishedEventPublisher;
 import eu.elision.pricing.repository.PriceRepository;
 import eu.elision.pricing.repository.PriceScrapingConfigRepository;
 import java.time.LocalDate;
@@ -29,7 +29,7 @@ public class PriceServiceImpl implements PriceService {
     private final PriceRepository priceRepository;
     private final PriceScrapingConfigRepository priceScrapingConfigRepository;
     private final PriceHistoryMapper priceHistoryMapper;
-    private final ProductPriceScrapedEventPublisher productPriceScrapedEventPublisher;
+    private final ScrapingFinishedEventPublisher scrapingFinishedEventPublisher;
 
     @Override
     public void scrapeAndSavePrices() {
@@ -61,7 +61,7 @@ public class PriceServiceImpl implements PriceService {
                 }
             });
 
-            productPriceScrapedEventPublisher.publish(startTime);
+            scrapingFinishedEventPublisher.publish(startTime);
 
         });
     }
@@ -182,7 +182,7 @@ public class PriceServiceImpl implements PriceService {
 
 
 
-        productPriceScrapedEventPublisher.publish(startTime);
+        scrapingFinishedEventPublisher.publish(startTime);
 
     }
 

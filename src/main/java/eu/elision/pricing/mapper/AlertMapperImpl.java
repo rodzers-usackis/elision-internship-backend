@@ -26,6 +26,7 @@ public class AlertMapperImpl implements AlertMapper {
             .retailerCompany(retailerCompanyMapper.domainToDto(alert.getRetailerCompany()))
             .product(productMapper.domainToDto(alert.getProduct()))
             .timestamp(alert.getTimestamp())
+            .alertRulePriceThreshold(alert.getAlertRulePriceThreshold())
             .build();
     }
 }

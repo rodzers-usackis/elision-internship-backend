@@ -78,8 +78,8 @@ public class SuggestionServiceImpl implements SuggestionService {
                 suggestedPrice.getProduct().getId());
 
         if (existingSuggestedPrice.isPresent()) {
-            if (existingSuggestedPrice.get().getSuggestedPrice() ==
-                suggestedPrice.getSuggestedPrice()) {
+            if (existingSuggestedPrice.get().getSuggestedPrice()
+                == suggestedPrice.getSuggestedPrice()) {
                 // No need to suggest a price if it's the same as the previous suggested price
                 return null;
             }
