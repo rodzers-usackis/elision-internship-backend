@@ -1,6 +1,7 @@
 package eu.elision.pricing.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import eu.elision.pricing.domain.Address;
 import eu.elision.pricing.domain.Alert;
@@ -684,19 +685,5 @@ class AlertRuleRepositoryTests {
 
     }
 
-    //TODO: correct this test
-    /*@Test
-    void deleteRulesCorrectly() {
-        User user = userRepository.findAll().get(0);
 
-        assertEquals(2, alertRuleRepository.count());
-
-        alertRuleRepository.deleteAllByIdIn(List.of(this.alertRules.get(0).getId()));
-
-        assertEquals(1,
-            alertRuleRepository.findAllByAlertSettings_Id(user.getAlertSettings().getId()).size());
-        assertEquals(1, alertRuleRepository.count());
-
-
-    }*/
 }

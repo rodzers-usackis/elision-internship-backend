@@ -77,7 +77,6 @@ public class TrackedProductsController {
         TrackedProduct trackedProduct =
             trackedProductService.updateTrackedProduct(user, trackedProductPriceUpdateDto);
 
-        //TODO: map to dto
         return new ResponseEntity<>(trackedProduct, HttpStatus.OK);
     }
 }
