@@ -750,30 +750,4 @@ class AlertRuleControllerTests {
 
     }
 
-    //TODO: correct this test
-    /*@Test
-    void deleteAlertRuleCorrectly() throws Exception {
-
-        User user = userRepository.findAll().get(0);
-        long alertRuleCount = alertRuleRepository.count();
-
-        List<UUID> ids = List.of(this.alertRuleToDelete.getId());
-        Gson gson = new Gson();
-        String json = gson.toJson(ids);
-
-        log.debug(">>>>>>>json alert rules to delete:  " + json);
-
-
-        mockMvc.perform(delete("/api/alert-rules/")
-                .with(user(user))
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isNoContent());
-
-        assertEquals(alertRuleCount - 1, alertRuleRepository.count());
-        assertEquals(1,
-            alertRuleRepository.findAllByAlertSettings_Id(user.getAlertSettings().getId()).size());
-
-    }*/
-
 }

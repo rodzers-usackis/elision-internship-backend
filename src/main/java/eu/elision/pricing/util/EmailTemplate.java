@@ -126,7 +126,7 @@ public class EmailTemplate {
                                 color: #007bff;
                             }
                     
-                            table.alerts-and-suggestions {
+                            table {
                                 margin: 3rem auto;
                                 border-collapse: collapse;
                                 border-radius: 4px;
@@ -135,29 +135,34 @@ public class EmailTemplate {
                                 background-color: #E0E0E0;
                             }
                     
-                            table.alerts-and-suggestions thead {
+                            table thead {
                                 border-bottom: 3px solid #2C3E50;
                             }
                     
-                            table.alerts-and-suggestions th:nth-child(2),
-                            table.alerts-and-suggestions td:nth-child(2) {
+                            table > tr > th:nth-child(2),
+                            table > tr > td:nth-child(2) {
                                 text-align: right;
                                 padding-right: 1rem;
+                               
                                 width: 25%;
                                 border-left: 1px solid white;
                             }
                     
-                            table.alerts-and-suggestions th:nth-child(1),
-                            table.alerts-and-suggestions td:nth-child(1) {
+                            table > tr > th:nth-child(1),
+                            table > tr > td:nth-child(1) {
                                 text-align: left;
                                 padding-left: 1rem;
                             }
                     
-                            table.alerts-and-suggestions tbody tr:nth-child(odd) {
+                            table tbody > tr:nth-child(odd) {
                                 background-color: #F6F6F6;
                             }
                     
-                            table.alerts-and-suggestions
+                            caption {
+                                font-size: 1.2rem;
+                                font-weight: bold;
+                                margin-bottom: 0.5rem;
+                            }
                     
                     
                         </style>
@@ -208,7 +213,7 @@ public class EmailTemplate {
             StringBuilder alertRows = new StringBuilder();
             for (Alert alert : alerts) {
                 alertRows.append("<tr><td>").append(alert.getProduct().getName())
-                    .append("</td><td>").append(alert.getPrice()).append("€").append("</td></tr>");
+                    .append("</td><td align=\"right\">").append(alert.getPrice()).append("€").append("</td></tr>");
             }
             template = template.replace("{{alert-rows}}", alertRows.toString());
         } else {
@@ -222,7 +227,7 @@ public class EmailTemplate {
             StringBuilder suggestedPriceRows = new StringBuilder();
             for (SuggestedPrice suggestedPrice : suggestedPrices) {
                 suggestedPriceRows.append("<tr><td>").append(suggestedPrice.getProduct().getName())
-                    .append("</td><td>").append(suggestedPrice
+                    .append("</td><td align=\"right\">").append(suggestedPrice
                         .getSuggestedPrice()).append("€").append("</td></tr>");
             }
             template = template.replace("{{suggestion-rows}}", suggestedPriceRows.toString());

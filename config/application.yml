@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://35.241.199.192/pricingdb
+    url: jdbc:postgresql://34.76.173.46:5432/pricingdb
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: rodzers_password
+    password: postgres_password
   jpa:
     hibernate:
       ddl-auto: none
