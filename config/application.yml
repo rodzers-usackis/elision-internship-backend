@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://34.78.3.12:5432/pricingdb
+    url: jdbc:postgresql://34.76.173.46:5432/pricingdb
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres_password
